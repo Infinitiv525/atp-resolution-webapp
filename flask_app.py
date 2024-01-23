@@ -458,7 +458,6 @@ def handle_temp(temp, new_temp):
         else:
             new_temp.pop()
         i += 1
-    temp = []
 
 
 def simplify(cnf: list):
@@ -476,6 +475,7 @@ def simplify(cnf: list):
                 temp = new_temp
             else:
                 handle_temp(temp, new_temp)
+                temp = []
                 for element in new_temp:
                     if type(element) is list:
                         if element[1] in new_temp:
@@ -501,6 +501,7 @@ def simplify(cnf: list):
         temp = new_temp
     else:
         handle_temp(temp, new_temp)
+        temp = []
         for elm in new_temp:
             if type(elm) is list:
                 if elm[1] in new_temp:
@@ -640,12 +641,7 @@ def distribute(formula, q):
             q.append(formula)
             ref = (formula.copy(), len(q) - 1)
             ret = oor(distribute(formula[0], q), distribute(formula[2], q))
-            print("formula:", formula)
-            print("ret: ", ret)
-            # if ref[0]==ret:
-            # q.pop(ref[1])
             if ref[0][1] == "or" and ret[1] == "and":
-                # else:
                 q.append(ret)
             else:
                 q.pop(ref[1])
@@ -707,11 +703,8 @@ def full_cnf_steps(formula):
     # distribute or
     q = [no_neg]
     cnf = distribute(no_neg, q)
-    print("q:", *q)
     if cnf != no_neg:
         print_html(lang.DISTRIBUTE_OR, end="\n")
-        print(no_neg)
-        print(cnf)
         print_formula(no_neg, q=q, color=True, cnf=True)
         print_formula(cnf, q=q, color=True, cnf=True)
         print_html("\n")
@@ -1184,18 +1177,23 @@ def full_cnf(formula):
 
 
 def resolution(inp, res_type, reduced):
-    global var
+    global var, output
     tokens = tokenize(inp)
+    first_formula = ""
     print_html(lang.INPUT_FORMULA, end=" ")
     for token in tokens:
-        print_html(token, end=" ")
+        first_formula += print_html(token, end=" ")
     if not tokens:
         return print_html(lang.EMPTY_FORMULA)
     formula = add_priority(tokens)
     print_html("\n\n")
+    cut = len(output)
     print_html(lang.SIMPLIFIED_FORMULA)
-    print_formula(formula)
-    print_html("\n")
+    simple_formula = print_formula(formula) + " "
+    if first_formula == simple_formula:
+        output = output[:cut]
+    else:
+        print_html("\n")
 
     var = find_vars(formula)
     print_html()
@@ -1286,6 +1284,7 @@ def index():
         nodes = []
         resolution(inp, res_type, reduced)
         output = beautify(output)
+        tree = beautify(tree)
         return render_template("index.html", output=output, tree=tree, latex_tree=latex_tree)
     else:
         return render_template("index.html")
@@ -1311,6 +1310,7 @@ def indexeng():
         nodes = []
         resolution(inp, res_type, reduced)
         output = beautify(output)
+        tree = beautify(tree)
         return render_template("indexeng.html", output=output, tree=tree, latex_tree=latex_tree)
     else:
         return render_template("indexeng.html")
@@ -1348,11 +1348,16 @@ def truthen():
 
 def print_html(*text, sep=" ", end=""):
     global output
+    addition = ""
     for t in text:
         output += str(t)
+        addition += str(t)
         if t != text[-1]:
             output += str(sep)
+            addition += str(sep)
     output += end
+    addition += end
+    return addition
 
 
 def beautify(text: str) -> str:
@@ -1423,11 +1428,15 @@ def handle_queue(q, formula):
 
 
 def print_formula(formula, q=None, color=False, cnf=False):
+    addition = ""
     if len(formula) == 1:
-        print_html(*formula[0], end="")
+        if type(formula[0]) is list:
+            addition += print_html(*formula[0], end="")
+        else:
+            addition += print_html(formula[0], end="")
     elif len(formula) == 2:
         qu = handle_queue(q, formula)
-        print_html(formula[0], print_recursive(formula[1], formula[0], q=qu, first_iter=True, color=color, cnf=cnf))
+        addition += print_html(formula[0], print_recursive(formula[1], formula[0], q=qu, first_iter=True, color=color, cnf=cnf))
     else:
         operator = formula[1]
         red = False
@@ -1442,13 +1451,13 @@ def print_formula(formula, q=None, color=False, cnf=False):
                     if elm == q[0]:
                         first = True
         if red:
-            print_html(' <font color="#FF0000"> ' + print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf),
-                       formula[1],
-                       print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf) + " </font> ")
+            addition += print_html(' <font color="#FF0000"> ' + print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf),formula[1],
+                                   print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf) + " </font> ")
         else:
-            print_html(print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf), operator,
-                       print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf))
+            addition += print_html(print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf), operator,
+                                   print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf))
     print_html("\n")
+    return addition
 
 
 def print_recursive(formula, op, right=False, q=None, first_iter=False, color=False, cnf=False):
@@ -1630,7 +1639,7 @@ def print_tree(typ="reduced"):
     for node in nodes:
         if node.y > y_max:
             y_max = node.y + 5
-        node.value = node.value.replace("not ", "¬ ")
+        node.value = beautify(node.value)
         if node.y > y:
             if not node.parents:
                 node.x = x_offset
@@ -1673,7 +1682,6 @@ def print_tree(typ="reduced"):
     latex_tree += "\\end{tikzpicture}"
     tree = f'<br><svg height="{y_max}" width="{x_max + 25}">' + tree
     latex_tree = "\\begin{tikzpicture}[x=0.3mm, y=0.3mm]\n" + latex_tree
-    # output+=tree
 
 
 def check_children(node):
@@ -1702,8 +1710,8 @@ def recursive_children(node):
 
 
 def get_pixel_length(text, font_size, font_name):
-    #font = PIL.ImageFont.truetype(font_name, font_size)
-    font=PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
+    font = PIL.ImageFont.truetype(font_name, font_size)
+    #font=PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
     return font.getlength(text)
 
 
@@ -1712,7 +1720,11 @@ def svg2latex(text):
         return "{$\\square$}"
     out = text.replace("{", "{$\\{")
     out = out.replace("}", "\\}$}")
-    out = out.replace("¬", "\\neg")
+    for key, operator in operator_dic.items():
+        out = out.replace(f" {key} ", f" \\{operator[-1]} ")
+        out = out.replace(operator[0], f"\\{operator[-1]}")
+    for key, letter in greek_letters.items():
+        out = out.replace(letter, f"\\{key}")
     return out
 
 
