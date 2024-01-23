@@ -209,7 +209,7 @@ def negate_bfs(formula):
         if len(ref) == 1:
             ref[:] = ["not", ref]
         elif len(ref) == 2:
-            if type(ref[1]) == list:
+            if type(ref[1]) is list:
                 # ref.pop(0)
                 if len(ref[1]) == 1:
                     ref[0] = ref[1][0]
@@ -234,31 +234,31 @@ def negate_bfs(formula):
                 ref[1] = "equiv"
             elif ref[1] == "and":
                 ref[1] = "or"
-                if type(ref[0]) != list or len(ref[0]) != 2:
+                if type(ref[0]) is not list or len(ref[0]) != 2:
                     ref[0] = ["not", ref[0]]
                     queue.append(ref[0])
                 else:
                     ref[0] = ref[0][1]
-                if type(ref[2]) != list or len(ref[2]) != 2:
+                if type(ref[2]) is not list or len(ref[2]) != 2:
                     ref[2] = ["not", ref[2]]
                     queue.append(ref[2])
                 else:
                     ref[2] = ref[2][1]
             elif ref[1] == "or":
                 ref[1] = "and"
-                if type(ref[0]) != list or len(ref[0]) != 2:
+                if type(ref[0]) is not list or len(ref[0]) != 2:
                     ref[0] = ["not", ref[0]]
                     queue.append(ref[0])
                 else:
                     ref[2] = ref[0][1]
-                if type(ref[2]) != list or len(ref[2]) != 2:
+                if type(ref[2]) is not list or len(ref[2]) != 2:
                     ref[2] = ["not", ref[2]]
                     queue.append(ref[2])
                 else:
                     ref[2] = ref[2][1]
             elif ref[1] == "imply":
                 ref[1] = "and"
-                if type(ref[2]) != list or len(ref[2]) != 2:
+                if type(ref[2]) is not list or len(ref[2]) != 2:
                     ref[2] = ["not", ref[2]]
                     queue.append(ref[2])
                 else:
@@ -266,12 +266,12 @@ def negate_bfs(formula):
             elif ref[1] == "equiv":
                 ref[1] = "or"
                 temp0 = ref[0]
-                if type(ref[2]) != list or len(ref[2]) != 2:
+                if type(ref[2]) is not list or len(ref[2]) != 2:
                     ref[0] = [ref[0], "and", ["not", ref[2]]]
                     queue.append(ref[0][2])
                 else:
                     ref[0] = [ref[0], "and", ref[2][1]]
-                if type(temp0) != list or len(temp0) != 2:
+                if type(temp0) is not list or len(temp0) != 2:
                     ref[2] = [ref[2], "and", ["not", temp0]]
                     queue.append(ref[2][2])
                 else:
@@ -291,7 +291,7 @@ def negate_bfs(formula):
 
 def negate(formula):
     result = []
-    if type(formula) == list:
+    if type(formula) is list:
         if len(formula) == 1:
             result.append(["not", formula[0]])
         elif len(formula) == 2:
@@ -384,7 +384,7 @@ def xor(A: list, B: list):
 
 
 def to_cnf(formula):
-    if type(formula) != list:
+    if type(formula) is not list:
         return [formula]
     if len(formula) == 1:
         return to_cnf(formula[0])
@@ -420,7 +420,7 @@ def simplify_terms(cnf: list):
     if len(cnf) == 2 and cnf[0] == "not":
         return cnf
     for term in cnf:
-        if type(term) == list:
+        if type(term) is list:
             terms = simplify_terms(term)
             if terms in new_cnf:
                 new_cnf.pop()
@@ -436,12 +436,29 @@ def simplify_terms(cnf: list):
             new_cnf.append(term)
     final_cnf = []
     for term in new_cnf:
-        if type(term) == list:
+        if type(term) is list:
             for t in term:
                 final_cnf.append(t)
         else:
             final_cnf.append(term)
     return final_cnf
+
+
+def handle_temp(temp, new_temp):
+    i = 0
+    while i < len(temp):
+        if temp[i] == "not":
+            if ["not", temp[i + 1]] not in new_temp:
+                new_temp.append(["not", temp[i + 1]])
+            else:
+                new_temp.pop()
+            i += 1
+        elif temp[i] not in new_temp or temp[i] in operators:
+            new_temp.append(temp[i])
+        else:
+            new_temp.pop()
+        i += 1
+    temp = []
 
 
 def simplify(cnf: list):
@@ -458,22 +475,9 @@ def simplify(cnf: list):
                         new_temp.pop()
                 temp = new_temp
             else:
-                i = 0
-                while i < len(temp):
-                    if temp[i] == "not":
-                        if ["not", temp[i + 1]] not in new_temp:
-                            new_temp.append(["not", temp[i + 1]])
-                        else:
-                            new_temp.pop()
-                        i += 1
-                    elif temp[i] not in new_temp or temp[i] in operators:
-                        new_temp.append(temp[i])
-                    else:
-                        new_temp.pop()
-                    i += 1
-                temp = []
+                handle_temp(temp, new_temp)
                 for element in new_temp:
-                    if type(element) == list:
+                    if type(element) is list:
                         if element[1] in new_temp:
                             temp = []
                             break
@@ -496,22 +500,9 @@ def simplify(cnf: list):
                 new_temp.pop()
         temp = new_temp
     else:
-        i = 0
-        while i < len(temp):
-            if temp[i] == "not":
-                if ["not", temp[i + 1]] not in new_temp:
-                    new_temp.append(["not", temp[i + 1]])
-                else:
-                    new_temp.pop()
-                i += 1
-            elif temp[i] not in new_temp or temp[i] in operators:
-                new_temp.append(temp[i])
-            else:
-                new_temp.pop()
-            i += 1
-        temp = []
+        handle_temp(temp, new_temp)
         for elm in new_temp:
-            if type(elm) == list:
+            if type(elm) is list:
                 if elm[1] in new_temp:
                     temp = []
                     if new_cnf:
@@ -557,7 +548,7 @@ def simplify(cnf: list):
 
 
 def remove_imply(formula, q):
-    if type(formula) != list:
+    if type(formula) is not list:
         return formula
     if len(formula) == 1:
         return remove_imply(formula[0], q)
@@ -593,7 +584,7 @@ def remove_imply(formula, q):
 
 
 def remove_neg(formula, q):
-    if type(formula) != list:
+    if type(formula) is not list:
         return formula
     if len(formula) == 1:
         return to_cnf(formula[0])
@@ -634,7 +625,7 @@ def remove_neg(formula, q):
 
 
 def distribute(formula, q):
-    if type(formula) != list:
+    if type(formula) is not list:
         return formula
     if len(formula) == 1:
         return to_cnf(formula[0])
@@ -714,8 +705,7 @@ def full_cnf_steps(formula):
         print_html("\n")
 
     # distribute or
-    q = []
-    q.append(no_neg)
+    q = [no_neg]
     cnf = distribute(no_neg, q)
     print("q:", *q)
     if cnf != no_neg:
@@ -1279,10 +1269,10 @@ def resolution(inp, res_type, reduced):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global output, tree, nodes, lang, latex_tree
+    lang = importlib.import_module('langs.slovak')
     output = "<br>"
     tree = ""
     latex_tree = ""
-    lang = importlib.import_module('langs.slovak')
     if request.method == "POST":
         inp = request.form["inp"]
         res_type = request.form["option"]
@@ -1304,10 +1294,10 @@ def index():
 @app.route('/indexeng', methods=['GET', 'POST'])
 def indexeng():
     global output, tree, nodes, lang, latex_tree
+    lang = importlib.import_module('langs.english')
     output = "<br>"
     tree = ""
     latex_tree = ""
-    lang = importlib.import_module('langs.english')
     if request.method == "POST":
         inp = request.form["inp"]
         res_type = request.form["option"]
@@ -1392,10 +1382,10 @@ def beautify(text: str) -> str:
 def set2str(s):
     if s is None:
         return None
-    l = list(s)
-    l.sort(key=lambda x: abs(x))
+    lists = list(s)
+    lists.sort(key=lambda x: abs(x))
     string = "{"
-    for elm in l:
+    for elm in lists:
         string += f'{"not " * (elm < 0)}{var[abs(elm) - 1]},'
     return string[:-1] + "}"
 
@@ -1403,9 +1393,9 @@ def set2str(s):
 def print_set(s, table=False):
     global output
     count = 0
-    l = list(s)
-    l.sort(key=lambda x: abs(x))
-    for elm in l:
+    lists = list(s)
+    lists.sort(key=lambda x: abs(x))
+    for elm in lists:
         print_html(*f'{"not " * (elm < 0)}{var[abs(elm) - 1]},', sep="", end="")
         count += 1
         if count % 2 == 0 and table:
@@ -1416,22 +1406,27 @@ def print_set(s, table=False):
         output = output[:-1]
 
 
+def handle_queue(q, formula):
+    if q is not None:
+        qu = q.copy()
+        if formula in q:
+            if type(formula[1]) is list:
+                qu.append(formula[1].copy())
+            else:
+                qu = formula[1]
+    else:
+        if type(formula[1]) is list:
+            qu = formula[1].copy()
+        else:
+            qu = formula[1]
+    return qu
+
+
 def print_formula(formula, q=None, color=False, cnf=False):
     if len(formula) == 1:
         print_html(*formula[0], end="")
     elif len(formula) == 2:
-        if q is not None:
-            qu = q.copy()
-            if formula in q:
-                if type(formula[1]) == list:
-                    qu.append(formula[1].copy())
-                else:
-                    qu = formula[1]
-        else:
-            if type(formula[1]) == list:
-                qu = formula[1].copy()
-            else:
-                qu = formula[1]
+        qu = handle_queue(q, formula)
         print_html(formula[0], print_recursive(formula[1], formula[0], q=qu, first_iter=True, color=color, cnf=cnf))
     else:
         operator = formula[1]
@@ -1457,23 +1452,12 @@ def print_formula(formula, q=None, color=False, cnf=False):
 
 
 def print_recursive(formula, op, right=False, q=None, first_iter=False, color=False, cnf=False):
-    if type(formula) != list:
+    if type(formula) is not list:
         return formula
     elif len(formula) == 1:
         return formula[0]
     elif len(formula) == 2:
-        if q is not None:
-            qu = q.copy()
-            if formula in q:
-                if type(formula[1]) == list:
-                    qu.append(formula[1].copy())
-                else:
-                    qu = formula[1]
-        else:
-            if type(formula[1]) == list:
-                qu = formula[1].copy()
-            else:
-                qu = formula[1]
+        qu = handle_queue(q, formula)
         return f"{formula[0]} {print_recursive(formula[1], formula[0], q=qu, color=color, cnf=cnf)}"
     else:
         operat = formula[1]
@@ -1539,9 +1523,9 @@ class Node:
         return False
 
     def intersects(self, other):
-        if self.y == other.y and other.is_active() and self.x <= other.x + get_pixel_length(other.value, 16,
-                                                                                            "arial.ttf") and self.x + get_pixel_length(
-            self.value, 16, "arial.ttf") >= other.x:
+        if (self.y == other.y and other.is_active() and
+                self.x <= other.x + get_pixel_length(other.value, 16, "arial.ttf") and
+                self.x + get_pixel_length(self.value, 16, "arial.ttf") >= other.x):
             return True
         return False
 
@@ -1589,6 +1573,35 @@ def add_node(s1, s2, val):
     nodes[-1].parents.append(node2)
 
 
+def handle_child(node, child):
+    global tree, latex_tree
+    child.value = child.value.replace("not ", "¬ ")
+    tree += f'<line x1="{node.x + get_pixel_length(node.value, 16, "arial.ttf") / 2}" y1="{node.y + 5}" x2="{child.x + get_pixel_length(child.value, 16, "arial.ttf") / 2}" y2="{child.y - 15}" style="stroke:rgb(0,0,0);stroke-width:1" />'
+    latex_tree += f'\\draw ({node.x},{-node.y - 5}) -- ({child.x},{-child.y + 15});\n'
+
+
+def calculate_offset(node):
+    global nodes
+    offset = 0
+    for parent in node.parents:
+        offset += parent.x
+    if offset != 0:
+        offset = offset / len(node.parents)
+    node.x = offset
+    i = 0
+    while i < len(nodes):
+        other = nodes[i]
+        i += 1
+        if other == node and other.value == node.value:
+            break
+        if node.intersects(other):
+            i = 0
+            node.x = 25 + other.x + get_pixel_length(other.value, 16, "arial.ttf")
+            offset = node.x
+    offset += 25 + get_pixel_length(node.value, 16, "arial.ttf")
+    return offset
+
+
 def print_tree(typ="reduced"):
     global tree, output, nodes, latex_tree
     if not nodes:
@@ -1622,25 +1635,7 @@ def print_tree(typ="reduced"):
             if not node.parents:
                 node.x = x_offset
                 continue
-            x_offset = 0
-            for parent in node.parents:
-                x_offset += parent.x
-            if x_offset != 0:
-                x_offset = x_offset / len(node.parents)
-            node.x = x_offset
-            ##
-            i = 0
-            while i < len(nodes):
-                other = nodes[i]
-                i += 1
-                if other == node and other.value == node.value:
-                    break
-                if node.intersects(other):
-                    i = 0
-                    node.x = 25 + other.x + get_pixel_length(other.value, 16, "arial.ttf")
-                    x_offset = node.x
-            ##
-            x_offset += 25 + get_pixel_length(node.value, 16, "arial.ttf")
+            x_offset = calculate_offset(node)
         else:
             node.x = x_offset
             x_offset += 25 + get_pixel_length(node.value, 16, "arial.ttf")
@@ -1657,23 +1652,7 @@ def print_tree(typ="reduced"):
                 if not node.parents:
                     node.x = x
                 else:
-                    x = 0
-                    for parent in node.parents:
-                        x += parent.x
-                    if x != 0:
-                        x = x / len(node.parents)
-                    node.x = x
-                    i = 0
-                    while i < len(nodes):
-                        other = nodes[i]
-                        i += 1
-                        if other == node and other.value == node.value:
-                            break
-                        if node.intersects(other):
-                            i = 0
-                            node.x = 25 + other.x + get_pixel_length(other.value, 16, "arial.ttf")
-                            x = node.x
-                    x += 25 + get_pixel_length(node.value, 16, "arial.ttf")
+                    x = calculate_offset(node)
         if node.x + get_pixel_length(node.value, 16, "arial.ttf") > x_max:
             x_max = node.x + get_pixel_length(node.value, 16, "arial.ttf")
         tree += f'<text x="{node.x}" y="{node.y}">{node.value}</text>'
@@ -1681,9 +1660,7 @@ def print_tree(typ="reduced"):
         for child in node.children:
             if typ == "reduced":
                 break
-            child.value = child.value.replace("not ", "¬ ")
-            tree += f'<line x1="{node.x + get_pixel_length(node.value, 16, "arial.ttf") / 2}" y1="{node.y + 5}" x2="{child.x + get_pixel_length(child.value, 16, "arial.ttf") / 2}" y2="{child.y - 15}" style="stroke:rgb(0,0,0);stroke-width:1" />'
-            latex_tree += f'\\draw ({node.x},{-node.y - 5}) -- ({child.x},{-child.y + 15});\n'
+            handle_child(node, child)
     if typ == "reduced":
         for node in nodes:
             if not check_children(node):
@@ -1691,9 +1668,7 @@ def print_tree(typ="reduced"):
             for child in node.children:
                 if not check_children(child):
                     continue
-                child.value = child.value.replace("not ", "¬ ")
-                tree += f'<line x1="{node.x + get_pixel_length(node.value, 16, "arial.ttf") / 2}" y1="{node.y + 5}" x2="{child.x + get_pixel_length(child.value, 16, "arial.ttf") / 2}" y2="{child.y - 15}" style="stroke:rgb(0,0,0);stroke-width:1" />'
-                latex_tree += f'\\draw ({node.x},{-node.y - 5}) -- ({child.x},{-child.y + 15});\n'
+                handle_child(node, child)
     tree += "</svg>"
     latex_tree += "\\end{tikzpicture}"
     tree = f'<br><svg height="{y_max}" width="{x_max + 25}">' + tree
@@ -1727,7 +1702,8 @@ def recursive_children(node):
 
 
 def get_pixel_length(text, font_size, font_name):
-    font = PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
+    #font = PIL.ImageFont.truetype(font_name, font_size)
+    font=PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
     return font.getlength(text)
 
 
