@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}">
+  <title>Rezolučná metóda</title>
+</head>
+  
+<body>
+<div class="header">
+  <div class="image"> <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"> </div>
+    <a href="{{ url_for('syntaxen')}}"><img class="image2" src="{{ url_for('static', filename='img/eng.png') }}" alt="English"></a> 
+    <a href="{{ url_for('syntax')}}"><img class="image2" src="{{ url_for('static', filename='img/svk.png') }}" alt="Slovak"></a>
+    <div class ="title"> <h1 style="margin-left:-300px;">Systém automatického dokazovania pomocou rezolúcie</h1> </div>
+</div>
+
+<div class="topnav">
+  <ul class="menu">
+    <li style="float: left;"><a href="{{ url_for('index')}}">Domov</a></li>
+    <li style="float:right"><a href="{{ url_for('syntax')}}">Syntax</a></li>
+    <li style="float:right"><a href="{{ url_for('manual')}}">Manuál</a></li>
+	<li style="float:right"><a href="{{ url_for('truth')}}">Pravdivostné tabuľky</a></li>
+  </ul>
+</div>
+    <!-- greek letters-->
+    <table style="flex:0 0 30%; padding-top: 20px; margin-left: auto; margin-right: auto;">
+      <tr> 
+        <th style="width: 150px;"></th>
+        <th style="width: 200px;">Napísané</th>
+        <th style="width: 200px;">Výsledok</th>
+      </tr>
+      <tr>
+        <td rowspan="3"><b>Grécke písmená</b></td>
+        <td style="height: 30px;">alpha beta phi psi</td>
+        <td rowspan="1">α β φ ψ</td>
+      </tr>
+      <tr>
+        <td style="height: 30px;" >Alpha Beta Phi Psi</td>
+        <td rowspan="2"> Α Β Φ Ψ</td>
+      </tr>
+      <tr>
+        <td style="height: 30px;">ALPHA BETA PHI PSI</td>
+      </tr>
+    </table>
+<div class="table-container">
+  <!-- concjuction -->
+  <table style="flex:0 0 30%">
+    <tr> 
+      <th style="width: 150px;">Operácia</th>
+      <th style="width: 150px;">Symboly</th>
+      <th style="width: 500px;">Použitie</th>
+    </tr>
+    <tr>
+      <td rowspan="6"><b>Konjunkcia (AND)</b></td>
+      <td style="border: none;">∧</td>
+      <td rowspan="6">A and B &nbsp; A ∧ B <br> (A and B) &nbsp; (A ∧ B) <br> A and (ψ) &nbsp; A ∧ (ψ) <br> (φ) and B &nbsp; (φ) ∧ B <br> (φ) and (ψ) &nbsp; (φ) ∧ (ψ)</td>
+    </tr>
+    <tr>
+      <td style="border: none;">and</td>
+    </tr>
+    <tr>
+      <td style="border: none;">*</td>
+    </tr>
+    <tr>
+      <td style="border: none; font-family: 'Segoe UI Symbol';">.</td>
+    </tr>
+    <tr>
+      <td style="border: none;">&</td>
+    </tr>
+    <tr>
+      <td style="border: none;">&&</td>
+    </tr>
+  </table>
+  <!-- nand -->
+  <table style="flex:0 0 30%">
+    <tr> 
+      <th style="width: 150px;">Operácia</th>
+      <th style="width: 150px;">Symboly</th>
+      <th style="width: 500px;">Použitie</th>
+    </tr>
+    <tr>
+      <td rowspan="5"><b>Negovaná konjunkcia (NAND)</b></td>
+      <td style="border: none;">⊼</td>
+      <td rowspan="5">A nand B &nbsp; A ⊼ B <br> (A nand B) &nbsp; (A ⊼ B) <br> A nand (ψ) &nbsp; A ⊼ (ψ) <br> (φ) nand B &nbsp; (φ) ⊼ B <br> (φ) nand (ψ) &nbsp; (φ) ⊼ (ψ)</td>
+    </tr>
+    <tr>
+      <td style="border: none;">nand</td>
+    </tr>
+    <tr>
+      <td style="border: none;">↑</td>
+    </tr>
+  </table>
+    <!-- negation -->
+    <table style="flex:0 0 30%">
+    <tr> 
+      <th style="width: 150px;">Operácia</th>
+      <th style="width: 150px;">Symboly</th>
+      <th style="width: 500px;">Použitie</th>
+    </tr>
+    <tr>
+      <td rowspan="6"><b>Negácia</b></td>
+      <td style="border: none;">¬</td>
+      <td rowspan="6">¬A &nbsp; ¬ A &nbsp; ¬ (φ) &nbsp; ¬(φ) <br> not A &nbsp; not(φ) &nbsp; not (φ)</td>
+    </tr>
+    <tr>
+      <td style="border: none;">neg</td>
+    </tr>
+    <tr>
+      <td style="border: none;">not</td>
+    </tr>
+    <tr>
+      <td style="border: none;">~</td>
+    </tr>
+    <tr>
+      <td style="border: none;">!</td>
+    </tr>
+    <tr>
+      <td style="border: none; font-family: 'Segoe UI Symbol';">-</td>
+    </tr>
+    </table>
+    <!-- dicjunction -->
+    <table style="flex:0 0 30%">
+      <tr> 
+        <th style="width: 150px;">Operácia</th>
+        <th style="width: 150px;">Symboly</th>
+        <th style="width: 500px;">Použitie</th>
+      </tr>
+      <tr>
+        <td rowspan="6"><b>Disjunkcia (OR)</b></td>
+        <td style="border: none;">∨</td>
+        <td rowspan="6">A or B &nbsp; A ∨ B <br> (A or B) &nbsp; (A ∨ B) <br> A or (ψ) &nbsp; A ∨ (ψ) <br> (φ) or B &nbsp; (φ) ∨ B <br> (φ) or (ψ) &nbsp; (φ) ∨ (ψ)</td>
+      </tr>
+      <tr>
+        <td style="border: none;">or</td>
+      </tr>
+      <tr>
+        <td style="border: none;">+</td>
+      </tr>
+      <tr>
+        <td style="border: none;">|</td>
+      </tr>
+      <tr>
+        <td style="border: none;">||</td>
+      </tr>
+    </table>
+    <!-- nor -->
+    <table style="flex:0 0 30%">
+      <tr> 
+        <th style="width: 150px;">Operácia</th>
+        <th style="width: 150px;">Symboly</th>
+        <th style="width: 500px;">Použitie</th>
+      </tr>
+      <tr>
+        <td rowspan="5"><b>Negovaná disjunkcia (NOR)</b></td>
+        <td style="border: none;">⊽</td>
+        <td rowspan="5">A nor B &nbsp; A ⊽ B <br> (A nor B) &nbsp; (A ⊽ B) <br> A nor (ψ) &nbsp; A ⊽ (ψ) <br> (φ) nor B &nbsp; (φ) ⊽ B <br> (φ) nor (ψ) &nbsp; (φ) ⊽ (ψ)</td>
+      </tr>
+      <tr>
+        <td style="border: none;">nor</td>
+      </tr>
+      <tr>
+        <td style="border: none;">↓</td>
+      </tr>
+    </table>
+    <!-- implication -->
+    <table style="flex:0 0 30%">
+    <tr> 
+      <th style="width: 150px;">Operácia</th>
+      <th style="width: 150px;">Symboly</th>
+      <th style="width: 500px;">Použitie</th>
+    </tr>
+    <tr>
+      <td rowspan="5"><b>Implikácia (IMPLY)</b></td>
+      <td style="border: none;">⇒</td>
+      <td rowspan="5">A imply B &nbsp; A ⇒ B <br> (A imply B) &nbsp; (A ⇒ B) <br> A imply (ψ) &nbsp; A ⇒ (ψ) <br> (φ) imply B &nbsp; (φ) ⇒ B <br> (φ) imply (ψ) &nbsp; (φ) ⇒ (ψ)</td>
+    </tr>
+    <tr>
+      <td style="border: none;">imply</td>
+    </tr>
+    <tr>
+      <td style="border: none; font-family: 'Segoe UI Symbol';">=></td>
+    </tr>
+    <tr>
+      <td style="border: none; font-family: 'Segoe UI Symbol';">></td>
+    </tr>
+    <tr>
+      <td style="border: none; font-family: 'Segoe UI Symbol';">→</td>
+    </tr>
+    </table>
+    <!-- exclusive disjunctio and negated equivalence -->
+    <table style="flex:0 0 30%">
+      <tr> 
+        <th style="width: 150px;">Operácia</th>
+        <th style="width: 150px;">Symboly</th>
+        <th style="width: 500px;">Použitie</th>
+      </tr>
+      <tr>
+        <td rowspan="4"><b>Vylučovacia disjunkcia (XOR)<br><br> Negovaná ekvivalencia</b></td>
+        <td style="border: none;"> xor&nbsp; ⊻</td>
+        <td rowspan="4">A xor B &nbsp; A ⊕ B <br> (A xor B) &nbsp; (A ⊕ B) <br> A xor (ψ) &nbsp; A ⊕ (ψ) <br> (φ) xor B &nbsp; (φ) ⊕ B <br> (φ) xor (ψ) &nbsp; (φ) ⊕ (ψ)</td>
+      </tr>
+      <tr>
+        <td style="border: none;">eor &nbsp; nequiv</td>
+      </tr>
+      <tr>
+        <td style="border: none;">exor &nbsp; neq</td>
+      </tr>
+      <tr>
+        <td style="border: none; font-family: 'Segoe UI Symbol';"> ⊕ &nbsp; ↮  </td>
+      </tr>
+    </table>
+    <!-- equivalence and xnor -->
+    <table style="flex:0 0 30%">
+      <tr> 
+        <th style="width: 150px;">Operácia</th>
+        <th style="width: 150px;">Symboly</th>
+        <th style="width: 500px;">Použitie</th>
+      </tr>
+      <tr>
+        <td rowspan="6"><b>Ekvivalencia <br><br> Negovaná vylučovacia disjunkcia (XNOR)</b></td>
+        <td style="border: none;">⇔ &nbsp; ⊙</td>
+        <td rowspan="6">A eq B &nbsp; A ⇔ B <br> (A eq B) &nbsp; (A ⇔ B) <br> A eq (ψ) &nbsp; A ⇔ (ψ) <br> (φ) eq B &nbsp; (φ) ⇔ B <br> (φ) eq (ψ) &nbsp; (φ) ⇔ (ψ)</td>
+      </tr>
+      <tr>
+        <td style="border: none;">equiv &nbsp; eq</td>
+      </tr>
+      <tr>
+        <td style="border: none;">xnor &nbsp; iff</td>
+      </tr>
+      <tr>
+        <td style="border: none; font-family: 'Segoe UI Symbol';">↔ &nbsp; <-></td>
+      </tr>
+      <tr>
+        <td style="border: none; font-family: 'Segoe UI Symbol';"><> &nbsp; <=></td>
+      </tr>
+    </table>
+    <!-- nimply -->
+    <table style="flex:0 0 30%">
+    <tr> 
+      <th style="width: 150px;">Operácia</th>
+      <th style="width: 150px;">Symboly</th>
+      <th style="width: 500px;">Použitie</th>
+    </tr>
+    <tr>
+      <td rowspan="5"><b>Negovaná implikácia (NIMPLY)</b></td>
+      <td style="border: none;">nimply<br><br>⇏</td>
+      <td rowspan="5">A nimply B <br> (A nimply B) <br>  A nimply (ψ) <br>  (φ) nimply B <br>  (φ) nimply (ψ)</td>
+    </tr>
+    </table>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

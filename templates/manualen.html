@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}">
+  <title>Resolution method</title>
+</head>
+  
+<body>
+<div class="header">
+  <div class="image"> <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"> </div>
+    <a href="{{ url_for('manualen')}}"><img class="image2" src="{{ url_for('static', filename='img/eng.png') }}" alt="English"></a> 
+    <a href="{{ url_for('manual')}}"><img class="image2" src="{{ url_for('static', filename='img/svk.png') }}" alt="Slovak"></a>
+    <div class ="title"> <h1>ATP using Resolution</h1> </div>
+</div>
+
+
+<div class="topnav">
+  <ul class="menu">
+    <li style="float: left;"><a href="{{ url_for('indexeng')}}">Home</a></li>
+    <li style="float:right"><a href="{{ url_for('syntaxen')}}">Syntax</a></li>
+    <li style="float:right"><a href="{{ url_for('manualen')}}">Manual</a></li>
+	<li style="float:right"><a href="{{ url_for('truthen')}}">Truth tables</a></li>
+  </ul>
+</div>
+<div class="manual">
+<b>Priority of operators:</b>
+<ol>
+  <li>NOT (¬)</li>
+  <li>NAND (↑)</li>
+  <li>NOR (↓)</li>
+  <li>NIMPLY (⇏)</li>
+  <li>XOR (⊕)</li>
+  <li>AND (∧)</li>
+  <li>OR (∨)</li>
+  <li>IMPLY (⇒)</li>
+  <li>EQUIV (⇔)</li>
+</ol>
+
+To evaluate the formula, enter the formula in the box below the "Output" window using the keys below the box, or simply copy the formula from LaTeX. It is also possible to enter formulas manually, all possible accepted forms of operators are listed in the "Syntax" section. The input field checks the syntax.
+<br><br>
+After pressing the "SUBMIT" button, the following data will be written in the output window:
+<ul>
+  <li><b>Input formula:</b> the formula read from the input field.</li>
+  <li><b>Simplified formula:</b> if the formula contains excess parentheses or multiple negations, they will be removed from it.</li>
+  <li><b>Negation of the formula:</b> How to negate a given formula. Operators that are negated in a given step are highlighted in red.</li>
+  <li><b>Negated formula:</b> The result of the negation of the formula</li>
+</ul>
+
+Subsequently, the formula will be converted into Conjunctive Normal Form (CNF). This is done using the following steps:
+<ol>
+  <li><b>Removal of implication and equivalence: highlighted implications/equivalences are rewritten as follows in the next step:</b></li>
+  φ ⇔ ψ ≡ (φ ⇒ ψ) ∧ (ψ ⇒ φ) ≡ (¬φ ∨ ψ) ∧ (¬ψ ∨ φ)<br>
+  φ ⇒ ψ ≡ ¬φ ∨ ψ<br>
+  <br>
+  <li><b>Putting the negation in parentheses and removing the operators</b> ↑, ↓, ⇏, ⊕<b>:</b></li>
+  ¬(φ ∧ ψ) ≡ ¬φ ∨ ¬ψ <br>
+  ¬(φ ∨ ψ) ≡ ¬φ ∧ ¬ψ <br>
+  φ ↑ ψ ≡ ¬(φ ∧ ψ) ≡ ¬φ ∨ ¬ψ <br>
+  φ ↓ ψ ≡ ¬(φ ∨ ψ) ≡ ¬φ ∧ ¬ψ <br>
+  φ ⇏ ψ ≡ ¬(φ ⇒ ψ) ≡ ¬(¬φ ∨ ψ) ≡ φ ∨ ¬ψ <br>
+  φ ⊕ ψ ≡ ¬(φ ⇔ ψ) ≡ ¬((¬φ ∨ ψ) ∧ (¬ψ ∨ φ)) ≡ φ ∧ ¬ψ ∨ ψ ∧ ¬φ <br>
+  <br>
+  <li><b>Inserting disjunctions inside parentheses:</b></li>
+  φ ∨ (ψ ∧ θ) ≡ (φ ∨ ψ) ∧ (φ ∨ θ) <br>
+  (ψ ∧ θ) ∨ φ ≡ (ψ ∨ φ) ∧ (θ ∨ φ) <br>
+  (φ ∧ ψ) ∨ (θ ∧ ω) ≡ (φ ∨ θ) ∧ (φ ∨ ω) ∧ (ψ ∨ θ) ∧ (ψ ∨ ω) <br>
+  <br>
+  <li><b>Simplification by removing clauses with complementary literals, duplicate clauses and duplicate literals:</b></li>
+  ¬φ ∨ φ ≡ ⊤ <br>
+  (φ ∨ ψ) ∧ (ψ ∨ φ) ≡ φ ∨ ψ <br>
+  φ ∨ ψ ∨ φ ≡ φ ∨ ψ <br>
+</ol>
+
+<font color="#FF0000"><b>If any of these steps did not cause any change in the formula, it will not be written in the output window.</b></font>
+<br>
+<ul>
+  <li><b>Negated CNF:</b> Result of transfer to CNF</li>
+  <li><b>Set notation:</b> conversion of CNF to set notation</li>
+  <li><b>Resolution table:</b> This table lists all clauses and resolvents in set notation in the second column. The table shows the resolution procedure used to determine whether a given formula is a tautology. Clauses and resolvents are numbered in the first column of the table. The third column of the table shows which clauses were used to create a given resolvent using resolution.
+  Below the table is written the result of the resolution, i.e. whether the given formula is a tautology or not.
+</li>
+</ul>
+
+Under the input field, it is possible to set the resolution strategy and the method of listing the tree.
+<br><br>
+<b><u>Resolution strategies:</u></b>
+<ul>
+  <li><b>Full</b>- the program will try to combine each clause with each other to achieve a resolution result. However, it prioritizes unit clauses first.</li>
+  <li><b>Unit</b> - the program must use at least one unit clause for each resolution.</li>
+  <li><b>Linear</b> - the program always uses the resolvent of the previous step in the next step.</li>
+</ul>
+
+
+
+
+<b>Reduced Tree</b> - Instead of showing all clauses and resolvers in the tree, it will show only those that led to the result.
+<br>
+<font color="#FF0000"><b>The tree is written after the resolution is completed in the "Resolution tree" window. After clicking with the left button in the "Resolution tree" window, this tree will be copied in the form of LaTeX code as a tikz image, which can be inserted directly into LaTeX.</font></b></div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

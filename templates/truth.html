@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}">
+  <title>Rezolučná metóda</title>
+</head>
+  
+<body>
+<div class="header">
+  <div class="image"> <img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"> </div>
+    <a href="{{ url_for('truthen')}}"><img class="image2" src="{{ url_for('static', filename='img/eng.png') }}" alt="English"></a> 
+    <a href="{{ url_for('truth')}}"><img class="image2" src="{{ url_for('static', filename='img/svk.png') }}" alt="Slovak"></a>
+    <div class ="title"> <h1 style="margin-left:-300px;">Systém automatického dokazovania pomocou rezolúcie</h1> </div>
+</div>
+
+<div class="topnav">
+  <ul class="menu">
+    <li style="float: left;"><a href="{{ url_for('index')}}">Domov</a></li>
+    <li style="float:right"><a href="{{ url_for('syntax')}}">Syntax</a></li>
+    <li style="float:right"><a href="{{ url_for('manual')}}">Manuál</a></li>
+	<li style="float:right"><a href="{{ url_for('truth')}}">Pravdivostné tabuľky</a></li>
+  </ul>
+</div>
+<div class="table-container">
+<!-- not -->
+<table>
+  <tr>
+    <th colspan="2">NOT</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">¬A</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+</tr>
+</table>
+<!-- and -->
+<table>
+  <tr>
+    <th colspan="3">AND</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">B</td>
+    <td class="double-border">A ∧ B</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+<!-- or -->
+<table>
+  <tr>
+    <th colspan="3">OR</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">B</td>
+    <td class="double-border">A ∨ B</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+<!-- imply -->
+<table>
+  <tr>
+    <th colspan="3">IMPLY</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">B</td>
+    <td class="double-border">A ⇒ B</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+</table>
+<!-- equiv/xnor -->
+<table>
+  <tr>
+    <th colspan="3">EQUIV / XNOR</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">B</td>
+    <td class="double-border">A ⇔ B</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+</table>
+<!-- xor -->
+<table>
+  <tr>
+    <th colspan="3">XOR</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">B</td>
+    <td class="double-border">A ⊕ B</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+<!-- nand -->
+<table>
+  <tr>
+    <th colspan="3">NAND</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">B</td>
+    <td class="double-border">A ↑ B</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+  </tr>
+</table>
+<!-- nor -->
+<table>
+  <tr>
+    <th colspan="3">NOR</th>
+  </tr>
+  <tr>
+    <td class="double-border">A</td>
+    <td class="double-border">B</td>
+    <td class="double-border">A ↓ B</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
