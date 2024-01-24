@@ -808,8 +808,8 @@ def resolve(cnf):
                         for psi in unit2:
                             if phi == -1 * psi:
                                 add_node(unit, unit2, "{}")
-                                print_html(
-                                    f"<tr><td>{len(new_cnf) + 1}. </td>" + "<td>{}</td>" + f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td><tr>')
+                                print_html(f"<tr><td>{len(new_cnf) + 1}. </td>" + "<td>{}</td>" +
+                                           f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td><tr>')
                                 return True
         found_unit = False
         found = False
@@ -1380,8 +1380,16 @@ def beautify(text: str) -> str:
     text = text.replace("nor", "↓")
     text = text.replace("nimply", "⇏")
     pattern = r'\b(' + '|'.join(re.escape(name) for name in greek_letters.keys()) + r')\b'
-    text = re.sub(pattern, lambda x: greek_letters[x.group()], text, flags=re.IGNORECASE)
+    text = re.sub(pattern, replace_function, text, flags=re.IGNORECASE)
     return text
+
+
+def replace_function(match):
+    key = match.group()
+    if key[0].islower():
+        return greek_letters[key.lower()]
+    else:
+        return greek_letters[key.upper()]
 
 
 def set2str(s):
@@ -1709,12 +1717,6 @@ def recursive_children(node):
     return children
 
 
-def get_pixel_length(text, font_size, font_name):
-    font = PIL.ImageFont.truetype(font_name, font_size)
-    #font=PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
-    return font.getlength(text)
-
-
 def svg2latex(text):
     if text == "{}":
         return "{$\\square$}"
@@ -1726,6 +1728,12 @@ def svg2latex(text):
     for key, letter in greek_letters.items():
         out = out.replace(letter, f"\\{key}")
     return out
+
+
+def get_pixel_length(text, font_size, font_name):
+    #font = PIL.ImageFont.truetype(font_name, font_size)
+    font=PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
+    return font.getlength(text)
 
 
 operator_dic = {}
