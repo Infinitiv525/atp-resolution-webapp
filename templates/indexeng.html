@@ -105,11 +105,20 @@
   </div>
 
   <div class="column2">
+    <div class="prepinanie">
+      <input type="radio" name="option" value="Tree">
+        <label for="option1">Resolution tree</label>
+      <input type="radio" name="option" value="Table">
+        <label for="option2">Resolution table</label>
+      </div>
     <h2 style="text-align: center;">Resolution Tree</h2>
     <div class="output-container">
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
 		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
     </div>
+    <br>
+    <button id="copy-button" type="submit">Copy Tree</button>
+    <button id="copy-button" type="submit">Copy Table</button>
   </div>
     <script src="{{ url_for('static', filename='js/scripteng.js') }}"></script>
 </body>
