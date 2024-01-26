@@ -3,13 +3,17 @@
 }
 .image {
   float: left;
+  margin-top: 15px;
+  margin-left: 10px;
   width: 45%;
-  height: 50px;
+  height: 40px;
   display: flex;
 }
 .image2 {
   float: right;
-  height: 50px;
+  margin-top: 15px;
+  margin-right: 10px;
+  height: 40px;
   display: flex;
 }
 .title{
@@ -19,13 +23,10 @@ body{
   margin: 0;
   background-color: antiquewhite;
 }
-
 .header{
   background-color: #f1f1f1;
-  padding: 20px;
   text-align: center;
 }
-
 .menu{
   list-style-type: none;
   margin: 0;
@@ -33,11 +34,9 @@ body{
   overflow: hidden;
   background-color: #333;
 }
-
 li:last-child {
   border-right: none;
 }
-
 li a {
   display: block;
   color: white;
@@ -45,23 +44,19 @@ li a {
   padding: 14px 16px;
   text-decoration: none;
 }
-
 li a:hover:not(.active) {
   background-color: #111;
 }
-
 .column{
   float: left;
   width: 49%;
   padding: 15px;
 }
-
 .column2{
   float: right;
   width: 49%;
   padding: 15px;
 }
-
 @media screen and (max-width:600px) {
   .column{
     width: 100%;
@@ -87,32 +82,34 @@ input[type="radio"] {
   align-items: center;
   justify-content: center;
 }
-
 .button img {
   max-width: 25px;
   max-height: 25px;
 }
-
 .container {
   max-width: 600px;
   margin: 0 auto;
   padding: 10px;
 }
-
 .input-container {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
-
 input[type="text"] {
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
   width: 450px;
 }
-
 #submit-button{
+  padding: 10px 20px;
+  background-color: blue;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+#copy-button{
   padding: 10px 20px;
   background-color: blue;
   color: #fff;
@@ -126,20 +123,20 @@ button {
   border: none;
   cursor: pointer;
 }
-
 .button:hover {
   background-color: rgb(180, 172, 172);
   cursor: pointer;
 }
-
 .button:active {
   background-color: rgb(150, 142, 142);
 }
-
 .hidden {
   display: none;
 }
-
+.prepinanie{
+  float: left;
+  margin-top: 20px;
+}
 .topnav{
   overflow: hidden;
   background-color: #333;
@@ -156,7 +153,6 @@ button {
     overflow: auto;
     background-color: white;
 }
-
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
@@ -167,7 +163,6 @@ th{
   text-align: center;
   width: 25px;
 }
-
 td{
   width: 20px;
   text-align: center;
@@ -176,27 +171,21 @@ td{
   display: flex;
   flex-wrap: wrap;
 }
-
 table {
   margin: 30px;
   flex: 0 0 20%; 
   margin-right: 10px; 
 }
-
 table:last-child {
   margin-right: 0;
 }
-
-td:nth-child(2),
-th:nth-child(2) {
+td:nth-child(2), th:nth-child(2) {
   white-space: nowrap;
 }
-
 .double-border {
   border-bottom: 5px double #000;
   font-weight: bold;
 }
-
 .error-message {
   display: none;
   position: absolute;
