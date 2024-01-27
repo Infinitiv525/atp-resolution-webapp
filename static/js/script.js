@@ -9,18 +9,6 @@ const errorMessage = document.getElementById('errorMessage');
 // Pridáme premennú na sledovanie stavu správy
 let isSyntaxVisible = false;
 
-/* syntaxButton.addEventListener("click", function () {
-    syntaxContent.style.display = "block";
-    closeSyntaxButton.style.display = "block";
-});
-
-  closeSyntaxButton.addEventListener("click", function () {
-    syntaxContent.style.display = "none";
-    closeSyntaxButton.style.display = "none";
-}); */
-
-
-
  function tokenize(formula) {
     let tokens = [];
     let token = "";
@@ -179,27 +167,7 @@ function findVars(formula) {
 		inputField.style.borderRadius = '5px'; // Make the outline rounded
     }
   }
- /*
-  const fs = require('fs');
-  let operator_dic = {};
 
-// Read operators.dic file
-fs.readFile('operators.dic', 'utf-8', (err, data) => {
-    if (err) {
-        console.error('Error reading operators.dic:', err);
-        return;
-    }
-    const lines = data.split('\n');
-    lines.forEach((line) => {
-        if (line !== '') {
-            const arr = line.trim().split(':');
-            operator_dic[arr[0]] = arr[1].split(', ').map(item => item.trim());
-        }
-	});
-});
-
-let operators = Object.keys(operator_dic);
-*/
 const operator_dic = {
     "not": ["!", "¬", "neg", "-", "~", "NOT", "Not"],
     "nand": ["↑", "⊼", "NAND", "Nand"],
@@ -243,6 +211,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function changeFontSize() {
+    var selectElement = document.getElementById("fontSizeSelect");
+    var selectedValue = selectElement.options[selectElement.selectedIndex].text;
+    
+    // Nastavenie veľkosti písma podľa vybranej hodnoty
+    document.getElementById("output-text").style.fontSize = selectedValue;
+}
 // Save form values to local storage on change
 document.getElementById('inp-form').addEventListener('change', function() {
     localStorage.setItem('textInputValue', document.getElementById('text-input').value);
@@ -292,8 +267,28 @@ document.getElementById('inp-form').addEventListener('change', function() {
     }
     this.submit();
   });
-
-
+  //toto tu je vraj na prepínanie tlačidla pre strom alebo tabuľku ale nefunguje :D :D
+  function toggleOptions() {
+    var switchButton = document.getElementById('switch-button');
+    var optionsContainer = document.getElementById('options-container');
+    var resolutionTree = document.getElementById('resolution-tree');
+    var resolutionTable = document.getElementById('resolution-table');
+    var outputTextarea = document.getElementById('latex-tree');
+  
+    // Zmena textu tlačidla
+    switchButton.textContent = (switchButton.textContent === 'Resolution Table') ? 'Resolution Tree' : 'Resolution Table';
+  
+    // Skrytie/ukázanie možností
+    optionsContainer.style.display = (optionsContainer.style.display === 'none') ? 'block' : 'none';
+  
+    // Skrytie/ukázanie obsahu podľa zvolenej možnosti
+    resolutionTree.classList.toggle('active');
+    resolutionTable.classList.toggle('active');
+  
+    // Aktualizácia obsahu textarea podľa aktívneho tlačidla
+    outputTextarea.value = (switchButton.textContent === 'Resolution Table') ? '{{ latex_table | safe }}' : '{{ latex_tree | safe }}';
+  }
+  
 // Add a click event listener to the button grid
 buttonGrid.addEventListener('click', (e) => {
   const symbol = e.target.getAttribute('data-symbol'); // Get the symbol from the button's data attribute

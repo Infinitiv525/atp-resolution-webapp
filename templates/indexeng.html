@@ -27,6 +27,14 @@
 </div>
 <div>
   <div class="column">
+    <select id="fontSizeSelect" style="font-size: 20px; float: right; margin-top: 30px;" onchange="changeFontSize()">
+      <option selected>16px</option>
+      <option>18px</option>
+      <option>24px</option>
+      <option>32px</option>
+      <option>48px</option>
+    </select>
+    <p style="float: right; margin-top: 30px; font-size: 18px;"><b>Font size: </b>&nbsp;&nbsp;</p>
     <h2 style="text-align: center;">Output</h2>
 
     <div class="output-container">
@@ -105,13 +113,20 @@
   </div>
 
   <div class="column2">
+    <!-- prepinanie je práve to tlačidko ktoré vraj bude robiť prepínanie či tabuľka alebo strom, ale nefunguje, je to len v anglickej verzii
+    slovenska verzia ešte to neobsahuje -->
     <div class="prepinanie">
-      <input type="radio" name="option" value="Tree">
-        <label for="option1">Resolution tree</label>
-      <input type="radio" name="option" value="Table">
-        <label for="option2">Resolution table</label>
+      <button id="switch-button" onclick="toggleOptions()">Resolution Table</button>
+      <div id="options-container">
+        <!-- Obsah pre "Resolution Tree" -->
+        <div id="resolution-tree" class="option-content">
+        </div>
+        <!-- Obsah pre "Resolution Table" -->
+        <div id="resolution-table" class="option-content">
+        </div>
       </div>
-    <h2 style="text-align: center;">Resolution Tree</h2>
+    </div>
+    <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
     <div class="output-container">
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
 		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>

@@ -133,9 +133,16 @@ button {
 .hidden {
   display: none;
 }
+#switch-button{
+  padding: 10px 20px;
+  background-color: blue;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
 .prepinanie{
   float: left;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 .topnav{
   overflow: hidden;
