@@ -9,7 +9,7 @@ const errorMessage = document.getElementById('errorMessage');
 // Pridáme premennú na sledovanie stavu správy
 let isSyntaxVisible = false;
 
- function tokenize(formula) {
+function tokenize(formula) {
     let tokens = [];
     let token = "";
     let i = 0;
@@ -72,7 +72,6 @@ let isSyntaxVisible = false;
     }
     return tokens;
 }
-
 function findVars(formula) {
     let vars = [];
 
@@ -81,12 +80,10 @@ function findVars(formula) {
             vars.push(elm);
         }
     }
-
     return vars.sort();
 }
-
    // Function to perform syntax check
-  function checkSyntax(input) {
+function checkSyntax(input) {
 	let tokens=tokenize(input);
 	let vars=findVars(tokens);
     if (tokens.filter(token => token === '(').length !== tokens.filter(token => token === ')').length) {
@@ -96,24 +93,19 @@ function findVars(formula) {
 			return 2;
 		}
     }
-
     for (let i = 0; i < tokens.length - 1; i++) {
         let token = tokens[i];
         let next = tokens[i + 1];
-
         if (vars.includes(token) && (vars.includes(next) || next === '(')) {
             return 3;
         }
-
         if (operators.includes(token) && (operators.includes(next) && next !== 'not')) {
             return 4;
         }
-
         if (token === '(') {
             if ((operators.includes(next) && next !== 'not') || next === ')') {
                 return 5;
             }
-
             let j = i+1;
 			let brackets = 0;
             while (j <= tokens.length) {
@@ -129,12 +121,10 @@ function findVars(formula) {
 				}
                 j++;
             }
-
             if (j === tokens.length + 1) {
                 return 6;
             }
         }
-
         if (token === ')' && (next === 'not' || vars.includes(next) || next === '(')) {
             return 7;
         }
@@ -148,13 +138,11 @@ function findVars(formula) {
 		}
 	}
     return 0;
-  }
-
-  function handleInput() {
+}
+function handleInput() {
     var userInput = inputField.value;
     var isValidSyntax = checkSyntax(userInput);
 	errorMessage.style.display = 'none';
-
     // Loop through all elements with the class 'double-border'
     if (isValidSyntax===0) {
 		inputField.style.borderColor = '';
@@ -166,8 +154,7 @@ function findVars(formula) {
 		inputField.style.outline = '1px solid red';
 		inputField.style.borderRadius = '5px'; // Make the outline rounded
     }
-  }
-
+}
 const operator_dic = {
     "not": ["!", "¬", "neg", "-", "~", "NOT", "Not"],
     "nand": ["↑", "⊼", "NAND", "Nand"],
@@ -191,7 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedTextValue) {
         textInput.value = savedTextValue;
     }
-
     const radioInputs = document.querySelectorAll('input[type="radio"]');
     const savedRadioValue = localStorage.getItem('selectedRadio');
     if (savedRadioValue) {
@@ -203,7 +189,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }else{
 		document.getElementById('option1').checked=true;
 	}
-
     const checkbox = document.getElementById('reduced');
     const savedCheckboxValue = localStorage.getItem('checkboxValue');
     if (savedCheckboxValue === 'true') {
@@ -215,10 +200,9 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", function() {
     // Spustiť toggleOptions s predvoleným tlačidlom
     toggleOptions();
-  });
-  
+});
   // Funkcia na prepínanie možností
-  function toggleOptions() {
+function toggleOptions() {
     // Získať tlačidlo a obsah
     var button = document.getElementById("switch-button");
     var treeContent = document.getElementById("resolution-tree");
@@ -240,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // Zmeniť text tlačidla na "Resolution Table"
       button.innerText = "Rezolučná tabuľka";
     }
-  }
+}
   
 //zmena velkosti pisma
 function changeFontSize() {
@@ -254,41 +238,35 @@ function changeFontSize() {
 // Save form values to local storage on change
 document.getElementById('inp-form').addEventListener('change', function() {
     localStorage.setItem('textInputValue', document.getElementById('text-input').value);
-
     const selectedRadio = document.querySelector('input[name="option"]:checked');
     if (selectedRadio) {
         localStorage.setItem('selectedRadio', selectedRadio.value);
     }
-
     localStorage.setItem('checkboxValue', document.getElementById('reduced').checked);
 });
 
-        function copyToClipboard() {
-            var copyText = document.getElementById("latex-tree");
-                if (navigator.clipboard) {
-                    copyText.select();
-                    navigator.clipboard.writeText(copyText.value)
-                        .then(function() {
-                            console.log('Text successfully copied to clipboard');
-                        })
-                        .catch(function(err) {
-                            console.error('Unable to copy text to clipboard', err);
-                        });
-                } else {
-                    var tempTextArea = document.createElement('textarea');
-                    tempTextArea.value = copyText.value;
-
-                    document.body.appendChild(tempTextArea);
-
-                    tempTextArea.select();
-                    document.execCommand('copy');
-
-                    document.body.removeChild(tempTextArea);
-                }
+function copyToClipboard() {
+    var copyText = document.getElementById("latex-tree");
+        if (navigator.clipboard) {
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value)
+                .then(function() {
+                    console.log('Text successfully copied to clipboard');
+                })
+                .catch(function(err) {
+                    console.error('Unable to copy text to clipboard', err);
+                });
+        } else {
+            var tempTextArea = document.createElement('textarea');
+            tempTextArea.value = copyText.value;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
         }
+}
 
-
-  document.getElementById('inp-form').addEventListener('submit', function(event) {
+document.getElementById('inp-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevents the form from submitting by default
 
     var userInput = inputField.value;
@@ -299,7 +277,7 @@ document.getElementById('inp-form').addEventListener('change', function() {
       return false; // Prevents form submission
     }
     this.submit();
-  });
+});
   
 // Add a click event listener to the button grid
 buttonGrid.addEventListener('click', (e) => {
@@ -356,6 +334,5 @@ inputField.addEventListener('blur', function() {
 				break;
 		}
 		errorMessage.textContent = error;
-
 	}
 });
