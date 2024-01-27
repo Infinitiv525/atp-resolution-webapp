@@ -129,6 +129,7 @@
     <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
     <div class="output-container">
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
+        <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ table | safe }}</div>
 		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
     </div>
     <br>

@@ -1177,7 +1177,7 @@ def full_cnf(formula):
 
 
 def resolution(inp, res_type, reduced):
-    global var, output
+    global var, output, table
     tokens = tokenize(inp)
     first_formula = ""
     print_html(lang.INPUT_FORMULA, end=" ")
@@ -1233,6 +1233,7 @@ def resolution(inp, res_type, reduced):
         print_html("}")
     print_html("}\n\n")
     print_html(lang.RES_TABLE)
+    table_start = len(output)
     print_html("<table>")
     print_html(f'<tr><th>#</th><th>{lang.CLAUSE}</th><th>{lang.CONNECTED}</th></tr>')
     for i in range(len(negated_resolution)):
@@ -1250,6 +1251,7 @@ def resolution(inp, res_type, reduced):
         result = resolve_linear(negated_resolution)
     if not result:
         print_html("</table>")
+        table = output[table_start:]
         print_html(f"{lang.NOT_TAUTOLOGY}\n")
         if reduced:
             print_tree()
@@ -1257,6 +1259,7 @@ def resolution(inp, res_type, reduced):
             print_tree("normal")
     else:
         print_html("</table>")
+        table = output[table_start:]
         print_html(f"{lang.TAUTOLOGY}\n")
         if reduced:
             print_tree()
@@ -1266,11 +1269,12 @@ def resolution(inp, res_type, reduced):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global output, tree, nodes, lang, latex_tree
+    global output, tree, nodes, lang, latex_tree, table
     lang = importlib.import_module('langs.slovak')
     output = "<br>"
     tree = ""
     latex_tree = ""
+    table = ""
     if request.method == "POST":
         inp = request.form["inp"]
         res_type = request.form["option"]
@@ -1281,22 +1285,25 @@ def index():
             reduced = False
         tree = ""
         latex_tree = ""
+        table = ""
         nodes = []
         resolution(inp, res_type, reduced)
         output = beautify(output)
         tree = beautify(tree)
-        return render_template("index.html", output=output, tree=tree, latex_tree=latex_tree)
+        table = beautify(table)
+        return render_template("index.html", output=output, tree=tree, latex_tree=latex_tree, table=table)
     else:
         return render_template("index.html")
 
 
 @app.route('/indexeng', methods=['GET', 'POST'])
 def indexeng():
-    global output, tree, nodes, lang, latex_tree
+    global output, tree, nodes, lang, latex_tree, table
     lang = importlib.import_module('langs.english')
     output = "<br>"
     tree = ""
     latex_tree = ""
+    table = ""
     if request.method == "POST":
         inp = request.form["inp"]
         res_type = request.form["option"]
@@ -1307,11 +1314,13 @@ def indexeng():
             reduced = False
         tree = ""
         latex_tree = ""
+        table = ""
         nodes = []
         resolution(inp, res_type, reduced)
         output = beautify(output)
         tree = beautify(tree)
-        return render_template("indexeng.html", output=output, tree=tree, latex_tree=latex_tree)
+        table = beautify(table)
+        return render_template("indexeng.html", output=output, tree=tree, latex_tree=latex_tree, table=table)
     else:
         return render_template("indexeng.html")
 
@@ -1754,6 +1763,7 @@ operators = list(operator_dic.keys())
 output = ""
 tree = ""
 latex_tree = ""
+table = ""
 nodes = []
 var = []
 lang = importlib.import_module('langs.slovak')
