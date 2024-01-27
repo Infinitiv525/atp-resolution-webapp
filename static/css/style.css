@@ -140,10 +140,6 @@ button {
   border: none;
   cursor: pointer;
 }
-.prepinanie{
-  float: left;
-  margin-top: 30px;
-}
 .topnav{
   overflow: hidden;
   background-color: #333;

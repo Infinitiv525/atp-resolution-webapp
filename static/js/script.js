@@ -210,7 +210,39 @@ document.addEventListener('DOMContentLoaded', function() {
         checkbox.checked = true;
     }
 });
-
+//prepínanie strom a tabulka
+// Funkcia na inicializáciu stránky
+document.addEventListener("DOMContentLoaded", function() {
+    // Spustiť toggleOptions s predvoleným tlačidlom
+    toggleOptions();
+  });
+  
+  // Funkcia na prepínanie možností
+  function toggleOptions() {
+    // Získať tlačidlo a obsah
+    var button = document.getElementById("switch-button");
+    var treeContent = document.getElementById("resolution-tree");
+    var tableContent = document.getElementById("resolution-table");
+  
+    // Ak je zobrazený obsah pre "Resolution Tree"
+    if (treeContent.style.display !== "none") {
+      // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
+      treeContent.style.display = "none";
+      tableContent.style.display = "block";
+  
+      // Zmeniť text tlačidla na "Resolution Tree"
+      button.innerText = "Resolution Tree";
+    } else {
+      // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
+      treeContent.style.display = "block";
+      tableContent.style.display = "none";
+  
+      // Zmeniť text tlačidla na "Resolution Table"
+      button.innerText = "Resolution Table";
+    }
+  }
+  
+//zmena velkosti pisma
 function changeFontSize() {
     var selectElement = document.getElementById("fontSizeSelect");
     var selectedValue = selectElement.options[selectElement.selectedIndex].text;
@@ -267,27 +299,6 @@ document.getElementById('inp-form').addEventListener('change', function() {
     }
     this.submit();
   });
-  //toto tu je vraj na prepínanie tlačidla pre strom alebo tabuľku ale nefunguje :D :D
-  function toggleOptions() {
-    var switchButton = document.getElementById('switch-button');
-    var optionsContainer = document.getElementById('options-container');
-    var resolutionTree = document.getElementById('resolution-tree');
-    var resolutionTable = document.getElementById('resolution-table');
-    var outputTextarea = document.getElementById('latex-tree');
-  
-    // Zmena textu tlačidla
-    switchButton.textContent = (switchButton.textContent === 'Resolution Table') ? 'Resolution Tree' : 'Resolution Table';
-  
-    // Skrytie/ukázanie možností
-    optionsContainer.style.display = (optionsContainer.style.display === 'none') ? 'block' : 'none';
-  
-    // Skrytie/ukázanie obsahu podľa zvolenej možnosti
-    resolutionTree.classList.toggle('active');
-    resolutionTable.classList.toggle('active');
-  
-    // Aktualizácia obsahu textarea podľa aktívneho tlačidla
-    outputTextarea.value = (switchButton.textContent === 'Resolution Table') ? '{{ latex_table | safe }}' : '{{ latex_tree | safe }}';
-  }
   
 // Add a click event listener to the button grid
 buttonGrid.addEventListener('click', (e) => {

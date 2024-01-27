@@ -113,20 +113,35 @@
         </div>
         </div>
   </div>
-
   <div class="column2">
-    <div class="prepinanie">
-      <!-- <button type="submit">Strom/Tabuľka</button>  -->
+    <button id="switch-button" style="float: left; margin-top: 20px;" onclick="toggleOptions()">Resolution Tree</button>
+    <div id="options-container">
+      <!-- Obsah pre "Resolution Tree" -->
+      <div id="resolution-tree">
+          <h2 style="text-align: center;">Resolution Tree</h2>
+          <div class="output-container">
+              <div id="output-text-tree" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
+              <textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
+          </div>
+      </div>
+      <!-- Obsah pre "Resolution Table" -->
+      <div id="resolution-table" style="display: none;">
+          <h2 style="text-align: center;">Resolution Table</h2>
+          <div class="output-container" >
+              <div id="output-text-table" class="editable-text"  onclick="copyToClipboard()">{{ table | safe }}</div>
+              <textarea id="latex-table" style="display:none;">{{ latex_table | safe }}</textarea>
+          </div>
+      </div>
     </div>
-    <h2 style="text-align: center;">Rezolučný strom / Rezolučná tabuľka</h2>
+    <!-- <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
     <div class="output-container">
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ table | safe }}</div>
 		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
-    </div>
+    </div> -->
     <br>
-    <button id="copy-button" type="submit" onclick="copyToClipboard()">Kopírovať Strom</button>
-    <button id="copy-button" type="submit">Kopírovať Tabuľku</button>
+    <button id="copy-button" type="submit">Copy Tree</button>
+    <button id="copy-button" type="submit">Copy Table</button>
   </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
