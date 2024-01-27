@@ -44,7 +44,7 @@ Pre vyhodnotenie formuly zadajte formulu do rámčeku pod oknom "Výstup" pomoco
 Po stlačení tlačidla "POTVRĎ" sa do okna výstup vypíšu nasledovné údaje:
 <ul>
   <li><b>Zadaná formula:</b> formula načítaná zo vstupného poľa.</li>
-  <li><b>Zjednodušená formula:</b> ak formula obsahuje prebitočné zátvorky alebo viacnásobné negácie, budú z nej odstránené.</li>
+  <li><b>Zjednodušená formula:</b> ak formula obsahuje prebytočné zátvorky alebo viacnásobné negácie, budú z nej odstránené.</li>
   <li><b>Negácia formuly:</b> Postup, ako negovať danú formulu. Operátory, ktoré sú v danom kroku negované sú zvýraznené červenou farbou.</li>
   <li><b>Negovaná formula:</b> Výsledok negácie formuly</li>
 </ul>
@@ -60,7 +60,7 @@ Následne bude formula prevedená do Konjunktívnej Normálnej Formy (KNF). To s
 ¬(φ ∨ ψ)  ≡  ¬φ ∧ ¬ψ <br>
 φ ↑ ψ  ≡  ¬(φ ∧ ψ)  ≡  ¬φ ∨ ¬ψ <br>
 φ ↓ ψ  ≡  ¬(φ ∨ ψ)  ≡  ¬φ ∧ ¬ψ <br>
-φ ⇏ ψ  ≡  ¬(φ ⇒ ψ) ≡ ¬(¬φ ∨ ψ) ≡ φ ∨ ¬ψ <br>
+φ ⇏ ψ  ≡  ¬(φ ⇒ ψ) ≡ ¬(¬φ ∨ ψ) ≡ φ ∧ ¬ψ <br>
 φ ⊕ ψ  ≡  ¬(φ ⇔ ψ) ≡ ¬((¬φ ∨ ψ) ∧ (¬ψ ∨ φ)) ≡ φ ∧ ¬ψ ∨ ψ ∧ ¬φ<br>
 <br>
 <li><b>Vloženie disjunkcií do vnútra zátvoriek:</b></li>
