@@ -279,19 +279,17 @@ document.addEventListener("DOMContentLoaded", function() {
   
     // Ak je zobrazený obsah pre "Resolution Tree"
     if (treeContent.style.display !== "none") {
-      // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
-      treeContent.style.display = "none";
-      tableContent.style.display = "block";
-  
-      // Zmeniť text tlačidla na "Resolution Tree"
-      button.innerText = "Resolution Tree";
+        // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
+        treeContent.style.display = "none";
+        tableContent.style.display = "block";
+        // Zmeniť text tlačidla na "Resolution Table"
+        button.innerText = "Resolution Tree";
     } else {
-      // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
-      treeContent.style.display = "block";
-      tableContent.style.display = "none";
-  
-      // Zmeniť text tlačidla na "Resolution Table"
-      button.innerText = "Resolution Table";
+        // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
+        treeContent.style.display = "block";
+        tableContent.style.display = "none";
+        // Zmeniť text tlačidla na "Resolution Tree"
+        button.innerText = "Resolution Table";
     }
   }
   
