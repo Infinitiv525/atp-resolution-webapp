@@ -104,14 +104,14 @@ input[type="text"] {
 }
 #submit-button{
   padding: 10px 20px;
-  background-color: blue;
+  background-color: rgb(233, 145, 14);
   color: #fff;
   border: none;
   cursor: pointer;
 }
 #copy-button{
   padding: 10px 20px;
-  background-color: blue;
+  background-color: rgb(233, 145, 14);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -135,7 +135,7 @@ button {
 }
 #switch-button{
   padding: 10px 20px;
-  background-color: blue;
+  background-color: rgb(233, 145, 14);
   color: #fff;
   border: none;
   cursor: pointer;
