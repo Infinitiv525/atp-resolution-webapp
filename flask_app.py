@@ -1459,7 +1459,7 @@ def print_formula(formula, q=None, color=False, cnf=False):
                     if elm == q[0]:
                         first = True
         if red:
-            addition += print_html(' <font color="#FF0000"> ' + print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf),formula[1],
+            addition += print_html(' <font color="#FF0000"> ' + print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf), formula[1],
                                    print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf) + " </font> ")
         else:
             addition += print_html(print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf), operator,
@@ -1732,7 +1732,7 @@ def svg2latex(text):
 
 def get_pixel_length(text, font_size, font_name):
     #font = PIL.ImageFont.truetype(font_name, font_size)
-    font=PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
+    font = PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
     return font.getlength(text)
 
 
@@ -1759,4 +1759,4 @@ var = []
 lang = importlib.import_module('langs.slovak')
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=8000,debug=True)
+    app.run(host='127.0.0.1', port=8000, debug=True)
