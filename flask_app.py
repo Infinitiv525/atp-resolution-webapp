@@ -826,7 +826,7 @@ def resolve(cnf):
                             continue
                         add_node(unit, mult, set2str(new))
                         print_html(f"<tr><td>{len(new_cnf) + 1}. </td>", end="<td>{")
-                        print_set(new, table=True)
+                        print_set(new)
                         print_html("}</td>")
                         print_html(
                             f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(mult) + 1})</td></tr>')
@@ -872,7 +872,7 @@ def resolve(cnf):
                                 continue
                             add_node(A, B, set2str(new))
                             print_html(f"<tr><td>{len(new_cnf) + 1}. </td>", end="<td>{")
-                            print_set(new, table=True)
+                            print_set(new)
                             print_html("}</td>")
                             print_html(
                                 f' <td style="white-space:nowrap">({new_cnf.index(A) + 1})({new_cnf.index(B) + 1})</td></tr>')
@@ -947,7 +947,7 @@ def resolve_unit(cnf):
                             continue
                         add_node(unit, mult, set2str(new))
                         print_html(f"<tr><td>{len(new_cnf) + 1}. </td>", end="<td>{")
-                        print_set(new, table=True)
+                        print_set(new)
                         print_html("}</td>")
                         print_html(
                             f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(mult) + 1})</td></tr>')
@@ -1034,7 +1034,7 @@ def resolve_linear(cnf):
                                 continue
                             add_node(unit, mult, set2str(new))
                             print_html(f"<tr><td>{len(new_cnf) + 1}. </td>", end="<td>{")
-                            print_set(new, table=True)
+                            print_set(new)
                             print_html("}</td>")
                             print_html(
                                 f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(mult) + 1})</td></tr>')
@@ -1084,7 +1084,7 @@ def resolve_linear(cnf):
                                     continue
                                 add_node(A, B, set2str(new))
                                 print_html(f"<tr><td>{len(new_cnf) + 1}. </td>", end="<td>{")
-                                print_set(new, table=True)
+                                print_set(new)
                                 print_html("}</td>")
                                 print_html(
                                     f' <td style="white-space:nowrap">({new_cnf.index(A) + 1})({new_cnf.index(B) + 1})</td></tr>')
@@ -1131,7 +1131,7 @@ def resolve_linear(cnf):
                             helper = add_node(result, None, set2str(A))
                             add_node(result, helper, set2str(new))
                             print_html(f"<tr><td>{len(new_cnf) + 1}. </td>", end="<td>{")
-                            print_set(new, table=True)
+                            print_set(new)
                             print_html("}</td>")
                             print_html(
                                 f' <td style="white-space:nowrap">({new_cnf.index(A) + 1})({new_cnf.index(result) + 1})</td></tr>')
@@ -1240,7 +1240,7 @@ def resolution(inp, res_type, reduced):
         s = negated_resolution[i]
         print_html("<tr>")
         print_html(f"<td>{i + 1}. </td>", end="<td>{")
-        print_set(s, table=True)
+        print_set(s)
         print_html("}</td><td></td>")
         print_html("</tr>")
     if res_type == "Full":
@@ -1412,7 +1412,7 @@ def set2str(s):
     return string[:-1] + "}"
 
 
-def print_set(s, table=False):
+def print_set(s):
     global output
     count = 0
     lists = list(s)
@@ -1420,12 +1420,12 @@ def print_set(s, table=False):
     for elm in lists:
         print_html(*f'{"not " * (elm < 0)}{var[abs(elm) - 1]},', sep="", end="")
         count += 1
-        if count % 2 == 0 and table:
-            print_html("<br>", sep="", end="")
-    if count % 2 == 0 and table:
-        output = output[:-5]
-    else:
-        output = output[:-1]
+        #if count % 2 == 0 and table:
+            #print_html("<br>", sep="", end="")
+    #if count % 2 == 0 and table:
+        #output = output[:-5]
+    #else:
+    output = output[:-1]
 
 
 def handle_queue(q, formula):
