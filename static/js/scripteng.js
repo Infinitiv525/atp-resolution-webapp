@@ -298,6 +298,8 @@ function changeFontSize() {
     var selectElement = document.getElementById("fontSizeSelect");
     var selectedValue = selectElement.options[selectElement.selectedIndex].text;
     document.getElementById("output-text").style.fontSize = selectedValue;
+    
+    document.getElementById("text-input").style.fontSize = selectedValue;
 }
 // Add a click event listener to the button grid
 buttonGrid.addEventListener('click', (e) => {

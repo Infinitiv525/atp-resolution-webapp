@@ -249,6 +249,7 @@ function changeFontSize() {
     
     // Nastavenie veľkosti písma podľa vybranej hodnoty
     document.getElementById("output-text").style.fontSize = selectedValue;
+    document.getElementById("text-input").style.fontSize = selectedValue;
 }
 // Save form values to local storage on change
 document.getElementById('inp-form').addEventListener('change', function() {
