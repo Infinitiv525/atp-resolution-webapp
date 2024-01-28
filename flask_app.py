@@ -1232,7 +1232,7 @@ def resolution(inp, res_type, reduced):
         print_set(s)
         print_html("}")
     print_html("}\n\n")
-    print_html(lang.RES_TABLE)
+    #print_html(lang.RES_TABLE)
     table_start = len(output)
     print_html("<table>")
     print_html(f'<tr><th>#</th><th>{lang.CLAUSE}</th><th>{lang.CONNECTED}</th></tr>')
@@ -1252,6 +1252,7 @@ def resolution(inp, res_type, reduced):
     if not result:
         print_html("</table>")
         table = output[table_start:]
+        output = output[:table_start]
         print_html(f"{lang.NOT_TAUTOLOGY}\n")
         if reduced:
             print_tree()
@@ -1260,21 +1261,24 @@ def resolution(inp, res_type, reduced):
     else:
         print_html("</table>")
         table = output[table_start:]
+        output = output[:table_start]
         print_html(f"{lang.TAUTOLOGY}\n")
         if reduced:
             print_tree()
         else:
             print_tree("normal")
+    table2latex(table)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global output, tree, nodes, lang, latex_tree, table
+    global output, tree, nodes, lang, latex_tree, table, latex_table
     lang = importlib.import_module('langs.slovak')
     output = "<br>"
     tree = ""
     latex_tree = ""
     table = ""
+    latex_table = ""
     if request.method == "POST":
         inp = request.form["inp"]
         res_type = request.form["option"]
@@ -1286,23 +1290,25 @@ def index():
         tree = ""
         latex_tree = ""
         table = ""
+        latex_table = ""
         nodes = []
         resolution(inp, res_type, reduced)
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
-        return render_template("index.html", output=output, tree=tree, latex_tree=latex_tree, table=table)
+        return render_template("index.html", output=output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("index.html")
 
 
 @app.route('/indexeng', methods=['GET', 'POST'])
 def indexeng():
-    global output, tree, nodes, lang, latex_tree, table
+    global output, tree, nodes, lang, latex_tree, table, latex_table
     lang = importlib.import_module('langs.english')
     output = "<br>"
     tree = ""
     latex_tree = ""
+    latex_table = ""
     table = ""
     if request.method == "POST":
         inp = request.form["inp"]
@@ -1315,12 +1321,13 @@ def indexeng():
         tree = ""
         latex_tree = ""
         table = ""
+        latex_table = ""
         nodes = []
         resolution(inp, res_type, reduced)
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
-        return render_template("indexeng.html", output=output, tree=tree, latex_tree=latex_tree, table=table)
+        return render_template("indexeng.html", output=output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("indexeng.html")
 
@@ -1739,6 +1746,26 @@ def svg2latex(text):
     return out
 
 
+def table2latex(html):
+    global latex_table
+    latex_table = beautify(html)
+    latex_table = latex_table.replace("{}", "{\\square}")
+    latex_table = latex_table.replace("#", "\\#")
+    latex_table = latex_table.replace("<tr></table>", "</tr></table>")
+    latex_table = svg2latex(latex_table)
+    latex_table = latex_table.replace("<table>", "\\begin{table}[!h]\n\t\\centering\n\t\\begin{tabular}{|c|c|c|} \\hline\n\t")
+    latex_table = latex_table.replace("<td>", " ")
+    latex_table = latex_table.replace('<td style="white-space:nowrap">', " ")
+    latex_table = latex_table.replace("</td>", " &")
+    latex_table = latex_table.replace("<th>", " ")
+    latex_table = latex_table.replace("</th>", " &")
+    latex_table = latex_table.replace("&</tr>", " \\\\ \\hline\n\t")
+    latex_table = latex_table.replace("<tr>", "\t")
+    latex_table = latex_table.replace("</table>", "\\end{tabular}\n\\end{table}\n")
+    latex_table = latex_table.replace("<b>", "\\textbf{")
+    latex_table = latex_table.replace("</b>", "}")
+
+
 def get_pixel_length(text, font_size, font_name):
     #font = PIL.ImageFont.truetype(font_name, font_size)
     font = PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
@@ -1764,6 +1791,7 @@ output = ""
 tree = ""
 latex_tree = ""
 table = ""
+latex_table = ""
 nodes = []
 var = []
 lang = importlib.import_module('langs.slovak')

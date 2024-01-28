@@ -210,7 +210,7 @@ document.getElementById('inp-form').addEventListener('change', function() {
     localStorage.setItem('checkboxValue', document.getElementById('reduced').checked);
 });
 
-function copyToClipboard() {
+function copyToClipboardTree() {
     var copyText = document.getElementById("latex-tree");
         if (navigator.clipboard) {
             copyText.select();
@@ -230,6 +230,28 @@ function copyToClipboard() {
             document.body.removeChild(tempTextArea);
         }
 }
+
+function copyToClipboardTable() {
+    var copyText = document.getElementById("latex-table");
+        if (navigator.clipboard) {
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value)
+                .then(function() {
+                    console.log('Text successfully copied to clipboard');
+                })
+                .catch(function(err) {
+                    console.error('Unable to copy text to clipboard', err);
+                });
+        } else {
+            var tempTextArea = document.createElement('textarea');
+            tempTextArea.value = copyText.value;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+        }
+}
+
 document.getElementById('inp-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevents the form from submitting by default
 

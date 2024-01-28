@@ -155,6 +155,8 @@ button {
 	  cursor: pointer;
     overflow: auto;
     background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 table, th, td {
   border: 1px solid black;
