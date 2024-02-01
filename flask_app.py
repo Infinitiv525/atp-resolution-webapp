@@ -809,7 +809,7 @@ def resolve(cnf):
                             if phi == -1 * psi:
                                 add_node(unit, unit2, "{}")
                                 print_html(f"<tr><td>{len(new_cnf) + 1}. </td>" + "<td>{}</td>" +
-                                           f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td><tr>')
+                                           f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td></tr>')
                                 return True
         found_unit = False
         found = False
@@ -930,7 +930,8 @@ def resolve_unit(cnf):
                             if phi == -1 * psi:
                                 add_node(unit, unit2, "{}")
                                 print_html(
-                                    f"<tr><td>{len(new_cnf) + 1}. </td>" + "<td>{}</td>" + f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td><tr>')
+                                    f"<tr><td>{len(new_cnf) + 1}. </td>" + "<td>{}</td>" +
+                                    f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td></tr>')
                                 return True
         found_unit = False
         found = False
@@ -1004,7 +1005,8 @@ def resolve_linear(cnf):
                             if phi == -1 * psi:
                                 add_node(unit, unit2, "{}")
                                 print_html(
-                                    f"<tr><td>{len(new_cnf) + 1}. </td>" + "<td>{}</td>" + f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td><tr>')
+                                    f"<tr><td>{len(new_cnf) + 1}. </td>" + "<td>{}</td>" +
+                                    f' <td style="white-space:nowrap">({new_cnf.index(unit) + 1})({new_cnf.index(unit2) + 1})</td></tr>')
                                 return True
         elif found_unit:
             for unit in units:
@@ -1751,7 +1753,6 @@ def table2latex(html):
     latex_table = beautify(html)
     latex_table = latex_table.replace("{}", "{\\square}")
     latex_table = latex_table.replace("#", "\\#")
-    latex_table = latex_table.replace("<tr></table>", "</tr></table>")
     latex_table = svg2latex(latex_table)
     latex_table = latex_table.replace("<table>", "\\begin{table}[!h]\n\t\\centering\n\t\\begin{tabular}{|c|c|c|} \\hline\n\t")
     latex_table = latex_table.replace("<td>", " ")
