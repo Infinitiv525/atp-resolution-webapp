@@ -112,15 +112,15 @@
         </div>
   </div>
   <div class="column2">
+    <select style="font-size: 20px; float: right; margin-top: 30px;"  id="theme-select">
+      <option value="morning">Morning</option>
+      <option value="noon">Noon</option>
+      <option value="sunset">Sunset</option>
+      <option value="midnight">Midnight</option>
+      <option value="matrix">Matrix</option>
+  </select>
+    <label style="float: right; margin-top: 30px; font-size: 18px;" for="theme-select"><b>Select theme:</b>&nbsp;&nbsp;</label>
     <button id="switch-button" class="click-button" style="float: left; margin-top: 20px;" onclick="toggleOptions()">Resolution Tree</button>
-                <label for="theme-select">Select theme:</label>
-                <select id="theme-select">
-                    <option value="morning">Morning</option>
-                    <option value="noon">Noon</option>
-                    <option value="sunset">Sunset</option>
-                    <option value="midnight">Midnight</option>
-                    <option value="matrix">Matrix</option>
-                </select>
     <div id="options-container">
       <!-- Obsah pre "Resolution Tree" -->
       <div id="resolution-tree" style="display: none;">
