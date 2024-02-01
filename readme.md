@@ -1,6 +1,7 @@
-WIP
+Work in progress
 
 Vysvetlit strukturu stranka co na co sluzi
 
-link na stranku:
-linka na spravu stranky:
+link na stranku: http://infinitiv.pythonanywhere.com/
+
+linka na spravu stranky: https://www.pythonanywhere.com/user/Infinitiv/
