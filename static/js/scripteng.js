@@ -1,4 +1,3 @@
-// Získame odkaz na tlačidlo a na obsah, ktorý chceme zobraziť/ukázať
 const syntaxButton = document.getElementById("syntaxButton");
 const syntaxContent = document.getElementById("syntaxContent");
 const closeSyntaxButton = document.getElementById("closeSyntax");
@@ -6,10 +5,9 @@ const buttonGrid = document.querySelector('.button-grid');
 const inputField = document.getElementById('text-input');
 const inputForm = document.getElementById('inp-form');
 const errorMessage = document.getElementById('errorMessage');
-// Pridáme premennú na sledovanie stavu správy
 let isSyntaxVisible = false;
 
- function tokenize(formula) {
+function tokenize(formula) {
     let tokens = [];
     let token = "";
     let i = 0;
@@ -84,7 +82,6 @@ function findVars(formula) {
     return vars.sort();
 }
 
-   // Function to perform syntax check
 function checkSyntax(input) {
 	let tokens=tokenize(input);
 	let vars=findVars(tokens);
@@ -141,12 +138,12 @@ function checkSyntax(input) {
 	}
     return 0;
 }
+
 function handleInput() {
     var userInput = inputField.value;
     var isValidSyntax = checkSyntax(userInput);
 	errorMessage.style.display = 'none';
 
-    // Loop through all elements with the class 'double-border'
     if (isValidSyntax===0) {
 		inputField.style.borderColor = '';
 		inputForm.style.borderColor= '';
@@ -172,13 +169,18 @@ const operator_dic = {
 };
 const operators = ['not', 'nand', 'nor', 'nimply', 'xor', 'and', 'or', 'imply', 'equiv'];
 
-  inputField.addEventListener('input', handleInput);
-  inputField.addEventListener('focus', handleInput);
+if (inputField) {
+    inputField.addEventListener('input', handleInput);
+    inputField.addEventListener('focus', handleInput);
+}
 
 // Load saved values from local storage if available
 document.addEventListener('DOMContentLoaded', function() {
     const textInput = document.getElementById('text-input');
     const savedTextValue = localStorage.getItem('textInputValue');
+    if (textInput===null){
+        return;
+    }
     if (savedTextValue) {
         textInput.value = savedTextValue;
     }
@@ -198,17 +200,72 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedCheckboxValue === 'true') {
         checkbox.checked = true;
     }
+    document.getElementById("fontSizeSelect");
+    var selectElement = document.getElementById("fontSizeSelect");
+    var savedFontSize = localStorage.getItem("fontSize");
+    if (savedFontSize){
+        selectElement.value = savedFontSize;
+        changeFontSize();
+    }
 });
 
 // Save form values to local storage on change
-document.getElementById('inp-form').addEventListener('change', function() {
-    localStorage.setItem('textInputValue', document.getElementById('text-input').value);
-    const selectedRadio = document.querySelector('input[name="option"]:checked');
-    if (selectedRadio) {
-        localStorage.setItem('selectedRadio', selectedRadio.value);
+if (inputForm) {
+    inputForm.addEventListener('change', function () {
+        localStorage.setItem('textInputValue', document.getElementById('text-input').value);
+        const selectedRadio = document.querySelector('input[name="option"]:checked');
+        if (selectedRadio) {
+            localStorage.setItem('selectedRadio', selectedRadio.value);
+        }
+        localStorage.setItem('checkboxValue', document.getElementById('reduced').checked);
+    });
+}
+
+//prepínanie strom a tabulka
+// Funkcia na inicializáciu stránky
+document.addEventListener("DOMContentLoaded", function() {
+    // Spustiť toggleOptions s predvoleným tlačidlom
+    toggleOptions();
+  });
+
+  // Funkcia na prepínanie možností
+function toggleOptions() {
+    // Získať tlačidlo a obsah
+    var button = document.getElementById("switch-button");
+    var treeContent = document.getElementById("resolution-tree");
+    var tableContent = document.getElementById("resolution-table");
+
+    if (button===null){
+        return;
     }
-    localStorage.setItem('checkboxValue', document.getElementById('reduced').checked);
-});
+    // Ak je zobrazený obsah pre "Resolution Tree"
+    if (treeContent.style.display !== "none") {
+        // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
+        treeContent.style.display = "none";
+        tableContent.style.display = "block";
+
+        // Zmeniť text tlačidla na "Resolution Table"
+        button.innerText = "Resolution Tree";
+    } else {
+        // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
+        treeContent.style.display = "block";
+        tableContent.style.display = "none";
+
+        // Zmeniť text tlačidla na "Resolution Tree"
+        button.innerText = "Resolution Table";
+    }
+}
+
+//zmena velkosti pisma
+function changeFontSize() {
+    var selectElement = document.getElementById("fontSizeSelect");
+    var selectedValue = selectElement.options[selectElement.selectedIndex].text;
+
+    // Nastavenie veľkosti písma podľa vybranej hodnoty
+    document.getElementById("output-text").style.fontSize = selectedValue;
+    document.getElementById("text-input").style.fontSize = selectedValue;
+    localStorage.setItem('fontSize',selectElement.value);
+}
 
 function copyToClipboardTree() {
     var copyText = document.getElementById("latex-tree");
@@ -252,109 +309,167 @@ function copyToClipboardTable() {
         }
 }
 
-document.getElementById('inp-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevents the form from submitting by default
+if(inputForm) {
+    inputForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    var userInput = inputField.value;
-    var isValidSyntax = checkSyntax(userInput);
-    if (isValidSyntax!==0) {
-      inputField.style.borderColor = 'red';
-      return false; // Prevents form submission
-    }
-    // If syntax is valid, you can submit the form here
-    // For example:
-    this.submit(); // Uncomment this line to submit the form
-});
+        var userInput = inputField.value;
+        var isValidSyntax = checkSyntax(userInput);
 
-//prepínanie strom a tabulka
-// Funkcia na inicializáciu stránky
-document.addEventListener("DOMContentLoaded", function() {
-    // Spustiť toggleOptions s predvoleným tlačidlom
-    toggleOptions();
-  });
-  // Funkcia na prepínanie možností
-  function toggleOptions() {
-    // Získať tlačidlo a obsah
-    var button = document.getElementById("switch-button");
-    var treeContent = document.getElementById("resolution-tree");
-    var tableContent = document.getElementById("resolution-table");
-    // Ak je zobrazený obsah pre "Resolution Tree"
-    if (treeContent.style.display !== "none") {
-        // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
-        treeContent.style.display = "none";
-        tableContent.style.display = "block";
-        // Zmeniť text tlačidla na "Resolution Table"
-        button.innerText = "Resolution Tree";
-    } else {
-        // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
-        treeContent.style.display = "block";
-        tableContent.style.display = "none";
-        // Zmeniť text tlačidla na "Resolution Tree"
-        button.innerText = "Resolution Table";
-    }
+        if (isValidSyntax !== 0) {
+            inputField.style.borderColor = 'red';
+            return false;
+        }
+        this.submit();
+    });
 }
-  
-//nastavenie veľkosti písma
-function changeFontSize() {
-    var selectElement = document.getElementById("fontSizeSelect");
-    var selectedValue = selectElement.options[selectElement.selectedIndex].text;
-    document.getElementById("output-text").style.fontSize = selectedValue;
-    document.getElementById("text-input").style.fontSize = selectedValue;
-}
+
 // Add a click event listener to the button grid
-buttonGrid.addEventListener('click', (e) => {
-  const symbol = e.target.getAttribute('data-symbol'); // Get the symbol from the button's data attribute
-  if (symbol) {
-    // Append the symbol to the input field
-    inputField.value += symbol;
-    // Set focus back to the input field
-    inputField.focus();
-  }
-});
+if (buttonGrid) {
+    buttonGrid.addEventListener('click', (e) => {
+        const symbol = e.target.getAttribute('data-symbol'); // Get the symbol from the button's data attribute
+        if (symbol) {
+            // Append the symbol to the input field
+            inputField.value += symbol;
+            // Set focus back to the input field
+            inputField.focus();
+        }
+    });
+}
 
-inputField.addEventListener('blur', function() {
-	var userInput = inputField.value;
-	var isValidSyntax = checkSyntax(userInput);
-	inputField.style.outline = '';
-    if (isValidSyntax===0) {
-        errorMessage.style.display = 'none';
-		inputField.style.borderColor = '';
-    } else {
-		let error;
-        errorMessage.style.display = 'block';
-		inputField.style.borderColor = 'red';
-		switch(isValidSyntax){
-			case 1:
-				error="Missing ')' parenthesis";
-				break;
-			case 2:
-				error="Missing '(' parenthesis";
-				break;
-			case 3:
-				error="Variable must be followed by a binary operator or ')'";
-				break;
-			case 4:
-				error="Operator cannot be followed by another binary operator";
-				break;
-			case 5:
-				error="'(' cannot be followed by a binary operator or ')'";
-				break;
-			case 6:
-				error="Unmatched parenthesis";
-				break;
-			case 7:
-				error="')' must be followed by a binary operator or ')'";
-				break;
-			case 8:
-				error="Formula must end with variable or ')'";
-				break;
-			case 9:
-				error="Formula cannot begin with binary operator or ')'";
-				break;
-			default:
-				error="Syntax error";
-				break;
-		}
-		errorMessage.textContent = error;
-	}
+if(inputField) {
+      inputField.addEventListener('blur', function () {
+          var userInput = inputField.value;
+          var isValidSyntax = checkSyntax(userInput);
+          inputField.style.outline = '';
+          if (isValidSyntax === 0) {
+              errorMessage.style.display = 'none';
+              inputField.style.borderColor = '';
+          } else {
+              let error;
+              errorMessage.style.display = 'block';
+              inputField.style.borderColor = 'red';
+              switch (isValidSyntax) {
+                  case 1:
+                      error = "Missing ')' parenthesis";
+                      break;
+                  case 2:
+                      error = "Missing '(' parenthesis";
+                      break;
+                  case 3:
+                      error = "Variable must be followed by a binary operator or ')'";
+                      break;
+                  case 4:
+                      error = "Operator cannot be followed by another binary operator";
+                      break;
+                  case 5:
+                      error = "'(' cannot be followed by a binary operator or ')'";
+                      break;
+                  case 6:
+                      error = "Unmatched parenthesis";
+                      break;
+                  case 7:
+                      error = "')' must be followed by a binary operator or ')'";
+                      break;
+                  case 8:
+                      error = "Formula must end with variable or ')'";
+                      break;
+                  case 9:
+                      error = "Formula cannot begin with binary operator or ')'";
+                      break;
+                  default:
+                      error = "Syntax error";
+                      break;
+              }
+              errorMessage.textContent = error;
+          }
+      });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const themeSelect = document.getElementById('theme-select');
+    const body = document.body;
+    const containers= document.getElementsByClassName("output-container");
+    const svgElement = document.getElementsByTagName("svg")[0];
+    const clickButtons = document.getElementsByClassName("click-button");
+    const tables = document.getElementsByTagName("table");
+    const ths = document.getElementsByTagName("th");
+    const tds = document.getElementsByTagName("td");
+    const input = document.getElementById("text-input");
+
+    // Array of available themes
+    const themes = ['morning', 'noon', 'sunset', 'midnight', 'matrix'];
+
+    // Check for user preference or default to the first theme
+    const savedTheme = localStorage.getItem('currentTheme');
+    const defaultTheme = savedTheme && themes.includes(savedTheme) ? savedTheme : themes[0];
+
+    // Apply the selected theme
+    body.classList.add(defaultTheme);
+    themeSelect.value = defaultTheme;
+    if(svgElement) svgElement.classList.add(defaultTheme);
+    if(input) input.classList.add(defaultTheme);
+
+    for(let container of containers){
+      container.classList.add(defaultTheme);
+    }
+
+    for(let button of clickButtons){
+        button.classList.add(defaultTheme);
+    }
+
+    for(let table of tables){
+        table.classList.add(defaultTheme);
+    }
+
+    for(let th of ths){
+        th.classList.add(defaultTheme);
+    }
+
+    for(let td of tds){
+        td.classList.add(defaultTheme);
+    }
+
+    // Change theme on dropdown selection
+    themeSelect.addEventListener('change', function() {
+        const selectedTheme = themeSelect.value;
+
+        // Remove the current theme
+        body.classList.remove(...themes);
+        if(svgElement) svgElement.classList.remove(...themes);
+        if(input) input.classList.remove(...themes);
+
+        // Apply the selected theme
+        body.classList.add(selectedTheme);
+        if(svgElement) svgElement.classList.add(selectedTheme);
+        if(input) input.classList.add(selectedTheme);
+
+        for(let container of containers) {
+            container.classList.remove(...themes);
+            container.classList.add(selectedTheme);
+        }
+
+        for(let button of clickButtons){
+            button.classList.remove(...themes);
+            button.classList.add(selectedTheme);
+        }
+
+        for(let table of tables){
+            table.classList.remove(...themes);
+            table.classList.add(selectedTheme);
+        }
+
+        for(let th of ths){
+            th.classList.remove(...themes);
+            th.classList.add(selectedTheme);
+        }
+
+        for(let td of tds){
+            td.classList.remove(...themes);
+            td.classList.add(selectedTheme);
+        }
+
+        // Save the current theme in local storage
+        localStorage.setItem('currentTheme', selectedTheme);
+    });
 });

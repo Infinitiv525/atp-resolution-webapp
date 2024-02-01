@@ -23,9 +23,78 @@ body{
   margin: 0;
   background-color: antiquewhite;
 }
+
+.morning{
+  background-color: antiquewhite;
+}
+
+.noon{
+  background-color: deepskyblue;
+}
+
+.sunset{
+  background-color: #ffbcbc;
+}
+
+.midnight{
+  background-color: #222222;
+  color: #ffffff;
+}
+
+.matrix{
+  background-color: #101811;
+  color: #2FE747;
+  font-family: "Consolas", monospace;
+}
+
+#text-input.morning, #text-input.noon, #text-input.sunset{
+  background-color: white;
+}
+
+.output-container.midnight, table.midnight #text-input.midnight{
+  background-color: #161616;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.output-container.matrix, table.matrix, #text-input.matrix{
+  background-color: #080C09;
+  color: #2FE747;
+  border: 2px solid #2FE747;
+}
+
+.svg{
+  background-color: white;
+  font-family: "Arial", sans-serif;
+}
+
+svg line{
+  stroke: black;
+  stroke-width: 1px;
+}
+
+svg.midnight{
+  background-color: #161616;
+  fill: white;
+}
+
+svg.matrix{
+  background-color: #080C09;
+  fill: #2FE747;
+}
+
+.svg.midnight line{
+  stroke: white;
+}
+
+.svg.matrix line{
+  stroke: #2FE747;
+}
+
 .header{
   background-color: #f1f1f1;
   text-align: center;
+  color: black;
 }
 .menu{
   list-style-type: none;
@@ -96,26 +165,47 @@ input[type="radio"] {
   align-items: center;
   margin-bottom: 10px;
 }
-input[type="text"] {
+input[type="text"]{
   flex: 1;
   padding: 10px;
   border: 1px solid #ccc;
   width: 450px;
 }
-#submit-button{
+
+.click-button{
   padding: 10px 20px;
-  background-color: rgb(233, 145, 14);
-  color: #fff;
   border: none;
   cursor: pointer;
 }
-#copy-button{
-  padding: 10px 20px;
+
+.click-button.morning{
   background-color: rgb(233, 145, 14);
   color: #fff;
-  border: none;
-  cursor: pointer;
 }
+
+.click-button.noon{
+  background-color: blue;
+  color: #fff;
+}
+
+.click-button.sunset{
+  background-color: red;
+  color: #fff;
+}
+
+.click-button.midnight{
+  background-color: black;
+  color: #fff;
+  border: 2px solid #ffffff;
+}
+
+.click-button.matrix{
+  background-color: black;
+  color: #2FE747;
+  border: 2px solid #2FE747;
+  font-family: "Consolas", monospace;
+}
+
 button {
   padding: 10px 20px;
   color: #fff;
@@ -133,13 +223,7 @@ button {
 .hidden {
   display: none;
 }
-#switch-button{
-  padding: 10px 20px;
-  background-color: rgb(233, 145, 14);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
+
 .topnav{
   overflow: hidden;
   background-color: #333;
@@ -172,6 +256,29 @@ td{
   width: 20px;
   text-align: center;
 }
+
+th.midnight{
+  border: 1px solid white;
+}
+
+th.matrix{
+  border: 1px solid #2FE747;
+}
+
+td.morning, td.noon, td.sunset{
+  background-color: white;
+}
+
+td.midnight{
+  background-color: black;
+  border: 1px solid white;
+}
+
+td.matrix{
+  background-color: black;
+  border: 1px solid #2FE747;
+}
+
 .table-container {
   display: flex;
   flex-wrap: wrap;

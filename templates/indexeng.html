@@ -46,7 +46,7 @@
           <input type="text" id="text-input" name="inp">
 		  <div id="errorMessage" class="error-message">This field is required</div>
 
-      <button id="submit-button" type="submit">SUBMIT</button>
+      <button id="submit-button" class="click-button" type="submit">SUBMIT</button>
     <h4 style="margin: 10px;">Strategy of resolution</h4>
     <input type="radio" name="option" id="option1" value="Full">
     <label for="option1">Full </label>
@@ -112,7 +112,15 @@
         </div>
   </div>
   <div class="column2">
-    <button id="switch-button" style="float: left; margin-top: 20px;" onclick="toggleOptions()">Resolution Tree</button>
+    <button id="switch-button" class="click-button" style="float: left; margin-top: 20px;" onclick="toggleOptions()">Resolution Tree</button>
+                <label for="theme-select">Select theme:</label>
+                <select id="theme-select">
+                    <option value="morning">Morning</option>
+                    <option value="noon">Noon</option>
+                    <option value="sunset">Sunset</option>
+                    <option value="midnight">Midnight</option>
+                    <option value="matrix">Matrix</option>
+                </select>
     <div id="options-container">
       <!-- Obsah pre "Resolution Tree" -->
       <div id="resolution-tree" style="display: none;">
@@ -138,8 +146,8 @@
 		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
     </div> -->
     <br>
-    <button id="copy-button" type="submit" onclick="copyToClipboardTree()">Copy Tree</button>
-    <button id="copy-button" type="submit" onclick="copyToClipboardTable()">Copy Table</button>
+    <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTree()">Copy Tree</button>
+    <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTable()">Copy Table</button>
   </div>
 </div>
     <script src="{{ url_for('static', filename='js/scripteng.js') }}"></script>

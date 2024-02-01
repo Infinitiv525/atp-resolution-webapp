@@ -1609,7 +1609,7 @@ def add_node(s1, s2, val):
 def handle_child(node, child):
     global tree, latex_tree
     child.value = child.value.replace("not ", "¬ ")
-    tree += f'<line x1="{node.x + get_pixel_length(node.value, 16, "arial.ttf") / 2}" y1="{node.y + 5}" x2="{child.x + get_pixel_length(child.value, 16, "arial.ttf") / 2}" y2="{child.y - 15}" style="stroke:rgb(0,0,0);stroke-width:1" />'
+    tree += f'<line x1="{node.x + get_pixel_length(node.value, 16, "arial.ttf") / 2}" y1="{node.y + 5}" x2="{child.x + get_pixel_length(child.value, 16, "arial.ttf") / 2}" y2="{child.y - 15}"/>'
     latex_tree += f'\\draw ({node.x},{-node.y - 10}) -- ({child.x},{-child.y + 10});\n'
 
 
@@ -1704,7 +1704,7 @@ def print_tree(typ="reduced"):
                 handle_child(node, child)
     tree += "</svg>"
     latex_tree += "\\end{tikzpicture}"
-    tree = f'<br><svg height="{y_max}" width="{x_max + 25}">' + tree
+    tree = f'<br><svg class="svg" height="{y_max}" width="{x_max + 25}">' + tree
     latex_tree = "\\begin{tikzpicture}[x=0.3mm, y=0.3mm]\n" + latex_tree
 
 
