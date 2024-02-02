@@ -1274,9 +1274,10 @@ def resolution(inp, res_type, reduced):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global output, tree, nodes, lang, latex_tree, table, latex_table
+    global output, tree, nodes, lang, latex_tree, table, latex_table, latex_output
     lang = importlib.import_module('langs.slovak')
     output = "<br>"
+    latex_output = ""
     tree = ""
     latex_tree = ""
     table = ""
@@ -1298,16 +1299,17 @@ def index():
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
-        return render_template("index.html", output=output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
+        return render_template("index.html", output=output, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("index.html")
 
 
 @app.route('/indexeng', methods=['GET', 'POST'])
 def indexeng():
-    global output, tree, nodes, lang, latex_tree, table, latex_table
+    global output, tree, nodes, lang, latex_tree, table, latex_table, latex_output
     lang = importlib.import_module('langs.english')
     output = "<br>"
+    latex_output = ""
     tree = ""
     latex_tree = ""
     latex_table = ""
@@ -1329,7 +1331,7 @@ def indexeng():
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
-        return render_template("indexeng.html", output=output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
+        return render_template("indexeng.html", output=output, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("indexeng.html")
 
@@ -1789,6 +1791,7 @@ with open(THIS_FOLDER / "greek.dic", 'r', encoding='utf-8') as f:
 
 operators = list(operator_dic.keys())
 output = ""
+latex_output = ""
 tree = ""
 latex_tree = ""
 table = ""

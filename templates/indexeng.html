@@ -139,6 +139,7 @@
           </div>
       </div>
     </div>
+      <textarea id="latex-table" style="display:none;">{{ latex_output | safe }}</textarea>
     <!-- <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
     <div class="output-container">
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
@@ -148,6 +149,7 @@
     <br>
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTree()">Copy Tree</button>
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTable()">Copy Table</button>
+      <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardOutput()">Copy Output</button>
   </div>
 </div>
     <script src="{{ url_for('static', filename='js/scripteng.js') }}"></script>

@@ -309,6 +309,27 @@ function copyToClipboardTable() {
         }
 }
 
+function copyToClipboardOutput() {
+    var copyText = document.getElementById("latex-output");
+        if (navigator.clipboard) {
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value)
+                .then(function() {
+                    console.log('Text successfully copied to clipboard');
+                })
+                .catch(function(err) {
+                    console.error('Unable to copy text to clipboard', err);
+                });
+        } else {
+            var tempTextArea = document.createElement('textarea');
+            tempTextArea.value = copyText.value;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+        }
+}
+
 if(inputForm) {
     inputForm.addEventListener('submit', function (event) {
         event.preventDefault();

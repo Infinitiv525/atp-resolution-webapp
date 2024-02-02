@@ -147,6 +147,7 @@
           </div>
       </div>
     </div>
+      <textarea id="latex-table" style="display:none;">{{ latex_output | safe }}</textarea>
 
     <!-- <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
     <div class="output-container">
@@ -157,6 +158,7 @@
     <br>-->
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTree()">Kopírovať Strom</button>
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTable()">Kopírovať Tabuľku</button>
+      <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardOutput()">Kopírovať Výstup</button>
   </div> 
 </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
