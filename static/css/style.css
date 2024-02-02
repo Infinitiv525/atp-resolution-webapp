@@ -38,13 +38,12 @@ body{
 
 .midnight{
   background-color: #222222;
-  color: #ffffff;
+  color: #E4E6EB;
 }
 
 .matrix{
   background-color: #101811;
   color: #2FE747;
-  font-family: "Consolas", monospace;
 }
 
 #text-input.morning, #text-input.noon, #text-input.sunset{
@@ -53,8 +52,8 @@ body{
 
 .output-container.midnight, table.midnight #text-input.midnight, .button.midnight{
   background-color: #161616;
-  color: #ffffff;
-  border: 2px solid #ffffff;
+  color: #E4E6EB;
+  border: 2px solid #E4E6EB;
 }
 
 .output-container.matrix, table.matrix, #text-input.matrix, .button.matrix{
@@ -75,7 +74,7 @@ svg line{
 
 svg.midnight{
   background-color: #161616;
-  fill: white;
+  fill: #E4E6EB;
 }
 
 svg.matrix{
@@ -84,7 +83,7 @@ svg.matrix{
 }
 
 .svg.midnight line{
-  stroke: white;
+  stroke: #E4E6EB;
 }
 
 .svg.matrix line{
@@ -95,6 +94,7 @@ svg.matrix{
   background-color: #f1f1f1;
   text-align: center;
   color: black;
+  font-family: "Times New Roman", sans-serif;
 }
 .menu{
   list-style-type: none;
@@ -196,15 +196,14 @@ input[type="text"]{
 
 .click-button.midnight{
   background-color: black;
-  color: #fff;
-  border: 2px solid #ffffff;
+  color: #E4E6EB;
+  border: 2px solid #E4E6EB;
 }
 
 .click-button.matrix{
   background-color: black;
   color: #2FE747;
   border: 2px solid #2FE747;
-  font-family: "Consolas", monospace;
 }
 
 button {
@@ -228,6 +227,7 @@ button {
 .topnav{
   overflow: hidden;
   background-color: #333;
+  font-family: "Times New Roman", sans-serif;
 }
 .output-container {
     width: 100%;
@@ -259,7 +259,8 @@ td{
 }
 
 th.midnight{
-  border: 1px solid white;
+  border: 1px solid #E4E6EB;
+  color: #E4E6EB;
 }
 
 th.matrix{
@@ -272,7 +273,8 @@ td.morning, td.noon, td.sunset{
 
 td.midnight{
   background-color: black;
-  border: 1px solid white;
+  border: 1px solid #E4E6EB;
+  color: #E4E6EB;
 }
 .midnight .toggle .slider::before{
   background-color: white;
@@ -314,6 +316,16 @@ td:nth-child(2), th:nth-child(2) {
 .manual{
   padding: 20px;
   text-align: justify;
+}
+
+input[type="radio"].midnight{
+  border-color: #E4E6EB;
+  background-color: black;
+}
+
+input[type="radio"].matrix{
+  border-color: #2FE747;
+  background-color: black;
 }
 /* https://www.tutorialstonight.com/css-toggle-switch-with-text */
 .toggle {

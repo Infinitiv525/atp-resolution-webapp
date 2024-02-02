@@ -396,8 +396,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const ths = document.getElementsByTagName("th");
     const tds = document.getElementsByTagName("td");
     const input = document.getElementById("text-input");
-    const buttons=document.getElementsByClassName("button");
-    const imgs=document.getElementsByClassName("sym");
+    const buttons= document.getElementsByClassName("button");
+    const inputs = document.getElementsByTagName("input");
+    const imgs= document.getElementsByClassName("sym");
 
     // Array of available themes
     const themes = ['morning', 'noon', 'sunset', 'midnight', 'matrix'];
@@ -434,6 +435,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for(let button of buttons){
         button.classList.add(defaultTheme);
+    }
+
+    for(let input of inputs){
+        input.classList.add(defaultTheme);
     }
 
     for(let img of imgs) {
@@ -486,6 +491,11 @@ document.addEventListener('DOMContentLoaded', function() {
         for(let button of buttons){
             button.classList.remove(...themes);
             button.classList.add(selectedTheme);
+        }
+
+        for(let input of inputs){
+            input.classList.remove(...themes);
+            input.classList.add(selectedTheme);
         }
 
         for(let img of imgs) {
