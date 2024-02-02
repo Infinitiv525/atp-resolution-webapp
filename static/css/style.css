@@ -51,13 +51,13 @@ body{
   background-color: white;
 }
 
-.output-container.midnight, table.midnight #text-input.midnight{
+.output-container.midnight, table.midnight #text-input.midnight, .button.midnight{
   background-color: #161616;
   color: #ffffff;
   border: 2px solid #ffffff;
 }
 
-.output-container.matrix, table.matrix, #text-input.matrix{
+.output-container.matrix, table.matrix, #text-input.matrix, .button.matrix{
   background-color: #080C09;
   color: #2FE747;
   border: 2px solid #2FE747;
@@ -151,6 +151,7 @@ input[type="radio"] {
   align-items: center;
   justify-content: center;
 }
+
 .button img {
   max-width: 25px;
   max-height: 25px;
@@ -178,17 +179,17 @@ input[type="text"]{
   cursor: pointer;
 }
 
-.click-button.morning{
+.click-button.morning, th.morning{
   background-color: rgb(233, 145, 14);
   color: #fff;
 }
 
-.click-button.noon{
+.click-button.noon, th.noon{
   background-color: blue;
   color: #fff;
 }
 
-.click-button.sunset{
+.click-button.sunset, th.sunset{
   background-color: red;
   color: #fff;
 }

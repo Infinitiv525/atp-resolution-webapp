@@ -396,6 +396,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const ths = document.getElementsByTagName("th");
     const tds = document.getElementsByTagName("td");
     const input = document.getElementById("text-input");
+    const buttons=document.getElementsByClassName("button");
+    const imgs=document.getElementsByClassName("sym");
 
     // Array of available themes
     const themes = ['morning', 'noon', 'sunset', 'midnight', 'matrix'];
@@ -429,6 +431,18 @@ document.addEventListener('DOMContentLoaded', function() {
     for(let td of tds){
         td.classList.add(defaultTheme);
     }
+
+    for(let button of buttons){
+        button.classList.add(defaultTheme);
+    }
+
+    for(let img of imgs) {
+        if (defaultTheme === "matrix") img.src = "static/img/"+img.alt+"-matrix.png";
+        else if (defaultTheme === "midnight") img.src = "static/img/"+img.alt+"-midnight.png";
+        else img.src = "static/img/"+img.alt+".png";
+    }
+
+
 
     // Change theme on dropdown selection
     themeSelect.addEventListener('change', function() {
@@ -467,6 +481,17 @@ document.addEventListener('DOMContentLoaded', function() {
         for(let td of tds){
             td.classList.remove(...themes);
             td.classList.add(selectedTheme);
+        }
+
+        for(let button of buttons){
+            button.classList.remove(...themes);
+            button.classList.add(selectedTheme);
+        }
+
+        for(let img of imgs) {
+            if (selectedTheme === "matrix") img.src = "static/img/"+img.alt+"-matrix.png";
+            else if (selectedTheme === "midnight") img.src = "static/img/"+img.alt+"-midnight.png";
+            else img.src = "static/img/"+img.alt+".png";
         }
 
         // Save the current theme in local storage
