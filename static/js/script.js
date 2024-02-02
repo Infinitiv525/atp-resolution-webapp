@@ -498,3 +498,22 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('currentTheme', selectedTheme);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Získajte odkaz na checkbox a na oba kontajnery s obsahom
+    var checkbox = document.querySelector('.toggle input[type="checkbox"]');
+    var treeContainer = document.getElementById('resolution-tree');
+    var tableContainer = document.getElementById('resolution-table');
+
+    // Pridajte poslúchača udalostí na zmenu stavu checkboxu
+    checkbox.addEventListener('change', function () {
+        // Ak je checkbox zaškrtnutý, zobraz strom a skry tabuľku
+        if (checkbox.checked) {
+            treeContainer.style.display = 'block';
+            tableContainer.style.display = 'none';
+        } else { // Inak zobraz tabuľku a skry strom
+            treeContainer.style.display = 'none';
+            tableContainer.style.display = 'block';
+        }
+    });
+});

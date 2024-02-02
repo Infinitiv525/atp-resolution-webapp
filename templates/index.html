@@ -122,11 +122,16 @@
       <option value="matrix">Matrix</option>
   </select>
     <label style="float: right; margin-top: 30px; font-size: 18px;" for="theme-select"><b>Výber motívu:</b>&nbsp;&nbsp;</label>
-    <button id="switch-button" class="click-button" style="float: left; margin-top: 20px;" onclick="toggleOptions()">Resolution Tree</button>
+    <!-- <button id="switch-button" class="click-button" style="float: left; margin-top: 20px;" onclick="toggleOptions()">Resolution Tree</button> -->
         
-                
+    <label class="toggle click-button">
+      <input type="checkbox">
+      <span class="slider"></span>
+      <span class="labels" data-on="Tabuľka" data-off="Strom"></span>
+    </label> 
+
+    <!-- Najnovsie -->
     <div id="options-container">
-      <!-- Obsah pre "Resolution Tree" -->
       <div id="resolution-tree" style="display: none;">
           <h2 style="text-align: center;">Rezolučný strom</h2>
           <div class="output-container">
@@ -134,8 +139,6 @@
               <textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
           </div>
       </div>
-
-      <!-- Obsah pre "Resolution Table" -->
       <div id="resolution-table">
           <h2 style="text-align: center;">Rezolučná tabuľka</h2>
           <div class="output-container" >
@@ -144,16 +147,17 @@
           </div>
       </div>
     </div>
+
     <!-- <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
     <div class="output-container">
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ table | safe }}</div>
 		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
-    </div> -->
-    <br>
+    </div>
+    <br>-->
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTree()">Kopírovať Strom</button>
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTable()">Kopírovať Tabuľku</button>
-  </div>
+  </div> 
 </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
