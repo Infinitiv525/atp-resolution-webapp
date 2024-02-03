@@ -1207,7 +1207,7 @@ def resolution(inp, res_type, reduced):
     print_html(lang.NEGATION_FORMULA, end="\n")
     negate_bfs(bfs)
     negated_formula = negate(formula)
-    print_html(lang.NEGATED_FORMULA, end=" ")
+    print_html("\n", lang.NEGATED_FORMULA, end=" ")
     print_formula(negated_formula)
     print_html("\n")
     full_cnf_steps(negated_formula)
@@ -1299,6 +1299,7 @@ def index():
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
+        html2latex()
         return render_template("index.html", output=output, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("index.html")
@@ -1331,6 +1332,7 @@ def indexeng():
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
+        html2latex()
         return render_template("indexeng.html", output=output, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("indexeng.html")
@@ -1735,6 +1737,43 @@ def recursive_children(node):
         for new_child in new_children:
             children.append(new_child)
     return children
+
+
+def html2latex():
+    global output, latex_output
+    latex_output = output
+    for key, operator in operator_dic.items():
+        latex_output = latex_output.replace(f" {key} ", f" \\{operator[-1]} ")
+        latex_output = latex_output.replace(operator[0], f"\\{operator[-1]}")
+    for key, letter in greek_letters.items():
+        latex_output = latex_output.replace(letter, f"\\{key}")
+    latex_output = latex_output.replace("{{", "${{")
+    latex_output = latex_output.replace("}}", "}}$")
+    latex_output = latex_output.replace("{", "\\{")
+    latex_output = latex_output.replace("}", "\\}")
+    latex_output = latex_output.replace('<font color="#FF0000">', "")
+    latex_output = latex_output.replace("</font>", "")
+    latex_output = latex_output.replace("<br>", "\n\n")
+    latex_output = latex_output.replace("<b>", "\\textbf{")
+    latex_output = latex_output.replace("</b>", "}")
+    row = ""
+    for char in latex_output:
+        row = row + char
+        if char == "\n":
+            if row == "" or ":}\n" in row or ":} $" in row:
+                row = ""
+                continue
+            elif ":}" in row:
+                index = row.find(":}") + 2
+                latex_output = latex_output.replace(row, f"{row[:index]} ${row[index:-1]}$", 1)
+            else:
+                latex_output = latex_output.replace(row, f"${row[:-1]}$\n", 1)
+            row = ""
+    index = latex_output.find("\n")
+    latex_output = latex_output.replace(latex_output[:index+1], "")
+    latex_output = latex_output[:-3]
+    index = latex_output.rfind("$")
+    latex_output = latex_output[:index] + latex_output[index+1:]
 
 
 def svg2latex(text):
