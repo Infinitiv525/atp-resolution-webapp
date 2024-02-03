@@ -1751,10 +1751,11 @@ def html2latex():
     latex_output = latex_output.replace("}}", "}}$")
     latex_output = latex_output.replace("{", "\\{")
     latex_output = latex_output.replace("}", "\\}")
-    latex_output = latex_output.replace('<font color="#FF0000">', "")
-    latex_output = latex_output.replace("</font>", "")
+    latex_output = latex_output.replace(' <font color="#FF0000"> ', "")
+    latex_output = latex_output.replace(" </font> ", "")
+    latex_output = latex_output.replace("<br><br>", "\n\n\n")
     latex_output = latex_output.replace("<br>", "\n\n")
-    latex_output = latex_output.replace("<b>", "\\textbf{")
+    latex_output = latex_output.replace("<b>", "\\noindent\\textbf{")
     latex_output = latex_output.replace("</b>", "}")
     row = ""
     for char in latex_output:
