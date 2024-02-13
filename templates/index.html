@@ -16,7 +16,6 @@
     <div class ="title"> <h1 style="margin-left:-300px;">Systém automatického dokazovania pomocou rezolúcie</h1> </div>
 </div>
 
-
 <div class="topnav">
   <ul class="menu">
     <li style="float:left;"><a href="{{ url_for('index')}}">Domov</a></li>
@@ -36,12 +35,13 @@
       <option>48px</option>
     </select>
     <p style="float: right; margin-top: 30px; font-size: 18px;"><b>Veľkosť písma: </b>&nbsp;&nbsp;</p>
-    
     <h2 style="text-align: center;">Výstup</h2>
     
     <div class="output-container">
         <div id="output-text" class="editable-text">{{ output | safe }}</div>
     </div>
+    <br>
+    <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardOutput()" style="margin-left: 10px;">Kopírovať Výstup</button>
     <div class="container">
       <div class="input-container">
 	  <form id="inp-form" method="post">
@@ -148,7 +148,6 @@
       </div>
     </div>
       <textarea id="latex-output" style="display:none;">{{ latex_output | safe }}</textarea>
-
     <!-- <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
     <div class="output-container">
         <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
@@ -156,9 +155,10 @@
 		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
     </div>
     <br>-->
+    <br>
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTree()">Kopírovať Strom</button>
     <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTable()">Kopírovať Tabuľku</button>
-      <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardOutput()">Kopírovať Výstup</button>
+    <!-- <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardOutput()">Kopírovať Výstup</button> -->
   </div> 
 </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

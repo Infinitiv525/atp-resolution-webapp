@@ -226,7 +226,7 @@ if (inputForm) {
 document.addEventListener("DOMContentLoaded", function() {
     // Spustiť toggleOptions s predvoleným tlačidlom
     toggleOptions();
-  });
+});
 
   // Funkcia na prepínanie možností
 function toggleOptions() {
@@ -240,19 +240,19 @@ function toggleOptions() {
     }
     // Ak je zobrazený obsah pre "Resolution Tree"
     if (treeContent.style.display !== "none") {
-        // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
-        treeContent.style.display = "none";
-        tableContent.style.display = "block";
-
-        // Zmeniť text tlačidla na "Resolution Table"
-        button.innerText = "Resolution Tree";
+      // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
+      treeContent.style.display = "none";
+      tableContent.style.display = "block";
+  
+      // Zmeniť text tlačidla na "Resolution Tree"
+      button.innerText = "Resolution tree";
     } else {
-        // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
-        treeContent.style.display = "block";
-        tableContent.style.display = "none";
-
-        // Zmeniť text tlačidla na "Resolution Tree"
-        button.innerText = "Resolution Table";
+      // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
+      treeContent.style.display = "block";
+      tableContent.style.display = "none";
+  
+      // Zmeniť text tlačidla na "Resolution Table"
+      button.innerText = "Resolution table";
     }
 }
 
@@ -418,6 +418,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tds = document.getElementsByTagName("td");
     const input = document.getElementById("text-input");
     const buttons=document.getElementsByClassName("button");
+    const inputs = document.getElementsByTagName("input");
     const imgs=document.getElementsByClassName("sym");
 
     // Array of available themes
@@ -455,6 +456,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for(let button of buttons){
         button.classList.add(defaultTheme);
+    }
+
+    for(let input of inputs){
+        input.classList.add(defaultTheme);
     }
 
     for(let img of imgs) {
@@ -509,6 +514,11 @@ document.addEventListener('DOMContentLoaded', function() {
             button.classList.add(selectedTheme);
         }
 
+        for(let input of inputs){
+            input.classList.remove(...themes);
+            input.classList.add(selectedTheme);
+        }
+
         for(let img of imgs) {
             if (selectedTheme === "matrix") img.src = "static/img/"+img.alt+"-matrix.png";
             else if (selectedTheme === "midnight") img.src = "static/img/"+img.alt+"-midnight.png";
@@ -517,5 +527,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Save the current theme in local storage
         localStorage.setItem('currentTheme', selectedTheme);
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Získajte odkaz na checkbox a na oba kontajnery s obsahom
+    var checkbox = document.querySelector('.toggle input[type="checkbox"]');
+    var treeContainer = document.getElementById('resolution-tree');
+    var tableContainer = document.getElementById('resolution-table');
+
+    // Pridajte poslúchača udalostí na zmenu stavu checkboxu
+    checkbox.addEventListener('change', function () {
+        // Ak je checkbox zaškrtnutý, zobraz strom a skry tabuľku
+        if (checkbox.checked) {
+            treeContainer.style.display = 'block';
+            tableContainer.style.display = 'none';
+        } else { // Inak zobraz tabuľku a skry strom
+            treeContainer.style.display = 'none';
+            tableContainer.style.display = 'block';
+        }
     });
 });

@@ -18,6 +18,8 @@
 }
 .title{
   display: flex;
+  margin-top: -15px;
+  margin-bottom: -10px;
 }
 body{
   margin: 0;
@@ -322,11 +324,11 @@ input[type="radio"].midnight{
   border-color: #E4E6EB;
   background-color: black;
 }
-
 input[type="radio"].matrix{
   border-color: #2FE747;
   background-color: black;
 }
+
 /* https://www.tutorialstonight.com/css-toggle-switch-with-text */
 .toggle {
   --width: 110px;
