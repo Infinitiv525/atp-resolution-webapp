@@ -163,6 +163,7 @@ input[type="text"]{
   border: none;
   cursor: pointer;
   font-weight: bolder;
+  border-radius: 5px;
 }
 .click-button.morning, th.morning{
   background-color: rgb(233, 145, 14);
