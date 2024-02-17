@@ -25,73 +25,58 @@ body{
   margin: 0;
   background-color: antiquewhite;
 }
-
 .morning{
   background-color: antiquewhite;
 }
-
 .noon{
   background-color: #97e2ff;
 }
-
 .sunset{
   background-color: #ffbcbc;
 }
-
 .midnight{
   background-color: #222222;
   color: #E4E6EB;
 }
-
 .matrix{
   background-color: #101811;
   color: #2FE747;
 }
-
 #text-input.morning, #text-input.noon, #text-input.sunset{
   background-color: white;
 }
-
 .output-container.midnight, table.midnight #text-input.midnight, .button.midnight{
   background-color: #161616;
   color: #E4E6EB;
   border: 2px solid #E4E6EB;
 }
-
 .output-container.matrix, table.matrix, #text-input.matrix, .button.matrix{
   background-color: #080C09;
   color: #2FE747;
   border: 2px solid #2FE747;
 }
-
 .svg{
   background-color: white;
   font-family: "Arial", sans-serif;
 }
-
 svg line{
   stroke: black;
   stroke-width: 1px;
 }
-
 svg.midnight{
   background-color: #161616;
   fill: #E4E6EB;
 }
-
 svg.matrix{
   background-color: #080C09;
   fill: #2FE747;
 }
-
 .svg.midnight line{
   stroke: #E4E6EB;
 }
-
 .svg.matrix line{
   stroke: #2FE747;
 }
-
 .header{
   background-color: #f1f1f1;
   text-align: center;
@@ -153,7 +138,6 @@ input[type="radio"] {
   align-items: center;
   justify-content: center;
 }
-
 .button img {
   max-width: 25px;
   max-height: 25px;
@@ -174,42 +158,35 @@ input[type="text"]{
   border: 1px solid #ccc;
   width: 450px;
 }
-
 .click-button{
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+  font-weight: bolder;
 }
-
 .click-button.morning, th.morning{
   background-color: rgb(233, 145, 14);
   color: #fff;
 }
-
 .click-button.noon, th.noon{
   background-color: blue;
   color: #fff;
 }
-
 .click-button.sunset, th.sunset{
   background-color: red;
   color: #fff;
 }
-
 .click-button.midnight{
   background-color: black;
   color: #E4E6EB;
   border: 2px solid #E4E6EB;
 }
-
 .click-button.matrix{
   background-color: black;
   color: #2FE747;
   border: 2px solid #2FE747;
 }
-
 button {
-  padding: 10px 20px;
   color: #fff;
   background-color: transparent;
   border: none;
@@ -225,7 +202,6 @@ button {
 .hidden {
   display: none;
 }
-
 .topnav{
   overflow: hidden;
   background-color: #333;
@@ -259,34 +235,28 @@ td{
   width: 20px;
   text-align: center;
 }
-
 th.midnight{
   border: 1px solid #E4E6EB;
   color: #E4E6EB;
 }
-
 th.matrix{
   border: 1px solid #2FE747;
 }
-
 td.morning, td.noon, td.sunset{
   background-color: white;
 }
-
 td.midnight{
   background-color: black;
   border: 1px solid #E4E6EB;
   color: #E4E6EB;
 }
-.midnight .toggle .slider::before{
-  background-color: white;
-}
 td.matrix{
   background-color: black;
   border: 1px solid #2FE747;
 }
-.matrix .toggle .slider::before {
-  background-color: #2FE747;
+.toggle.matrix{
+  --ball-color-checked: #2FE747;
+  --ball-color-unchecked: #2FE747;
 }
 .table-container {
   display: flex;
@@ -319,7 +289,6 @@ td:nth-child(2), th:nth-child(2) {
   padding: 20px;
   text-align: justify;
 }
-
 input[type="radio"].midnight{
   border-color: #E4E6EB;
   background-color: black;
@@ -328,7 +297,6 @@ input[type="radio"].matrix{
   border-color: #2FE747;
   background-color: black;
 }
-
 /* https://www.tutorialstonight.com/css-toggle-switch-with-text */
 .toggle {
   --width: 110px;
@@ -340,6 +308,8 @@ input[type="radio"].matrix{
   cursor: pointer;
   margin-top: 20px;
   float: left;
+  --ball-color-checked: white;
+  --ball-color-unchecked: white;
 }
 .toggle input {
   display: none;
@@ -364,6 +334,7 @@ input[type="radio"].matrix{
   border-radius: calc(var(--height) / 2);
   border: 1px solid black;
   transition: all 0.4s ease-in-out;
+  background-color: var(--ball-color-unchecked);
 }
 .toggle input:checked+.slider::before {
   transform: translateX(calc(var(--width) - var(--height)));
@@ -397,4 +368,16 @@ input[type="radio"].matrix{
 }
 .toggle input:checked~.labels::before {
   opacity: 1;
+}
+.toggle input:checked + .slider::before {
+  background-color: var(--ball-color-checked); /* Farba guličky pre checked stav */
+}
+#submit-button{
+  height: 44px;
+}
+.setting{
+  font-size: 20px; 
+  float: right; 
+  margin-top: 30px; 
+  border-radius: 6px;
 }

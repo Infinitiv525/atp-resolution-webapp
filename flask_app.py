@@ -1810,8 +1810,8 @@ def table2latex(html):
 
 
 def get_pixel_length(text, font_size, font_name):
-    #font = PIL.ImageFont.truetype(font_name, font_size)
-    font = PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
+    font = PIL.ImageFont.truetype(font_name, font_size)
+    #font = PIL.ImageFont.truetype(THIS_FOLDER / f"static/{font_name}", font_size)
     return font.getlength(text)
 
 
