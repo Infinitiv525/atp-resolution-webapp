@@ -3,7 +3,7 @@
 }
 .image {
   float: left;
-  margin-top: 15px;
+  margin-top: 20px;
   margin-left: 10px;
   width: 45%;
   height: 40px;
@@ -11,7 +11,7 @@
 }
 .image2 {
   float: right;
-  margin-top: 15px;
+  margin-top: 20px;
   margin-right: 10px;
   height: 40px;
   display: flex;
