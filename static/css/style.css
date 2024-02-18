@@ -382,3 +382,22 @@ input[type="radio"].matrix{
   margin-top: 30px; 
   border-radius: 6px;
 }
+
+#copy-message{
+  display: none;
+  position: relative;
+  top: 10px;
+  border: 1px solid;
+  padding: 5px;
+  width: fit-content;
+}
+
+#copy-output{
+  display: none;
+  position: absolute;
+  border: 1px solid;
+  padding: 5px;
+  width: fit-content;
+  left: 200px;
+  bottom: 215px;
+}
