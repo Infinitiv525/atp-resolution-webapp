@@ -339,29 +339,29 @@ def oor(A: list, B: list):
         return [A, "or", B]
     if len(A) == 1 and len(B) == 3:
         if B[1] == "and":
-            return [[A[0], "or", to_cnf(B[0])], "and", [A[0], "or", to_cnf(B[2])]]
+            return [oor(A[0], to_cnf(B[0])), "and", oor(A[0], to_cnf(B[2]))]
         return [A[0], "or", to_cnf(B)]
     if len(A) == 2 and len(B) == 3:
-        if B[1] == "and":  # A
-            return [[A, "or", to_cnf(B[0])], "and", [A, "or", to_cnf(B[2])]]  # [2]
+        if B[1] == "and":
+            return [oor(A, to_cnf(B[0])), "and", oor(A, to_cnf(B[2]))]
         # return [[A,"or",to_cnf(B[0])],"or",[A,"or",to_cnf(B[2])]]
         return [A, "or", to_cnf(B)]
     if len(A) == 3 and len(B) == 1:
         if A[1] == "and":
-            return [[to_cnf(A[0]), "or", B[0]], "and", [to_cnf(A[2]), "or", B[0]]]
+            return [oor(to_cnf(A[0]), B[0]), "and", oor(to_cnf(A[2]), B[0])]
         return [to_cnf(A), "or", B[0]]
     if len(A) == 3 and len(B) == 2:
         if A[1] == "and":
-            return [[to_cnf(A[0]), "or", B], "and", [to_cnf(A[2]), "or", B]]
+            return [oor(to_cnf(A[0]), B), "and", oor(to_cnf(A[2]), B)]
         # return [[to_cnf(A[0]),"or",B],"or",[to_cnf(A[2]),"or",B]]
         return [to_cnf(A), "or", B]
     if len(A) == 3 and len(B) == 3:
         if A[1] == "or" and B[1] == "or":
             return [to_cnf(A), "or", to_cnf(B)]
         if A[1] == "or":
-            return [[to_cnf(A), "or", B[0]], "and", [to_cnf(A), "or", B[2]]]
+            return [oor(to_cnf(A), B[0]), "and", oor(to_cnf(A), B[2])]
         if B[1] == "or":
-            return [[A[0], "or", to_cnf(B)], "and", [A[2], "or", to_cnf(B)]]
+            return [oor(A[0], to_cnf(B)), "and", oor(A[2], to_cnf(B))]
         return to_cnf([[[[A[0], "or", B[0]]], "and", [[A[0], "or", B[2]]]], "and",
                        [[[A[2], "or", B[0]]], "and", [[A[2], "or", B[2]]]]])
     return [A, "and", B]
