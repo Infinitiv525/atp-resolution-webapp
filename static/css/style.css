@@ -32,23 +32,23 @@ body{
 .sunset{
   background-color: #ffbcbc;
 }
-.midnight{
+.midnight, .setting.midnight *, .setting2.midnight *{
   background-color: #222222;
   color: #E4E6EB;
 }
-.matrix{
+.matrix, .setting.matrix *, .setting2.matrix *{
   background-color: #101811;
   color: #2FE747;
 }
 #text-input.morning, #text-input.noon, #text-input.sunset{
   background-color: white;
 }
-.container.midnight, table.midnight #text-input.midnight, .button.midnight{
+.container.midnight, table.midnight #text-input.midnight, .button.midnight, .setting.midnight, .setting2.midnight{
   background-color: #161616;
   color: #E4E6EB;
   border: 2px solid #E4E6EB;
 }
-.container.matrix, table.matrix, #text-input.matrix, .button.matrix{
+.container.matrix, table.matrix, #text-input.matrix, .button.matrix, .setting.matrix, .setting2.matrix{
   background-color: #080C09;
   color: #2FE747;
   border: 2px solid #2FE747;
@@ -365,6 +365,8 @@ input[type="radio"].matrix{
   left: 145px;
   margin-top: 10px; 
   border-radius: 6px;
+  border: 1px solid black;
+  background-color: white;
 }
 .setting2{
   position: relative;
@@ -373,6 +375,8 @@ input[type="radio"].matrix{
   margin-right: 10px;
   margin-top: 10px; 
   border-radius: 6px;
+  border: 1px solid black;
+  background-color: white;
 }
 /* pokus */
 .container {

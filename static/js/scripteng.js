@@ -427,6 +427,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const inputs = document.getElementsByTagName("input");
     const imgs = document.getElementsByClassName("sym");
     const divider = document.getElementById('divider');
+    const selects = document.getElementsByTagName('select');
 
     const themes = ['morning', 'noon', 'sunset', 'midnight', 'matrix'];
 
@@ -471,6 +472,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (defaultTheme === "matrix") img.src = "static/img/" + img.alt + "-matrix.png";
         else if (defaultTheme === "midnight") img.src = "static/img/" + img.alt + "-midnight.png";
         else img.src = "static/img/" + img.alt + ".png";
+    }
+
+    for (let select of selects) {
+        select.classList.add(defaultTheme);
     }
 
     themeSelect.addEventListener('change', function () {
@@ -527,6 +532,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (selectedTheme === "matrix") img.src = "static/img/" + img.alt + "-matrix.png";
             else if (selectedTheme === "midnight") img.src = "static/img/" + img.alt + "-midnight.png";
             else img.src = "static/img/" + img.alt + ".png";
+        }
+
+        for (let select of selects) {
+            select.classList.remove(...themes);
+            select.classList.add(selectedTheme);
         }
 
         localStorage.setItem('currentTheme', selectedTheme);
