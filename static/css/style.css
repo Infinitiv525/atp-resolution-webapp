@@ -1,6 +1,4 @@
-*{
-  box-sizing: border-box;
-}
+
 .image {
   float: left;
   margin-top: 20px;
@@ -45,12 +43,12 @@ body{
 #text-input.morning, #text-input.noon, #text-input.sunset{
   background-color: white;
 }
-.output-container.midnight, table.midnight #text-input.midnight, .button.midnight{
+.container.midnight, table.midnight #text-input.midnight, .button.midnight{
   background-color: #161616;
   color: #E4E6EB;
   border: 2px solid #E4E6EB;
 }
-.output-container.matrix, table.matrix, #text-input.matrix, .button.matrix{
+.container.matrix, table.matrix, #text-input.matrix, .button.matrix{
   background-color: #080C09;
   color: #2FE747;
   border: 2px solid #2FE747;
@@ -126,11 +124,13 @@ input[type="radio"] {
   grid-template-columns: repeat(15, 1fr);
   grid-gap: 10px;
   max-width: 300px;
-  padding-left: 30px;
+  padding-left: 50px;
+  padding-top: 10px;
 }
+
 .button {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -139,27 +139,20 @@ input[type="radio"] {
   justify-content: center;
 }
 .button img {
-  max-width: 25px;
-  max-height: 25px;
+  max-width: 30px;
+  max-height: 30px;
 }
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 10px;
-}
+
 .input-container {
-  display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 input[type="text"]{
   flex: 1;
-  padding: 10px;
   border: 1px solid #ccc;
-  width: 450px;
+  width: 650px;
+  height: 300px;
 }
 .click-button{
-  padding: 10px 20px;
   border: none;
   cursor: pointer;
   font-weight: bolder;
@@ -207,20 +200,6 @@ button {
   overflow: hidden;
   background-color: #333;
   font-family: "Times New Roman", sans-serif;
-}
-.output-container {
-    width: 100%;
-    height: 480px;
-    border: 1px solid #ccc;
-    resize: None;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-	  line-height: 1.5;
-	  cursor: pointer;
-    overflow: auto;
-    background-color: white;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 table, th, td {
   border: 1px solid black;
@@ -301,14 +280,14 @@ input[type="radio"].matrix{
 /* https://www.tutorialstonight.com/css-toggle-switch-with-text */
 .toggle {
   --width: 110px;
-  --height: calc(var(--width) / 3);
+  --height: calc(var(--width) / 4);
   position: relative;
   width: var(--width);
   height: var(--height);
   border-radius: var(--height);
   cursor: pointer;
-  margin-top: 20px;
   float: left;
+  left: 30px;
   --ball-color-checked: white;
   --ball-color-unchecked: white;
 }
@@ -317,8 +296,8 @@ input[type="radio"].matrix{
 }
 .toggle .slider {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -1px;
+  left: -2px;
   width: 100%;
   height: 100%;
   border-radius: var(--height);
@@ -328,7 +307,7 @@ input[type="radio"].matrix{
 .toggle .slider::before {
   content: "";
   position: absolute;
-  top: 3px;
+  top: 4px;
   left: 2px;
   width: calc(var(--height)*0.6);
   height: calc(var(--height)*0.6);
@@ -360,7 +339,7 @@ input[type="radio"].matrix{
 .toggle .labels::before {
   content: attr(data-on);
   position: absolute;
-  left: 5px;
+  left: 8px;
   opacity: 0;
   transition: all 0.4s ease-in-out;
 }
@@ -374,30 +353,113 @@ input[type="radio"].matrix{
   background-color: var(--ball-color-checked); /* Farba guličky pre checked stav */
 }
 #submit-button{
+  margin-left: 20px;
+  position: relative;
+  bottom: 150px;
   height: 44px;
 }
 .setting{
+  position: relative;
   font-size: 20px; 
-  float: right; 
-  margin-top: 30px; 
+  float: left;
+  left: 145px;
+  margin-top: 10px; 
   border-radius: 6px;
+}
+.setting2{
+  position: relative;
+  font-size: 20px; 
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px; 
+  border-radius: 6px;
+}
+/* pokus */
+.container {
+  display: flex;
+  height: 480px; /* Zmeniť podľa potreby */
+  border: 1px solid #ccc;
+  overflow: hidden;
+  width: 99%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+}
+.left-panel, .right-panel {
+  flex: 1;
+  min-width: 300px;
+  overflow: auto;
+  /*background-color: white;*/
+}
+.divider {
+  width: 10px;
+  cursor: ew-resize;
+  background-color: #ddd;
+}
+
+.divider.matrix{
+	background-color: #2FE747;
+}
+
+.output-container {
+  width: 100%;
+  height: 480px;
+  /*border: 1px solid #ccc;*/
+  resize: None;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+  /*overflow: auto;*/
+  /*background-color: white;*/
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  word-wrap: break-word; /* Lámavanie slov */
+}
+.pismo{
+  position: relative;
+  float: left; 
+  left: -55px;
+  margin-top: 10px; 
+  font-size: 18px;
+}
+.pismo2{
+  position: relative;
+  float: right; 
+  margin-top: 10px; 
+  font-size: 18px;
+}
+.container2 {
+  width: 1310px;
+  margin: 0 auto;
+  padding: 10px;
+}
+#text-input{
+  flex: 1;
+  border: 1px solid #ccc;
+  width: 93%;
+  height: 300px;
+  resize: none;
+}
+.right-panel{
+  overflow: auto;
+}
+
+#output-text{
+	 padding-left: 10px;
+	padding-right: 10px;
 }
 
 #copy-message{
   display: none;
-  position: relative;
-  top: 10px;
-  border: 1px solid;
-  padding: 5px;
-  width: fit-content;
-}
-
-#copy-output{
-  display: none;
   position: absolute;
+  top: 720px;
   border: 1px solid;
   padding: 5px;
   width: fit-content;
-  left: 200px;
-  bottom: 215px;
 }

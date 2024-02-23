@@ -8,6 +8,7 @@ const errorMessage = document.getElementById('errorMessage');
 const copyMessage = document.getElementById("copy-message");
 let isSyntaxVisible = false;
 
+
 function tokenize(formula) {
     let tokens = [];
     let token = "";
@@ -76,7 +77,7 @@ function findVars(formula) {
     let vars = [];
 
     for (let elm of formula) {
-        if (!operators.includes(elm) && !vars.includes(elm) && elm!="(" && elm!=")") {
+        if (!operators.includes(elm) && !vars.includes(elm) && elm != "(" && elm != ")") {
             vars.push(elm);
         }
     }
@@ -84,14 +85,14 @@ function findVars(formula) {
 }
 
 function checkSyntax(input) {
-	let tokens=tokenize(input);
-	let vars=findVars(tokens);
+    let tokens = tokenize(input);
+    let vars = findVars(tokens);
     if (tokens.filter(token => token === '(').length !== tokens.filter(token => token === ')').length) {
-        if (tokens.filter(token => token === '(').length>tokens.filter(token => token === ')').length) {
-			return 1;
-		} else {
-			return 2;
-		}
+        if (tokens.filter(token => token === '(').length > tokens.filter(token => token === ')').length) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
     for (let i = 0; i < tokens.length - 1; i++) {
         let token = tokens[i];
@@ -106,19 +107,19 @@ function checkSyntax(input) {
             if ((operators.includes(next) && next !== 'not') || next === ')') {
                 return 5;
             }
-            let j = i+1;
-			let brackets = 0;
+            let j = i + 1;
+            let brackets = 0;
             while (j <= tokens.length) {
                 if (tokens[j] === ')') {
-					if (brackets === 0) {
-						break;
-					} else {
-						brackets--;
-					}
+                    if (brackets === 0) {
+                        break;
+                    } else {
+                        brackets--;
+                    }
                 }
-				if (tokens[j] === '(') {
-					brackets++;
-				}
+                if (tokens[j] === '(') {
+                    brackets++;
+                }
                 j++;
             }
             if (j === tokens.length + 1) {
@@ -129,31 +130,31 @@ function checkSyntax(input) {
             return 7;
         }
     }
-	if (tokens.length > 0) {
-		if (!vars.includes(tokens[tokens.length - 1]) && tokens[tokens.length - 1] !==')') {
-			return 8;
-		}
-		if ((operators.includes(tokens[0]) && tokens[0]!=='not') || tokens[0]===')') {
-			return 9;
-		}
-	}
+    if (tokens.length > 0) {
+        if (!vars.includes(tokens[tokens.length - 1]) && tokens[tokens.length - 1] !== ')') {
+            return 8;
+        }
+        if ((operators.includes(tokens[0]) && tokens[0] !== 'not') || tokens[0] === ')') {
+            return 9;
+        }
+    }
     return 0;
 }
 
 function handleInput() {
     var userInput = inputField.value;
     var isValidSyntax = checkSyntax(userInput);
-	errorMessage.style.display = 'none';
+    errorMessage.style.display = 'none';
 
-    if (isValidSyntax===0) {
-		inputField.style.borderColor = '';
-		inputForm.style.borderColor= '';
-		inputField.style.outline = '';
+    if (isValidSyntax === 0) {
+        inputField.style.borderColor = '';
+        inputForm.style.borderColor = '';
+        inputField.style.outline = '';
     } else {
-		inputField.style.borderColor = 'red';
-		inputForm.style.borderColor = 'red';
-		inputField.style.outline = '1px solid red';
-		inputField.style.borderRadius = '5px'; // Make the outline rounded
+        inputField.style.borderColor = 'red';
+        inputForm.style.borderColor = 'red';
+        inputField.style.outline = '1px solid red';
+        inputField.style.borderRadius = '5px';
     }
 }
 
@@ -170,16 +171,16 @@ const operator_dic = {
 };
 const operators = ['not', 'nand', 'nor', 'nimply', 'xor', 'and', 'or', 'imply', 'equiv'];
 
-if (inputField){
+if (inputField) {
     inputField.addEventListener('input', handleInput);
     inputField.addEventListener('focus', handleInput);
 }
 
-// Load saved values from local storage if available
-document.addEventListener('DOMContentLoaded', function() {
+//Local storage load
+document.addEventListener('DOMContentLoaded', function () {
     const textInput = document.getElementById('text-input');
     const savedTextValue = localStorage.getItem('textInputValue');
-    if (textInput===null){
+    if (textInput === null) {
         return;
     }
     if (savedTextValue) {
@@ -193,9 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.checked = true;
             }
         });
-    }else{
-		document.getElementById('option1').checked=true;
-	}
+    } else {
+        document.getElementById('option1').checked = true;
+    }
     const checkbox = document.getElementById('reduced');
     const savedCheckboxValue = localStorage.getItem('checkboxValue');
     if (savedCheckboxValue === 'true') {
@@ -204,13 +205,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("fontSizeSelect");
     var selectElement = document.getElementById("fontSizeSelect");
     var savedFontSize = localStorage.getItem("fontSize");
-    if (savedFontSize){
+    if (savedFontSize) {
         selectElement.value = savedFontSize;
         changeFontSize();
     }
 });
 
-// Save form values to local storage on change
+//Local Storage Save
 if (inputForm) {
     inputForm.addEventListener('change', function () {
         localStorage.setItem('textInputValue', document.getElementById('text-input').value);
@@ -222,131 +223,123 @@ if (inputForm) {
     });
 }
 
-//prepínanie strom a tabulka
-// Funkcia na inicializáciu stránky
-document.addEventListener("DOMContentLoaded", function() {
-    // Spustiť toggleOptions s predvoleným tlačidlom
+document.addEventListener("DOMContentLoaded", function () {
     toggleOptions();
+    checkEmptyDiv();
 });
 
-  // Funkcia na prepínanie možností
 function toggleOptions() {
-    // Získať tlačidlo a obsah
     var button = document.getElementById("switch-button");
     var treeContent = document.getElementById("resolution-tree");
     var tableContent = document.getElementById("resolution-table");
 
-    if (button===null){
+    if (button === null) {
         return;
     }
-    // Ak je zobrazený obsah pre "Resolution Tree"
     if (treeContent.style.display !== "none") {
-      // Skryť obsah pre "Resolution Tree" a zobraziť pre "Resolution Table"
-      treeContent.style.display = "none";
-      tableContent.style.display = "block";
-  
-      // Zmeniť text tlačidla na "Resolution Tree"
-      button.innerText = "Rezolučný strom";
+        treeContent.style.display = "none";
+        tableContent.style.display = "block";
+
+        button.innerText = "Rezolučný strom";
     } else {
-      // Skryť obsah pre "Resolution Table" a zobraziť pre "Resolution Tree"
-      treeContent.style.display = "block";
-      tableContent.style.display = "none";
-  
-      // Zmeniť text tlačidla na "Resolution Table"
-      button.innerText = "Rezolučná tabuľka";
+        treeContent.style.display = "block";
+        tableContent.style.display = "none";
+
+        button.innerText = "Rezolučná tabuľka";
     }
 }
-  
-//zmena velkosti pisma
+
 function changeFontSize() {
     var selectElement = document.getElementById("fontSizeSelect");
     var selectedValue = selectElement.options[selectElement.selectedIndex].text;
-    
-    // Nastavenie veľkosti písma podľa vybranej hodnoty
+
     document.getElementById("output-text").style.fontSize = selectedValue;
     document.getElementById("text-input").style.fontSize = selectedValue;
-    localStorage.setItem('fontSize',selectElement.value);
+    localStorage.setItem('fontSize', selectElement.value);
 }
 
 function copyToClipboardTree() {
     var copyText = document.getElementById("latex-tree");
-        if (navigator.clipboard) {
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value)
-                .then(function() {
-                    console.log('Text successfully copied to clipboard');
-                })
-                .catch(function(err) {
-                    console.error('Unable to copy text to clipboard', err);
-                });
-        } else {
-            var tempTextArea = document.createElement('textarea');
-            tempTextArea.value = copyText.value;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-        }
-        copyMessage.style.display='block';
-        copyMessage.style.left='0px';
-        setTimeout(function() {
-            copyMessage.style.display='none';
-        }, 2000);
+    if (navigator.clipboard) {
+        copyText.select();
+        navigator.clipboard.writeText(copyText.value)
+            .then(function () {
+                console.log('Text successfully copied to clipboard');
+            })
+            .catch(function (err) {
+                console.error('Unable to copy text to clipboard', err);
+            });
+    } else {
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = copyText.value;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+    }
+    copyMessage.style.display = 'block';
+    copyMessage.style.right = '40px';
+    copyMessage.style.left = '';
+    setTimeout(function () {
+        copyMessage.style.display = 'none';
+    }, 2000);
 }
 
 function copyToClipboardTable() {
     var copyText = document.getElementById("latex-table");
-        if (navigator.clipboard) {
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value)
-                .then(function() {
-                    console.log('Text successfully copied to clipboard');
-                })
-                .catch(function(err) {
-                    console.error('Unable to copy text to clipboard', err);
-                });
-        } else {
-            var tempTextArea = document.createElement('textarea');
-            tempTextArea.value = copyText.value;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-        }
-        copyMessage.style.display='block';
-        copyMessage.style.left='155px';
-        setTimeout(function() {
-            copyMessage.style.display='none';
-        }, 2000);
+    if (navigator.clipboard) {
+        copyText.select();
+        navigator.clipboard.writeText(copyText.value)
+            .then(function () {
+                console.log('Text successfully copied to clipboard');
+            })
+            .catch(function (err) {
+                console.error('Unable to copy text to clipboard', err);
+            });
+    } else {
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = copyText.value;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+    }
+    copyMessage.style.display = 'block';
+    copyMessage.style.right = '185px';
+    copyMessage.style.left = '';
+    setTimeout(function () {
+        copyMessage.style.display = 'none';
+    }, 2000);
 }
 
 function copyToClipboardOutput() {
     var copyText = document.getElementById("latex-output");
-        if (navigator.clipboard) {
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value)
-                .then(function() {
-                    console.log('Text successfully copied to clipboard');
-                })
-                .catch(function(err) {
-                    console.error('Unable to copy text to clipboard', err);
-                });
-        } else {
-            var tempTextArea = document.createElement('textarea');
-            tempTextArea.value = copyText.value;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-        }
-        const copyOutput = document.getElementById("copy-output");
-        copyOutput.style.display='block';
-        setTimeout(function() {
-            copyOutput.style.display='none';
-        }, 2000);
+    if (navigator.clipboard) {
+        copyText.select();
+        navigator.clipboard.writeText(copyText.value)
+            .then(function () {
+                console.log('Text successfully copied to clipboard');
+            })
+            .catch(function (err) {
+                console.error('Unable to copy text to clipboard', err);
+            });
+    } else {
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = copyText.value;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+    }
+    copyMessage.style.display = 'block';
+    copyMessage.style.left = '10px';
+    copyMessage.style.right = '';
+    setTimeout(function () {
+        copyMessage.style.display = 'none';
+    }, 2000);
 }
 
-if(inputForm) {
+if (inputForm) {
     inputForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -360,21 +353,18 @@ if(inputForm) {
         this.submit();
     });
 }
-  
-// Add a click event listener to the button grid
+
 if (buttonGrid) {
     buttonGrid.addEventListener('click', (e) => {
-        const symbol = e.target.getAttribute('data-symbol'); // Get the symbol from the button's data attribute
+        const symbol = e.target.getAttribute('data-symbol');
         if (symbol) {
-            // Append the symbol to the input field
             inputField.value += symbol;
-            // Set focus back to the input field
             inputField.focus();
         }
     });
 }
 
-if(inputField) {
+if (inputField) {
     inputField.addEventListener('blur', function () {
         var userInput = inputField.value;
         var isValidSyntax = checkSyntax(userInput);
@@ -423,144 +413,184 @@ if(inputField) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const themeSelect = document.getElementById('theme-select');
     const body = document.body;
-    const containers= document.getElementsByClassName("output-container");
+    const containers = document.getElementsByClassName("container");
     const svgElement = document.getElementsByTagName("svg")[0];
     const clickButtons = document.getElementsByClassName("click-button");
     const tables = document.getElementsByTagName("table");
     const ths = document.getElementsByTagName("th");
     const tds = document.getElementsByTagName("td");
     const input = document.getElementById("text-input");
-    const buttons= document.getElementsByClassName("button");
+    const buttons = document.getElementsByClassName("button");
     const inputs = document.getElementsByTagName("input");
-    const imgs= document.getElementsByClassName("sym");
+    const imgs = document.getElementsByClassName("sym");
+    const divider = document.getElementById('divider');
 
-    // Array of available themes
     const themes = ['morning', 'noon', 'sunset', 'midnight', 'matrix'];
 
-    // Check for user preference or default to the first theme
     const savedTheme = localStorage.getItem('currentTheme');
     const defaultTheme = savedTheme && themes.includes(savedTheme) ? savedTheme : themes[0];
 
-    // Apply the selected theme
     body.classList.add(defaultTheme);
     themeSelect.value = defaultTheme;
-    if(svgElement) svgElement.classList.add(defaultTheme);
-    if(input) input.classList.add(defaultTheme);
+    if (svgElement) svgElement.classList.add(defaultTheme);
+    if (input) input.classList.add(defaultTheme);
+    if (divider) divider.classList.add(defaultTheme);
 
-    for(let container of containers){
-      container.classList.add(defaultTheme);
+    for (let container of containers) {
+        container.classList.add(defaultTheme);
     }
 
-    for(let button of clickButtons){
+    for (let button of clickButtons) {
         button.classList.add(defaultTheme);
     }
 
-    for(let table of tables){
+    for (let table of tables) {
         table.classList.add(defaultTheme);
     }
 
-    for(let th of ths){
+    for (let th of ths) {
         th.classList.add(defaultTheme);
     }
 
-    for(let td of tds){
+    for (let td of tds) {
         td.classList.add(defaultTheme);
     }
 
-    for(let button of buttons){
+    for (let button of buttons) {
         button.classList.add(defaultTheme);
     }
 
-    for(let input of inputs){
+    for (let input of inputs) {
         input.classList.add(defaultTheme);
     }
 
-    for(let img of imgs) {
-        if (defaultTheme === "matrix") img.src = "static/img/"+img.alt+"-matrix.png";
-        else if (defaultTheme === "midnight") img.src = "static/img/"+img.alt+"-midnight.png";
-        else img.src = "static/img/"+img.alt+".png";
+    for (let img of imgs) {
+        if (defaultTheme === "matrix") img.src = "static/img/" + img.alt + "-matrix.png";
+        else if (defaultTheme === "midnight") img.src = "static/img/" + img.alt + "-midnight.png";
+        else img.src = "static/img/" + img.alt + ".png";
     }
 
-
-
-    // Change theme on dropdown selection
-    themeSelect.addEventListener('change', function() {
+    themeSelect.addEventListener('change', function () {
         const selectedTheme = themeSelect.value;
 
         // Remove the current theme
         body.classList.remove(...themes);
-        if(svgElement) svgElement.classList.remove(...themes);
-        if(input) input.classList.remove(...themes);
+        if (svgElement) svgElement.classList.remove(...themes);
+        if (input) input.classList.remove(...themes);
+        if (divider) divider.classList.remove(...themes);
 
         // Apply the selected theme
         body.classList.add(selectedTheme);
-        if(svgElement) svgElement.classList.add(selectedTheme);
-        if(input) input.classList.add(selectedTheme);
+        if (svgElement) svgElement.classList.add(selectedTheme);
+        if (input) input.classList.add(selectedTheme);
+        if (divider) divider.classList.add(selectedTheme);
 
-        for(let container of containers) {
+        for (let container of containers) {
             container.classList.remove(...themes);
             container.classList.add(selectedTheme);
         }
 
-        for(let button of clickButtons){
+        for (let button of clickButtons) {
             button.classList.remove(...themes);
             button.classList.add(selectedTheme);
         }
 
-        for(let table of tables){
+        for (let table of tables) {
             table.classList.remove(...themes);
             table.classList.add(selectedTheme);
         }
 
-        for(let th of ths){
+        for (let th of ths) {
             th.classList.remove(...themes);
             th.classList.add(selectedTheme);
         }
 
-        for(let td of tds){
+        for (let td of tds) {
             td.classList.remove(...themes);
             td.classList.add(selectedTheme);
         }
 
-        for(let button of buttons){
+        for (let button of buttons) {
             button.classList.remove(...themes);
             button.classList.add(selectedTheme);
         }
 
-        for(let input of inputs){
+        for (let input of inputs) {
             input.classList.remove(...themes);
             input.classList.add(selectedTheme);
         }
 
-        for(let img of imgs) {
-            if (selectedTheme === "matrix") img.src = "static/img/"+img.alt+"-matrix.png";
-            else if (selectedTheme === "midnight") img.src = "static/img/"+img.alt+"-midnight.png";
-            else img.src = "static/img/"+img.alt+".png";
+        for (let img of imgs) {
+            if (selectedTheme === "matrix") img.src = "static/img/" + img.alt + "-matrix.png";
+            else if (selectedTheme === "midnight") img.src = "static/img/" + img.alt + "-midnight.png";
+            else img.src = "static/img/" + img.alt + ".png";
         }
 
-        // Save the current theme in local storage
         localStorage.setItem('currentTheme', selectedTheme);
     });
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Získajte odkaz na checkbox a na oba kontajnery s obsahom
     var checkbox = document.querySelector('.toggle input[type="checkbox"]');
     var treeContainer = document.getElementById('resolution-tree');
     var tableContainer = document.getElementById('resolution-table');
 
-    // Pridajte poslúchača udalostí na zmenu stavu checkboxu
     checkbox.addEventListener('change', function () {
-        // Ak je checkbox zaškrtnutý, zobraz strom a skry tabuľku
         if (checkbox.checked) {
             treeContainer.style.display = 'block';
             tableContainer.style.display = 'none';
-        } else { // Inak zobraz tabuľku a skry strom
+        } else {
             treeContainer.style.display = 'none';
             tableContainer.style.display = 'block';
         }
     });
 });
+
+const divider = document.getElementById('divider');
+const leftPanel = document.querySelector('.left-panel');
+const rightPanel = document.querySelector('.right-panel');
+
+let isResizing = false;
+
+divider.addEventListener('mousedown', function (e) {
+    isResizing = true;
+    document.addEventListener('mousemove', resize);
+    document.addEventListener('mouseup', () => {
+        isResizing = false;
+        document.removeEventListener('mousemove', resize);
+    });
+});
+
+function resize(e) {
+    if (isResizing) {
+        const offsetLeft = e.clientX - leftPanel.getBoundingClientRect().left;
+        const totalWidth = leftPanel.offsetWidth + rightPanel.offsetWidth;
+        const leftWidthPercentage = (offsetLeft / totalWidth) * 100;
+        leftPanel.style.flex = `${leftWidthPercentage}%`;
+        rightPanel.style.flex = `${100 - leftWidthPercentage}%`;
+    }
+}
+
+function checkEmptyDiv() {
+    let outputDiv = document.getElementById('output-text');
+    let containers = document.getElementsByClassName('container');
+    let hideButtons = document.getElementsByClassName('hide');
+    if (outputDiv.innerHTML.trim() === '') {
+        for (let container of containers) {
+            container.style.display = 'none';
+        }
+        for (let hideButton of hideButtons) {
+            hideButton.style.display = 'none';
+        }
+    } else {
+        for (let container of containers) {
+            container.style.display = 'flex';
+        }
+        for (let hideButton of hideButtons) {
+            hideButton.style.display = 'block';
+        }
+    }
+}

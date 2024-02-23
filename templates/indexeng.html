@@ -24,143 +24,130 @@
 	  <li style="float:right"><a href="{{ url_for('truthen')}}">Truth tables</a></li>
   </ul>
 </div>
+<br>
+<select id="fontSizeSelect" class="setting" onchange="changeFontSize()">
+  <option selected>16px</option>
+  <option>18px</option>
+  <option>24px</option>
+  <option>32px</option>
+  <option>48px</option>
+</select>
+<p class="pismo"><b>Font size: </b>&nbsp;&nbsp;</p>
+<select class="setting2" id="theme-select">
+  <option value="morning">Morning</option>
+  <option value="noon">Noon</option>
+  <option value="sunset">Sunset</option>
+  <option value="midnight">Midnight</option>
+  <option value="matrix">Matrix</option>
+</select>
+<p class="pismo2"><b>Select theme:</b>&nbsp;&nbsp;</p>
+<label style="float: right; font-size: 18px;" for="theme-select"></label>
 
-<div>
-  <div class="column">
-    <select id="fontSizeSelect" style="font-size: 20px; float: right; margin-top: 30px; border-radius: 6px;" onchange="changeFontSize()">
-      <option selected>16px</option>
-      <option>18px</option>
-      <option>24px</option>
-      <option>32px</option>
-      <option>48px</option>
-    </select>
-    <p style="float: right; margin-top: 30px; font-size: 18px;"><b>Font size: </b>&nbsp;&nbsp;</p>
+<div class="container">
+  <div class="left-panel">
     <h2 style="text-align: center;">Output</h2>
-
-    <div class="output-container">
-        <div id="output-text" class="editable-text">{{ output | safe }}</div>
+    <div id="left-output" class="output-container">
+      <div id="output-text" class="editable-text">{{ output | safe }}</div>
     </div>
-    <br>
-    <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardOutput()" style="margin-left: 10px;">Copy Output</button>
-      <div id="copy-output">Copied</div>
-    <div class="container">
-      <div class="input-container">
-	  <form id="inp-form" method="post">
-          <input type="text" id="text-input" name="inp">
-		  <div id="errorMessage" class="error-message">This field is required</div>
-
-      <button id="submit-button" class="click-button" type="submit">SUBMIT</button>
-    <h4 style="margin: 10px;">Strategy of resolution</h4>
-    <input type="radio" name="option" id="option1" value="Full">
-    <label for="option1">Full </label>
-
-    <input type="radio" name="option" id="option2" value="Unit">
-    <label for="option2">Unit</label>
-
-    <input type="radio" name="option" id="option3" value="Linear">
-    <label for="option3">Linear</label>
-
-	<input type="checkbox" id="reduced" name="reduced">
-	<label for="reduced">Reduced tree</label>
-	  </form>
-    </div>
-    </div>
-      <!-- znaky -->
-      <div class="button-grid">
-        <div class="button" data-symbol=" ¬">
-          <button data-symbol=" ¬"><img class="sym" data-symbol=" ¬" src="{{ url_for('static', filename='img/NOT.png') }}" alt="NOT"></button>
-        </div>
-        <div class="button" data-symbol=" ∧ ">
-          <button data-symbol=" ∧ "><img class="sym" data-symbol=" ∧ " src="{{ url_for('static', filename='img/AND.png') }}" alt="AND"></button>
-        </div>
-        <div class="button" data-symbol=" ∨ ">
-          <button data-symbol=" ∨ "><img class="sym" data-symbol=" ∨ " src="{{ url_for('static', filename='img/OR.png') }}" alt="OR"></button>
-        </div>
-        <div class="button" data-symbol=" ⇒ ">
-          <button data-symbol=" ⇒ "><img class="sym" data-symbol=" ⇒ " src="{{ url_for('static', filename='img/IMPLY.png') }}" alt="IMPLY"></button>
-        </div>
-      <div class="button" data-symbol=" (">
-          <button data-symbol=" ("><img class="sym" data-symbol=" (" src="{{ url_for('static', filename='img/LPAREN.png') }}" alt="LPAREN"></button>
-        </div>
-        <div class="button" data-symbol=") ">
-          <button data-symbol=") "><img class="sym" data-symbol=") " src="{{ url_for('static', filename='img/RPAREN.png') }}" alt="RPAREN"></button>
-        </div>
-        <div class="button" data-symbol=" ⇔ ">
-          <button data-symbol=" ⇔ "><img class="sym" data-symbol=" ⇔ " src="{{ url_for('static', filename='img/EQUIV.png') }}" alt="EQUIV"></button>
-        </div>
-        <div class="button" data-symbol=" ⊼ ">
-          <button data-symbol=" ⊼ "><img class="sym" data-symbol=" ⊼ " src="{{ url_for('static', filename='img/NAND.png') }}" alt="NAND"></button>
-        </div>
-        <div class="button" data-symbol=" ⊽ ">
-          <button data-symbol=" ⊽ "><img class="sym" data-symbol=" ⊽ " src="{{ url_for('static', filename='img/NOR.png') }}" alt="NOR"></button>
-        </div>
-        <div class="button" data-symbol=" ⊕ ">
-          <button data-symbol=" ⊕ "><img class="sym" data-symbol=" ⊕ " src="{{ url_for('static', filename='img/XOR.png') }}" alt="XOR"></button>
-        </div>
-        <div class="button" data-symbol=" α ">
-          <button data-symbol=" α "><img class="sym" data-symbol=" α " src="{{ url_for('static', filename='img/ALPHA.png') }}" alt="ALPHA"></button>
-        </div>
-        <div class="button" data-symbol=" β ">
-          <button data-symbol=" β "><img class="sym" data-symbol=" β " src="{{ url_for('static', filename='img/BETA.png') }}" alt="BETA"></button>
-        </div>
-      <div class="button" data-symbol=" φ ">
-          <button data-symbol=" φ "><img class="sym" data-symbol=" φ " src="{{ url_for('static', filename='img/PHI.png') }}" alt="PHI"></button>
-        </div>
-        <div class="button" data-symbol=" ψ ">
-          <button data-symbol=" ψ "><img class="sym" data-symbol=" ψ " src="{{ url_for('static', filename='img/PSI.png') }}" alt="PSI"></button>
-        </div>
-        <div class="button" data-symbol=" ω ">
-          <button data-symbol=" ω "><img class="sym" data-symbol=" ω " src="{{ url_for('static', filename='img/OMEGA.png') }}" alt="OMEGA"></button>
-        </div>
-        </div>
   </div>
-  <div class="column2">
-    <select style="font-size: 20px; float: right; margin-top: 30px; border-radius: 6px;"  id="theme-select">
-      <option value="morning">Morning</option>
-      <option value="noon">Noon</option>
-      <option value="sunset">Sunset</option>
-      <option value="midnight">Midnight</option>
-      <option value="matrix">Matrix</option>
-  </select>
-    <label style="float: right; margin-top: 30px; font-size: 18px;" for="theme-select"><b>Select theme:</b>&nbsp;&nbsp;</label>
-    <!-- <button id="switch-button" class="click-button" style="float: left; margin-top: 20px;" onclick="toggleOptions()">Resolution Tree</button> -->    
-    
-    <label class="toggle click-button">
-      <input type="checkbox">
-      <span class="slider"></span>
-      <span class="labels" data-on="Table" data-off="Tree"></span>
-    </label> 
-
-    <!-- Najnovsie -->
+  <div class="divider" id="divider"></div>
+  <div class="right-panel">
     <div id="options-container">
+      <label class="toggle click-button">
+        <input type="checkbox">
+        <span class="slider"></span>
+        <span class="labels" data-on="Table" data-off="Tree"></span>
+      </label>
       <div id="resolution-tree" style="display: none;">
-          <h2 style="text-align: center;">Resolution tree</h2>
-          <div class="output-container">
-              <div id="output-text-tree" class="editable-text" onclick="copyToClipboardTree()">{{ tree | safe }}</div>
-              <textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
-          </div>
+        <h2 style="text-align: center;">Resolition tree</h2>
+        <div class="output-container">
+          <div id="output-text-tree" class="editable-text" onclick="copyToClipboardTree()">{{ tree | safe }}</div>
+          <textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
+        </div>
       </div>
       <div id="resolution-table">
-          <h2 style="text-align: center;">Resolution table</h2>
-          <div class="output-container" >
-              <div id="output-text-table" class="editable-text"  onclick="copyToClipboardTable()">{{ table | safe }}</div>
-              <textarea id="latex-table" style="display:none;">{{ latex_table | safe }}</textarea>
-          </div>
+        <h2 style="text-align: center;">Resolution table</h2>
+        <div class="output-container">
+          <div id="output-text-table" class="editable-text" onclick="copyToClipboardTable()">{{ table | safe }}</div>
+          <textarea id="latex-table" style="display:none;">{{ latex_table | safe }}</textarea>
+        </div>
       </div>
     </div>
-      <textarea id="latex-output" style="display:none;">{{ latex_output | safe }}</textarea>
-    <!-- <h2 style="text-align: center;">Resolution Tree/Resolution table</h2>
-    <div class="output-container">
-        <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ tree | safe }}</div>
-        <div id="output-text" class="editable-text" onclick="copyToClipboard()">{{ table | safe }}</div>
-		<textarea id="latex-tree" style="display:none;">{{ latex_tree | safe }}</textarea>
-    </div> 
-    <br>-->
-    <br>
-    <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTree()">Copy Tree</button>
-    <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardTable()">Copy Table</button>
-      <div id="copy-message">Copied</div>
-    <!-- <button id="copy-button" class="click-button" type="submit" onclick="copyToClipboardOutput()">Copy Output</button> -->
+    <textarea id="latex-output" style="display:none;">{{ latex_output | safe }}</textarea>
+  </div>
+</div>
+<br>
+<button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardOutput()" style="float: left; height: 40px; margin-left: 10px;" >Copy Output</button>
+<button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTree()" style="float: right; height: 40px; margin-right: 10px;">Copy Tree</button>
+<button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTable()" style="float: right; height: 40px; margin-right: 10px;">Copy Table</button>
+<div id="copy-message">Copied</div>
+<br><br>
+<div class="container2">
+  <div class="input-container">
+  <form id="inp-form" method="post">
+    <textarea type="text" id="text-input" name="inp"></textarea>
+    <div id="errorMessage" class="error-message">This field is required</div>
+    <button id="submit-button" class="click-button" type="submit">SUBMIT</button>
+    <h3 style="margin-left: 10px; margin-top: -10px;">Resolution strategy:</h3>
+    <input type="radio" name="option" id="option1" value="Full">
+    <label for="option1" style="font-size: 18px;">Full</label>
+
+    <input type="radio" name="option" id="option2" value="Unit">
+    <label for="option2" style="font-size: 18px;">Unit</label>
+
+    <input type="radio" name="option" id="option3" value="Linear">
+    <label for="option3" style="font-size: 18px;">Linear</label>
+
+    <input type="checkbox" id="reduced" name="reduced">
+    <label for="reduced" style="font-size: 18px;">Reduced tree</label>
+  </form>
+  </div>
+  <div class="button-grid">
+    <div class="button" data-symbol=" ¬">
+      <button data-symbol=" ¬"><img class="sym" data-symbol=" ¬" src="{{ url_for('static', filename='img/NOT.png') }}" alt="NOT"></button>
+    </div>
+    <div class="button" data-symbol=" ∧ ">
+      <button data-symbol=" ∧ "><img class="sym" data-symbol=" ∧ " src="{{ url_for('static', filename='img/AND.png') }}" alt="AND"></button>
+    </div>
+    <div class="button" data-symbol=" ∨ ">
+      <button data-symbol=" ∨ "><img class="sym" data-symbol=" ∨ " src="{{ url_for('static', filename='img/OR.png') }}" alt="OR"></button>
+    </div>
+    <div class="button" data-symbol=" ⇒ ">
+      <button data-symbol=" ⇒ "><img class="sym" data-symbol=" ⇒ " src="{{ url_for('static', filename='img/IMPLY.png') }}" alt="IMPLY"></button>
+    </div>
+    <div class="button" data-symbol=" (">
+      <button data-symbol=" ("><img class="sym" data-symbol=" (" src="{{ url_for('static', filename='img/LPAREN.png') }}" alt="LPAREN"></button>
+    </div>
+    <div class="button" data-symbol=") ">
+      <button data-symbol=") "><img class="sym" data-symbol=") " src="{{ url_for('static', filename='img/RPAREN.png') }}" alt="RPAREN"></button>
+    </div>
+    <div class="button" data-symbol=" ⇔ ">
+      <button data-symbol=" ⇔ "><img class="sym" data-symbol=" ⇔ " src="{{ url_for('static', filename='img/EQUIV.png') }}" alt="EQUIV"></button>
+    </div>
+    <div class="button" data-symbol=" ⊼ ">
+      <button data-symbol=" ⊼ "><img class="sym" data-symbol=" ⊼ " src="{{ url_for('static', filename='img/NAND.png') }}" alt="NAND"></button>
+    </div>
+    <div class="button" data-symbol=" ⊽ ">
+      <button data-symbol=" ⊽ "><img class="sym" data-symbol=" ⊽ " src="{{ url_for('static', filename='img/NOR.png') }}" alt="NOR"></button>
+    </div>
+    <div class="button" data-symbol=" ⊕ ">
+      <button data-symbol=" ⊕ "><img class="sym" data-symbol=" ⊕ " src="{{ url_for('static', filename='img/XOR.png') }}" alt="XOR"></button>
+    </div>
+    <div class="button" data-symbol=" α ">
+      <button data-symbol=" α "><img class="sym" data-symbol=" α " src="{{ url_for('static', filename='img/ALPHA.png') }}" alt="ALPHA"></button>
+    </div>
+    <div class="button" data-symbol=" β ">
+      <button data-symbol=" β "><img class="sym" data-symbol=" β " src="{{ url_for('static', filename='img/BETA.png') }}" alt="BETA"></button>
+    </div>
+    <div class="button" data-symbol=" φ ">
+      <button data-symbol=" φ "><img class="sym" data-symbol=" φ " src="{{ url_for('static', filename='img/PHI.png') }}" alt="PHI"></button>
+    </div>
+    <div class="button" data-symbol=" ψ ">
+      <button data-symbol=" ψ "><img class="sym" data-symbol=" ψ " src="{{ url_for('static', filename='img/PSI.png') }}" alt="PSI"></button>
+    </div>
+    <div class="button" data-symbol=" ω ">
+      <button data-symbol=" ω "><img class="sym" data-symbol=" ω " src="{{ url_for('static', filename='img/OMEGA.png') }}" alt="OMEGA"></button>
+    </div>
   </div>
 </div>
     <script src="{{ url_for('static', filename='js/scripteng.js') }}"></script>
