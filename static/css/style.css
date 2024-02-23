@@ -353,10 +353,10 @@ input[type="radio"].matrix{
   background-color: var(--ball-color-checked); /* Farba guličky pre checked stav */
 }
 #submit-button{
-  margin-left: 20px;
   position: relative;
   bottom: 150px;
   height: 44px;
+  left: 15px;
 }
 .setting{
   position: relative;
