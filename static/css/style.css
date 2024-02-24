@@ -1,4 +1,3 @@
-
 .image {
   float: left;
   margin-top: 20px;
@@ -111,12 +110,70 @@ li a:hover:not(.active) {
   width: 49%;
   padding: 15px;
 }
-@media screen and (max-width:600px) {
-  .column{
+@media (max-width: 480px) {
+  
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .image2 {
+    margin: 10px auto;
+    margin-left: 5px;
+    margin-top: 20px;
+    width: 10%;
+    height: auto;
+  }
+  .title{
+    margin-left: 310px;
+    padding-top: 50px;
+    font-size: 14px;
+    text-align: center;
+  }
+  .topnav {
+    flex-direction: column;
+  }
+  .menu {
     width: 100%;
   }
+  .menu li {
+    text-align: center;
+  }
+  .container {
+    flex-direction: column;
+  }
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  } 
+  .divider {
+    width: 100%;
+  }
+  .input-container {
+    flex-direction: column;
+  }
+  textarea {
+    width: 100%;
+    height: 150px;
+  }
+  #text-input {
+    height: 200px;
+  }
+  .click-button {
+    margin: 10px auto;
+  }
+  .pismo, .pismo2{
+    font-weight: normal;
+    font-size: 10px;
+  }
+  #text-input {
+    height: 150px; /* Prispôsobte výšku textarea podľa potreby */
+    width: 25% !important;
+  }
+  label[for="reduced"] {
+    display: block;
+    margin-top: 10px; /* Prispôsobte medzeru podľa potreby */
+  }
 } 
-
 .moznost {
   display: inline;
   position: relative;
@@ -125,15 +182,11 @@ li a:hover:not(.active) {
   cursor: pointer;
   font-size: 18px;
 }
-
-/* Hide the browser's default radio button */
 .moznost input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
 }
-
-/* Create a custom radio button */
 .checkmark {
   position: absolute;
   top: 0;
@@ -155,86 +208,62 @@ li a:hover:not(.active) {
   background-color: white;
   border: 1px solid black;
 }
-/* When the radio button is checked, add a blue background */
-/* zmena farby okolo malej gulicky */
 .moznost input:checked ~ .checkmark{
   background-color: rgb(233, 145, 14);
 }
-/* Create the indicator (the dot/circle - hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
-
-/* Show the indicator (dot/circle) when checked */
 .moznost input:checked ~ .checkmark:after {
   display: block;
 }
-
-/* Style the indicator (dot/circle) */
 .moznost .checkmark:after {
  	top: 3.5px;
 	left: 3px;
 	width: 8px;
 	height: 8px;
 	border-radius: 50%;
-	background: white; /* zmena farby malej gulicky */
+	background: white;
 }
-
 .moznost .checkmark.midnight:after{
   background: #E4E6EB;
 }
-
 .moznost .checkmark.matrix:after{
   background: #2FE747;
 }
-
-/* zmena farby okolo stvorceka */
 .moznost input:checked ~ .checkmark2 {
   background-color: #E4E6EB;
 }
-
 .moznost input:checked ~ .checkmark2.morning, .moznost input:checked ~ .checkmark.morning{
   background-color: rgb(233, 145, 14);
 }
-
 .moznost input:checked ~ .checkmark2.noon, .moznost input:checked ~ .checkmark.noon{
   background-color: blue;
 }
-
 .moznost input:checked ~ .checkmark2.sunset, .moznost input:checked ~ .checkmark.sunset{
   background-color: red;
 }
-
 .moznost input:checked ~ .checkmark2.midnight, .moznost input:checked ~ .checkmark2.matrix, .moznost input:checked ~ .checkmark.midnight, .moznost input:checked ~ .checkmark.matrix{
   background-color: black;
 }
-
 .checkmark.midnight, .checkmark2.midnight{
   background: black;
   border: 2px solid #E4E6EB;
 }
-
 .checkmark.matrix, .checkmark2.matrix{
   background: black;
   border: 2px solid #2FE747;
 }
-
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark2:after {
   content: "";
   position: absolute;
   display: none;
 }
-
-/* Show the checkmark when checked */
 .moznost input:checked ~ .checkmark2:after {
   display: block;
 }
-
-/* Style the checkmark/indicator */
-/* zmena farby fajocky*/
 .moznost .checkmark2:after {
   left: 3px;
   top: 0px;
@@ -246,15 +275,12 @@ li a:hover:not(.active) {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-
 .moznost .checkmark2.midnight:after{
   border-color: #E4E6EB;
 }
-
 .moznost .checkmark2.matrix:after{
   border-color: #2FE747;
 }
-
 .button-grid {
   display: grid;
   grid-template-columns: repeat(15, 1fr);
@@ -263,7 +289,6 @@ li a:hover:not(.active) {
   padding-left: 50px;
   padding-top: 10px;
 }
-
 .button {
   width: 60px;
   height: 60px;
@@ -278,7 +303,6 @@ li a:hover:not(.active) {
   max-width: 30px;
   max-height: 30px;
 }
-
 .input-container {
   align-items: center;
 }
@@ -488,7 +512,7 @@ input[type="radio"].matrix{
   opacity: 1;
 }
 .toggle input:checked + .slider::before {
-  background-color: var(--ball-color-checked); /* Farba guličky pre checked stav */
+  background-color: var(--ball-color-checked);
 }
 #submit-button{
   position: relative;
@@ -516,10 +540,9 @@ input[type="radio"].matrix{
   border: 1px solid black;
   background-color: white;
 }
-/* pokus */
 .container {
   display: flex;
-  height: 480px; /* Zmeniť podľa potreby */
+  height: 480px; 
   border: 1px solid #ccc;
   overflow: hidden;
   width: 99%;
@@ -531,37 +554,30 @@ input[type="radio"].matrix{
   flex: 1;
   min-width: 300px;
   overflow: auto;
-  /*background-color: white;*/
 }
 .divider {
   width: 10px;
   cursor: ew-resize;
   background-color: #ddd;
 }
-
 .divider.matrix{
 	background-color: #2FE747;
 }
-
 .output-container {
   width: 100%;
   height: 480px;
-  /*border: 1px solid #ccc;*/
   resize: None;
   font-family: Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   cursor: pointer;
-  /*overflow: auto;*/
-  /*background-color: white;*/
 }
-
 textarea {
   width: 100%;
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
-  word-wrap: break-word; /* Lámavanie slov */
+  word-wrap: break-word;
 }
 .pismo{
   position: relative;
@@ -569,12 +585,14 @@ textarea {
   left: -55px;
   margin-top: 10px; 
   font-size: 18px;
+  font-weight: bold;
 }
 .pismo2{
   position: relative;
   float: right; 
   margin-top: 10px; 
   font-size: 18px;
+  font-weight: bold;
 }
 .container2 {
   position: relative;
@@ -592,12 +610,10 @@ textarea {
 .right-panel{
   overflow: auto;
 }
-
 #output-text{
 	 padding-left: 10px;
 	padding-right: 10px;
 }
-
 #copy-message{
   display: none;
   position: absolute;
