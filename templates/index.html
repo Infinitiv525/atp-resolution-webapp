@@ -89,7 +89,7 @@
     <div id="errorMessage" class="error-message">Toto pole je povinné</div>
     <button id="submit-button" class="click-button" type="submit">POTVRĎ</button>
     <h3 style="margin-left: 10px; margin-top: -10px;">Stratégia rezolúcie:</h3>
-    <input type="radio" name="option" id="option1" value="Full">
+    <!-- <input type="radio" name="option" id="option1" value="Full">
     <label for="option1" style="font-size: 18px;">Úplna</label>
 
     <input type="radio" name="option" id="option2" value="Unit">
@@ -99,7 +99,24 @@
     <label for="option3" style="font-size: 18px;">Lineárna</label>
 
     <input type="checkbox" id="reduced" name="reduced">
-    <label for="reduced" style="font-size: 18px;">Redukovaný strom</label>
+    <label for="reduced" style="font-size: 18px;">Redukovaný strom</label> -->
+
+    <label class="moznost" for="option1">Úplna
+      <input type="radio" checked="checked" name="option" id="option1">
+      <span class="checkmark"></span>
+    </label>
+    <label class="moznost" for="option2">Jednotková
+      <input type="radio"name="option" id="option2">
+      <span class="checkmark"></span>
+    </label>
+    <label class="moznost" for="option3">Lineárna
+      <input type="radio" name="option" id="option3">
+      <span class="checkmark"></span>
+    </label>
+    <label class="moznost" for="reduced">Redukovaný strom
+      <input type="checkbox" id="reduced" name="reduced">
+      <span class="checkmark2"></span>
+    </label>
   </form>
   </div>
   <div class="button-grid">
