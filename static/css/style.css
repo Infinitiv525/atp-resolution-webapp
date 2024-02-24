@@ -125,7 +125,7 @@ li a:hover:not(.active) {
   }
   .title{
     margin-left: 310px;
-    padding-top: 50px;
+    padding-top: 20px;
     font-size: 14px;
     text-align: center;
   }
@@ -166,12 +166,12 @@ li a:hover:not(.active) {
     font-size: 10px;
   }
   #text-input {
-    height: 150px; /* Prispôsobte výšku textarea podľa potreby */
-    width: 25% !important;
+    height: 150px;
+    width: 22% !important;
   }
   label[for="reduced"] {
     display: block;
-    margin-top: 10px; /* Prispôsobte medzeru podľa potreby */
+    margin-top: 10px;
   }
 } 
 .moznost {
