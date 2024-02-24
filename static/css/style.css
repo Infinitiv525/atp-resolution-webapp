@@ -181,9 +181,44 @@ li a:hover:not(.active) {
 	border-radius: 50%;
 	background: white; /* zmena farby malej gulicky */
 }
+
+.moznost .checkmark.midnight:after{
+  background: #E4E6EB;
+}
+
+.moznost .checkmark.matrix:after{
+  background: #2FE747;
+}
+
 /* zmena farby okolo stvorceka */
 .moznost input:checked ~ .checkmark2 {
+  background-color: #E4E6EB;
+}
+
+.moznost input:checked ~ .checkmark2.morning, .moznost input:checked ~ .checkmark.morning{
   background-color: rgb(233, 145, 14);
+}
+
+.moznost input:checked ~ .checkmark2.noon, .moznost input:checked ~ .checkmark.noon{
+  background-color: blue;
+}
+
+.moznost input:checked ~ .checkmark2.sunset, .moznost input:checked ~ .checkmark.sunset{
+  background-color: red;
+}
+
+.moznost input:checked ~ .checkmark2.midnight, .moznost input:checked ~ .checkmark2.matrix, .moznost input:checked ~ .checkmark.midnight, .moznost input:checked ~ .checkmark.matrix{
+  background-color: black;
+}
+
+.checkmark.midnight, .checkmark2.midnight{
+  background: black;
+  border: 2px solid #E4E6EB;
+}
+
+.checkmark.matrix, .checkmark2.matrix{
+  background: black;
+  border: 2px solid #2FE747;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -205,12 +240,21 @@ li a:hover:not(.active) {
   top: 0px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid #fff;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.moznost .checkmark2.midnight:after{
+  border-color: #E4E6EB;
+}
+
+.moznost .checkmark2.matrix:after{
+  border-color: #2FE747;
+}
+
 .button-grid {
   display: grid;
   grid-template-columns: repeat(15, 1fr);

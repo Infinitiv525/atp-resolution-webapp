@@ -89,17 +89,24 @@
     <div id="errorMessage" class="error-message">This field is required</div>
     <button id="submit-button" class="click-button" type="submit">SUBMIT</button>
     <h3 style="margin-left: 10px; margin-top: -10px;">Resolution strategy:</h3>
-    <input type="radio" name="option" id="option1" value="Full">
-    <label for="option1" style="font-size: 18px;">Full</label>
 
-    <input type="radio" name="option" id="option2" value="Unit">
-    <label for="option2" style="font-size: 18px;">Unit</label>
+    <label class="moznost" for="option1">Full
+      <input type="radio" checked="checked" name="option" id="option1" value="Full">
+      <span class="checkmark"></span>
+    </label>
+    <label class="moznost" for="option2">Unit
+      <input type="radio"name="option" id="option2" value="Unit">
+      <span class="checkmark"></span>
+    </label>
+    <label class="moznost" for="option3">Linear
+      <input type="radio" name="option" id="option3" value="Linear">
+      <span class="checkmark"></span>
+    </label>
+    <label class="moznost" for="reduced">Reduced tree
+      <input type="checkbox" id="reduced" name="reduced">
+      <span class="checkmark2"></span>
+    </label>
 
-    <input type="radio" name="option" id="option3" value="Linear">
-    <label for="option3" style="font-size: 18px;">Linear</label>
-
-    <input type="checkbox" id="reduced" name="reduced">
-    <label for="reduced" style="font-size: 18px;">Reduced tree</label>
   </form>
   </div>
   <div class="button-grid">

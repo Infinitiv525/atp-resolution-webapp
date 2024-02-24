@@ -428,6 +428,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const imgs = document.getElementsByClassName("sym");
     const divider = document.getElementById('divider');
     const selects = document.getElementsByTagName('select');
+    const checkmarks = document.getElementsByClassName("checkmark");
+    const checkmarks2 = document.getElementsByClassName("checkmark2");
 
     const themes = ['morning', 'noon', 'sunset', 'midnight', 'matrix'];
 
@@ -476,6 +478,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (let select of selects) {
         select.classList.add(defaultTheme);
+    }
+
+    for (let checkmark of checkmarks){
+        checkmark.classList.add(defaultTheme);
+    }
+    for (let checkmark2 of checkmarks2){
+        checkmark2.classList.add(defaultTheme);
     }
 
     themeSelect.addEventListener('change', function () {
@@ -537,6 +546,16 @@ document.addEventListener('DOMContentLoaded', function () {
         for (let select of selects) {
             select.classList.remove(...themes);
             select.classList.add(selectedTheme);
+        }
+
+        for (let checkmark of checkmarks){
+            checkmark.classList.remove(...themes);
+            checkmark.classList.add(selectedTheme);
+        }
+
+        for (let checkmark2 of checkmarks2){
+            checkmark2.classList.remove(...themes);
+            checkmark2.classList.add(selectedTheme);
         }
 
         localStorage.setItem('currentTheme', selectedTheme);
