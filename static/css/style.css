@@ -110,10 +110,14 @@ li a:hover:not(.active) {
   width: 49%;
   padding: 15px;
 }
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .header {
     flex-direction: column;
     align-items: center;
+  }
+  .image{
+    padding-top: 10px;
+    margin-top: unset;
   }
   .image2 {
     margin: 10px auto;
@@ -123,10 +127,14 @@ li a:hover:not(.active) {
     height: auto;
   }
   .title{
-    margin-left: 310px;
-    padding-top: 20px;
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 0;
     font-size: 14px;
     text-align: center;
+  }
+  .title h1{
+    margin-left: unset!important;
   }
   .topnav {
     flex-direction: column;
@@ -136,16 +144,24 @@ li a:hover:not(.active) {
   }
   .menu li {
     text-align: center;
+    float: unset!important;
+    border: 1px solid grey;
+  }
+  .setting2{
+    display: flex!important;
   }
   .container {
     flex-direction: column;
+    height: 600px!important;
   }
   .left-panel,
   .right-panel {
     width: 100%;
   } 
   .divider {
-    width: 100%;
+    width: 100%!important;
+    cursor: ns-resize!important;
+    height: 10px;
   }
   .input-container {
     flex-direction: column;
@@ -157,8 +173,10 @@ li a:hover:not(.active) {
   #text-input {
     height: 200px;
   }
-  .click-button {
-    margin: 10px auto;
+  #copy-button {
+    margin: 10px auto!important;
+    width: 90%;
+    float: unset!important;
   }
   .pismo, .pismo2{
     font-weight: normal;
@@ -173,8 +191,41 @@ li a:hover:not(.active) {
     margin-top: 10px;
   }
   .button-grid {
-    max-width: 450px;
+    max-width: 100%;
     grid-template-columns: repeat(5, 1fr) !important;
+    @media (max-width: 390px){
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+    @media (max-width: 310px) {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+  }
+  .container2{
+    max-width: 90%;
+  }
+  .input-container{
+    width: 100%;
+  }
+  #text-input{
+    width: 100% !important;
+  }
+  #submit-button{
+    bottom: 5px !important;
+    left: 0px!important;
+    width: 100%;
+    margin: 10px 0;
+  }
+  .error-message{
+    position: static!important;
+  }
+
+  .table-container table{
+    flex-basis: 70%!important;
+  }
+  #syntax-table{
+    float: left!important;
+    width: 70%;
+    margin-left: 30px!important;
   }
 } 
 .moznost {
@@ -402,6 +453,7 @@ td.matrix{
 .table-container {
   display: flex;
   flex-wrap: wrap;
+  float: left;
 }
 table {
   margin: 30px;

@@ -567,15 +567,17 @@ document.addEventListener("DOMContentLoaded", function () {
     var treeContainer = document.getElementById('resolution-tree');
     var tableContainer = document.getElementById('resolution-table');
 
-    checkbox.addEventListener('change', function () {
-        if (checkbox.checked) {
-            treeContainer.style.display = 'block';
-            tableContainer.style.display = 'none';
-        } else {
-            treeContainer.style.display = 'none';
-            tableContainer.style.display = 'block';
-        }
-    });
+    if (checkbox) {
+        checkbox.addEventListener('change', function () {
+            if (checkbox.checked) {
+                treeContainer.style.display = 'block';
+                tableContainer.style.display = 'none';
+            } else {
+                treeContainer.style.display = 'none';
+                tableContainer.style.display = 'block';
+            }
+        });
+    }
 });
 
 const divider = document.getElementById('divider');
@@ -584,20 +586,30 @@ const rightPanel = document.querySelector('.right-panel');
 
 let isResizing = false;
 
-divider.addEventListener('mousedown', function (e) {
-    isResizing = true;
-    document.addEventListener('mousemove', resize);
-    document.addEventListener('mouseup', () => {
-        isResizing = false;
-        document.removeEventListener('mousemove', resize);
+if (divider) {
+    divider.addEventListener('mousedown', function (e) {
+        isResizing = true;
+        document.addEventListener('mousemove', resize);
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+            document.removeEventListener('mousemove', resize);
+        });
     });
-});
+}
 
 function resize(e) {
     if (isResizing) {
-        const offsetLeft = e.clientX - leftPanel.getBoundingClientRect().left;
-        const totalWidth = leftPanel.offsetWidth + rightPanel.offsetWidth;
-        const leftWidthPercentage = (offsetLeft / totalWidth) * 100;
+        let leftWidthPercentage;
+        if (window.innerWidth < 600) {
+            const offsetTop = e.clientY - leftPanel.getBoundingClientRect().top;
+            const totalHeight = leftPanel.offsetHeight + rightPanel.offsetHeight;
+            leftWidthPercentage = (offsetTop / totalHeight) * 100;
+        }
+        else {
+            const offsetLeft = e.clientX - leftPanel.getBoundingClientRect().left;
+            const totalWidth = leftPanel.offsetWidth + rightPanel.offsetWidth;
+            leftWidthPercentage = (offsetLeft / totalWidth) * 100;
+        }
         leftPanel.style.flex = `${leftWidthPercentage}%`;
         rightPanel.style.flex = `${100 - leftWidthPercentage}%`;
     }
@@ -605,6 +617,7 @@ function resize(e) {
 
 function checkEmptyDiv() {
     let outputDiv = document.getElementById('output-text');
+    if (!outputDiv) return;
     let containers = document.getElementsByClassName('container');
     let hideButtons = document.getElementsByClassName('hide');
     if (outputDiv.innerHTML.trim() === '') {
