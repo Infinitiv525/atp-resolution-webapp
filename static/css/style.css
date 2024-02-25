@@ -13,7 +13,7 @@
   height: 40px;
   display: flex;
 }
-.title{
+.title, .title2{
   display: flex;
   margin-top: -15px;
   margin-bottom: -10px;
@@ -136,6 +136,16 @@ li a:hover:not(.active) {
   .title h1{
     margin-left: unset!important;
   }
+  .title2{
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 0;
+    font-size: 14px;
+    text-align: center;
+  }
+  .title2 h1{
+    margin: 10px auto!important;
+  }
   .topnav {
     flex-direction: column;
   }
@@ -245,6 +255,9 @@ li a:hover:not(.active) {
     .setting2{
       margin-top: unset!important;
       margin-bottom: 10px;
+    }
+    .pismo, .pismo2{
+      width: fit-content;
     }
   }
 } 
