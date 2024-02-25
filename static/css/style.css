@@ -241,6 +241,14 @@ li a:hover:not(.active) {
     left: 5px!important;
     width: 100px!important;
   }
+  #copy-message{
+    top: unset!important;
+    width: 90%!important;
+    left: unset!important;
+    right: unset!important;
+    margin-left: 10px!important;
+  }
+
   @media (max-width: 455px) {
     .setting, .setting2, .pismo, .pismo2{
       float: unset!important;
