@@ -7,6 +7,7 @@ const inputForm = document.getElementById('inp-form');
 const errorMessage = document.getElementById('errorMessage');
 const copyMessage = document.getElementById("copy-message");
 let isSyntaxVisible = false;
+const htmlLang = document.documentElement.lang;
 
 
 function tokenize(formula) {
@@ -239,13 +240,14 @@ function toggleOptions() {
     if (treeContent.style.display !== "none") {
         treeContent.style.display = "none";
         tableContent.style.display = "block";
-
-        button.innerText = "Rezolučný strom";
+        if (htmlLang === "sk") button.innerText = "Rezolučný strom";
+        else button.innerText = "Resolution tree";
     } else {
         treeContent.style.display = "block";
         tableContent.style.display = "none";
 
-        button.innerText = "Rezolučná tabuľka";
+        if (htmlLang === "sk") button.innerText = "Rezolučná tabuľka";
+        else button.innerText = "Resolution table";
     }
 }
 
@@ -378,34 +380,44 @@ if (inputField) {
             inputField.style.borderColor = 'red';
             switch (isValidSyntax) {
                 case 1:
-                    error = "Chýbajúce ')' zátvorky";
+                    if (htmlLang === "sk") error = "Chýbajúce ')' zátvorky";
+                    else error = "Missing ')' parenthesis";
                     break;
                 case 2:
-                    error = "Chýbajúce '(' zátvorky";
+                    if (htmlLang === "sk") error = "Chýbajúce '(' zátvorky";
+                    else error = "Missing '(' parenthesis";
                     break;
                 case 3:
-                    error = "Za premennou musí nasledovať binárny operátor alebo ')'";
+                    if (htmlLang === "sk") error = "Za premennou musí nasledovať binárny operátor alebo ')'";
+                    else error = "Variable must be followed by a binary operator or ')'";
                     break;
                 case 4:
-                    error = "Za operátorom nesmie nasledovať ďalší binárny operátor";
+                    if (htmlLang === "sk") error = "Za operátorom nesmie nasledovať ďalší binárny operátor";
+                    else error = "Operator cannot be followed by another binary operator";
                     break;
                 case 5:
-                    error = "Za '(' nesmie nasledovať binárny operátor alebo ')'";
+                    if (htmlLang === "sk") error = "Za '(' nesmie nasledovať binárny operátor alebo ')'";
+                    else error = "'(' cannot be followed by a binary operator or ')'";
                     break;
                 case 6:
-                    error = "Neuzatvorená zátvorka";
+                    if (htmlLang === "sk") error = "Neuzatvorená zátvorka";
+                    else error = "Unmatched parenthesis";
                     break;
                 case 7:
-                    error = "Za ')' musí nasledovať binárny operátor alebo ')'";
+                    if (htmlLang === "sk") error = "Za ')' musí nasledovať binárny operátor alebo ')'";
+                    else error = "')' must be followed by a binary operator or ')'";
                     break;
                 case 8:
-                    error = "Formula musí končiť premennou alebo ')'";
+                    if (htmlLang === "sk") error = "Formula musí končiť premennou alebo ')'";
+                    else error = "Formula must end with variable or ')'";
                     break;
                 case 9:
-                    error = "Formula nesmie začínať binárnym operátorom alebo ')'";
+                    if (htmlLang === "sk") error = "Formula nesmie začínať binárnym operátorom alebo ')'";
+                    else error = "Formula cannot begin with binary operator or ')'";
                     break;
                 default:
-                    error = "Chyba syntaxe";
+                    if (htmlLang === "sk") error = "Chyba syntaxe";
+                    else error = "Syntax error";
                     break;
             }
             errorMessage.textContent = error;
