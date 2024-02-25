@@ -231,6 +231,21 @@ li a:hover:not(.active) {
     left: 5px!important;
     width: 100px!important;
   }
+  @media (max-width: 455px) {
+    .setting, .setting2, .pismo, .pismo2{
+      float: unset!important;
+      left: unset!important;
+      margin-left: 10px;
+    }
+    .setting, .setting2{
+      position: absolute!important;
+      right: 10px!important;
+      margin-right: 0!important;
+    }
+    .pismo, .pismo2{
+
+    }
+  }
 } 
 .moznost {
   display: inline;
