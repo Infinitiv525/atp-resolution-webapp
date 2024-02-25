@@ -227,6 +227,10 @@ li a:hover:not(.active) {
     width: 70%;
     margin-left: 30px!important;
   }
+  .toggle{
+    left: 5px!important;
+    width: 100px!important;
+  }
 } 
 .moznost {
   display: inline;
@@ -634,7 +638,7 @@ textarea {
 }
 .pismo{
   position: relative;
-  float: left; 
+  float: left;
   left: -55px;
   margin-top: 10px; 
   font-size: 18px;
