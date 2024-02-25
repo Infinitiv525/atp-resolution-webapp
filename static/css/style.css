@@ -242,8 +242,9 @@ li a:hover:not(.active) {
       right: 10px!important;
       margin-right: 0!important;
     }
-    .pismo, .pismo2{
-
+    .setting2{
+      margin-top: unset!important;
+      margin-bottom: 10px;
     }
   }
 } 
