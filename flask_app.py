@@ -748,10 +748,10 @@ def dimacs_to_set(string: str):
     divide = string.split("\n")
     cnf = []
     # num_var=int(divide[0].split(" ")[2])
-    num_clauses = int(divide[0].split(" ")[3])
+    num_clauses = int(divide[0].strip().split(" ")[3])
     for i in range(1, num_clauses + 1):
         cls = set()
-        clause = divide[i].split(" ")
+        clause = divide[i].strip().split(" ")
         for term in clause:
             if term == "0":
                 break
@@ -763,11 +763,11 @@ def dimacs_to_set(string: str):
 def from_dimacs(string: str):
     divide = string.split("\n")
     cnf = []
-    num_var = int(divide[0].split(" ")[2])
-    num_clauses = int(divide[0].split(" ")[3])
+    num_var = int(divide[0].strip().split(" ")[2])
+    num_clauses = int(divide[0].strip().split(" ")[3])
     for i in range(1, num_clauses + 1):
         cls = []
-        clause = divide[i].split(" ")
+        clause = divide[i].strip().split(" ")
         for term in clause:
             if term == "0":
                 cls.pop()
@@ -1180,53 +1180,64 @@ def full_cnf(formula):
 
 def resolution(inp, res_type, reduced):
     global var, output, table
-    tokens = tokenize(inp)
-    first_formula = ""
-    print_html(lang.INPUT_FORMULA, end=" ")
-    for token in tokens:
-        first_formula += print_html(token, end=" ")
-    if not tokens:
-        return print_html(lang.EMPTY_FORMULA)
-    formula = add_priority(tokens)
-    print_html("\n\n")
-    cut = len(output)
-    print_html(lang.SIMPLIFIED_FORMULA)
-    simple_formula = print_formula(formula) + " "
-    if first_formula == simple_formula:
-        output = output[:cut]
-    else:
+    is_dimacs = False
+    try:
+        cnf, var = from_dimacs(inp)
+        print_html(lang.DIMACS, cnf)
         print_html("\n")
+        negated_resolution = dimacs_to_set(inp)
 
-    var = find_vars(formula)
-    print_html()
-    # cnf=full_cnf(formula)
+        is_dimacs = True
+    except Exception as e:
+        print(e)
+    if not is_dimacs:
+        tokens = tokenize(inp)
+        first_formula = ""
+        print_html(lang.INPUT_FORMULA, end=" ")
+        for token in tokens:
+            first_formula += print_html(token, end=" ")
+        if not tokens:
+            return print_html(lang.EMPTY_FORMULA)
+        formula = add_priority(tokens)
+        print_html("\n\n")
+        cut = len(output)
+        print_html(lang.SIMPLIFIED_FORMULA)
+        simple_formula = print_formula(formula) + " "
+        if first_formula == simple_formula:
+            output = output[:cut]
+        else:
+            print_html("\n")
 
-    # dimacs_set=dimacs(cnf,var)
-    # print_html(f"DIMACS: \n{dimacs_set}\n")
-    bfs = add_priority(tokens)
-    print_html(lang.NEGATION_FORMULA, end="\n")
-    negate_bfs(bfs)
-    negated_formula = negate(formula)
-    print_html("\n", lang.NEGATED_FORMULA, end=" ")
-    print_formula(negated_formula)
-    print_html("\n")
-    full_cnf_steps(negated_formula)
-    negated_cnf = full_cnf(negated_formula)
-    print_html(lang.NEGATED_CNF, end=" ")
-    if len(negated_cnf) == 1:
-        print_html(*negated_cnf[0], end="")
-    else:
-        for lit in negated_cnf:
-            if len(lit) == 1:
-                print_html(lit[0], end=" ")
-            elif len(lit) == 2 and lit != "or":
-                print_html(*lit, end=" ")
-            else:
-                print_html(lit, end=" ")
-    print_html("\n")
-    negated_dimacs = dimacs(negated_cnf, var)
-    # print_html(f"Negated DIMACS: \n{negated_dimacs}")
-    negated_resolution = dimacs_to_set(negated_dimacs)
+        var = find_vars(formula)
+        print_html()
+        # cnf=full_cnf(formula)
+
+        # dimacs_set=dimacs(cnf,var)
+        # print_html(f"DIMACS: \n{dimacs_set}\n")
+        bfs = add_priority(tokens)
+        print_html(lang.NEGATION_FORMULA, end="\n")
+        negate_bfs(bfs)
+        negated_formula = negate(formula)
+        print_html("\n", lang.NEGATED_FORMULA, end=" ")
+        print_formula(negated_formula)
+        print_html("\n")
+        full_cnf_steps(negated_formula)
+        negated_cnf = full_cnf(negated_formula)
+        print_html(lang.NEGATED_CNF, end=" ")
+        if len(negated_cnf) == 1:
+            print_html(*negated_cnf[0], end="")
+        else:
+            for lit in negated_cnf:
+                if len(lit) == 1:
+                    print_html(lit[0], end=" ")
+                elif len(lit) == 2 and lit != "or":
+                    print_html(*lit, end=" ")
+                else:
+                    print_html(lit, end=" ")
+        print_html("\n")
+        negated_dimacs = dimacs(negated_cnf, var)
+        # print_html(f"Negated DIMACS: \n{negated_dimacs}")
+        negated_resolution = dimacs_to_set(negated_dimacs)
     print_html("\n")
     print_html(lang.SET_NOTATION, end="{")
     for s in negated_resolution:

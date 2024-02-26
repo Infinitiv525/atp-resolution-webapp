@@ -85,7 +85,38 @@ function findVars(formula) {
     return vars.sort();
 }
 
+function isDimacs(text){
+    let pattern = /^p\s+cnf\s+\d+\s+\d+/;
+    let regex = new RegExp(pattern);
+
+    let lines = text.split('\n');
+
+    if (!regex.test(lines[0])) return -1;
+
+    let match = lines[0].match(/(\d+)\s+(\d+)/);
+
+    let numClauses = parseInt(match[2]);
+    let actualNumClauses = text.split('\n').slice(1).filter(line => line.trim() !== '').length;
+
+    if(numClauses < actualNumClauses) return 10;
+    if(numClauses > actualNumClauses) return 11;
+
+    let numVariables = parseInt(match[1]);
+
+    for (let i = 1; i < lines.length; i++) {
+        let clause = lines[i].trim().split(' ');
+        for (let j = 0; j < clause.length; j++) {
+            if (clause[j] === '' || isNaN(parseInt(clause[j]))) return 12;
+            if (Math.abs(parseInt(clause[j])) > numVariables) return 13;
+        }
+    }
+
+    return 0;
+}
+
 function checkSyntax(input) {
+    let dimacs = isDimacs(input);
+    if (dimacs !== -1) return dimacs;
     let tokens = tokenize(input);
     let vars = findVars(tokens);
     if (tokens.filter(token => token === '(').length !== tokens.filter(token => token === ')').length) {
@@ -414,6 +445,22 @@ if (inputField) {
                 case 9:
                     if (htmlLang === "sk") error = "Formula nesmie začínať binárnym operátorom alebo ')'";
                     else error = "Formula cannot begin with binary operator or ')'";
+                    break;
+                case 10:
+                    if (htmlLang === "sk") error = "Príliš veľa klauzúl v DIMACS";
+                    else error = "Too many clauses in DIMACS";
+                    break;
+                case 11:
+                    if (htmlLang === "sk") error = "Príliš málo klauzúl v DIMACS";
+                    else error = "Too few clauses in DIMACS";
+                    break;
+                case 12:
+                    if (htmlLang === "sk") error = "Klauzuly v DIMACS môžu obsahovať len čísla";
+                    else error = "Clauses in DIMACS can only contain integers";
+                    break;
+                case 13:
+                    if (htmlLang === "sk") error = "Príliš veľa premenných v DIMACS";
+                    else error = "Too many variables in DIMACS";
                     break;
                 default:
                     if (htmlLang === "sk") error = "Chyba syntaxe";
