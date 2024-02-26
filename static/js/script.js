@@ -108,6 +108,7 @@ function isDimacs(text){
         for (let j = 0; j < clause.length; j++) {
             if (clause[j] === '' || isNaN(parseInt(clause[j]))) return 12;
             if (Math.abs(parseInt(clause[j])) > numVariables) return 13;
+            if (j === clause.length -1  && parseInt(clause[j]) !== 0) return 14;
         }
     }
 
@@ -461,6 +462,10 @@ if (inputField) {
                 case 13:
                     if (htmlLang === "sk") error = "Príliš veľa premenných v DIMACS";
                     else error = "Too many variables in DIMACS";
+                    break;
+                case 14:
+                    if (htmlLang === "sk") error = "Klauzula musí končiť nulou";
+                    else error = "A clause must end with 0";
                     break;
                 default:
                     if (htmlLang === "sk") error = "Chyba syntaxe";
