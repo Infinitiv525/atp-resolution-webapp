@@ -17,7 +17,7 @@ function tokenize(formula) {
     let is_name = false;
 
     while (i < formula.length) {
-        if (formula[i] === ' ') {
+        if (formula[i] === ' ' || formula[i] === '\n') {
             is_name = false;
             if (token !== "") {
                 tokens.push(token);
