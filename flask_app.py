@@ -753,6 +753,8 @@ def dimacs_to_set(string: str):
         cls = set()
         clause = divide[i].strip().split(" ")
         for term in clause:
+            if term == "":
+                continue
             if term == "0":
                 break
             cls.add(int(term))
@@ -769,6 +771,8 @@ def from_dimacs(string: str):
         cls = []
         clause = divide[i].strip().split(" ")
         for term in clause:
+            if term == "":
+                continue
             if term == "0":
                 cls.pop()
                 break

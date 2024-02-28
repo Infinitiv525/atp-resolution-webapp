@@ -106,7 +106,8 @@ function isDimacs(text){
     for (let i = 1; i < lines.length; i++) {
         let clause = lines[i].trim().split(' ');
         for (let j = 0; j < clause.length; j++) {
-            if (clause[j] === '' || isNaN(parseInt(clause[j]))) return 12;
+            if (clause[j] === '') continue;
+            if (isNaN(parseInt(clause[j]))) return 12;
             if (Math.abs(parseInt(clause[j])) > numVariables) return 13;
             if (j === clause.length -1  && parseInt(clause[j]) !== 0) return 14;
         }
