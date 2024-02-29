@@ -34,7 +34,7 @@
 </select>
 <label style="float: right; margin-top: 30px; font-size: 18px;" for="theme-select" class="pismo2"><b>Výber motívu:</b>&nbsp;&nbsp;</label>
 
-<div class="manual"><b>Priorita operátorov:</b>
+<div class="manual"><b><u>Priorita operátorov:</u></b>
 <ol>
   <li>Negácia (¬)</li>
   <li>Negovaná Konjunkcia (↑)</li>
@@ -47,9 +47,13 @@
   <li>Ekvivalencia (⇔)</li>
 </ol>
 
-Pre vyhodnotenie formuly zadajte formulu do rámčeku pod oknom "Výstup" pomocou kláves pod rámčekom, alebo jednoducho skopírujte formulu z LaTeXu. Taktiež je možné formuly zadať ručne, všetky možné akceptované tvary operátorov sú vypísané v časti "Syntax". Vstupné pole obsahuje kontrolu syntaxe.
+<b><u>Vstup a výstup</u></b><br><br>
+V ľavej časti je možné nastaviť veľkosť písma vo vstupnom aj výstupnom poli.<br>
+V pravej časti je možné si zvoliť vzhľad stránky.
 <br><br>
-Po stlačení tlačidla "POTVRĎ" sa do okna výstup vypíšu nasledovné údaje:
+Pre vyhodnotenie formuly zadajte formulu do vstupného poľa pomocou kláves pod poľom, alebo jednoducho doňho skopírujte formulu z LaTeXu. Taktiež je možné formuly zadať ručne, všetky možné akceptované tvary operátorov sú vypísané v časti "Syntax". Vstupné pole obsahuje kontrolu syntaxe.
+<br><br>
+Po stlačení tlačidla "POTVRĎ" sa na stránke objaví okno výstupu, do ktorého ľavej časti sa vypíšu nasledovné údaje:
 <ul>
   <li><b>Zadaná formula:</b> formula načítaná zo vstupného poľa.</li>
   <li><b>Zjednodušená formula:</b> ak formula obsahuje prebytočné zátvorky alebo viacnásobné negácie, budú z nej odstránené.</li>
@@ -88,8 +92,7 @@ Následne bude formula prevedená do Konjunktívnej Normálnej Formy (KNF). To s
 <ul>
   <li><b>Negovaná KNF:</b> Výsledok prevodu do KNF</li>
   <li><b>Množinová notácia:</b> prevod KNF do množinovej notácie</li>
-  <li><b>Rezolučná tabuľka:</b> V tejto tabuľke sú uvedené všetky klauzuly a rezolventy v množinovej notácií v druhom stĺpci. Tabuľka uvádza postup rezolúcie, ktorý bol použitý na zistenie, či zadaná formula je tautológia. Klauzuly a rezolventy sú očíslované v prvom stĺpci tabuľky. V tretom stĺpci tabuľky je uvedené, ktoré klauzuly boli použité na vytvorenie danej rezolventy pomocou rezolúcie.
-Pod tabuľkou je vypísaný výsledok rezolúcie, teda či daná formula je alebo nie je tautológia.</li>
+  <li> Na konci je vypísaný výsledok rezolúcie, teda či daná formula je alebo nie je tautológia.</li>
 </ul>
 
 Pod vstupným poľom je možné nastaviť stratégiu rezolúcie, a spôsob výpisu stromu.
@@ -103,8 +106,16 @@ Pod vstupným poľom je možné nastaviť stratégiu rezolúcie, a spôsob výpi
 </ul>
 
 <b>Redukovaný strom</b> - Namiesto toho, aby boli v strome zobrazené všetky klauzuly a rezolventy, budú v ňom zobrazené len tie, ktoré viedli k výsledku.<br>
-<font color="#FF0000"><b>Strom sa vypisuje po dokončení rezolúcie do okna "Rezolučný strom". Po kliknutí ľavým tlačidlom do okna "Rezolučný strom" bude tento strom skopírovaný v podobe LaTeX kódu ako tikz obrázok, ktorý je možné vložiť priamo do LaTeXu.</b></font></div>
 
+V pravej časti výstupného okna je možnosť prepnúť medzi dvoma reprezentáciami rezolúcie, a to:<br>
+<ul>
+    <li><b>Rezolučná tabuľka:</b> V tejto tabuľke sú uvedené všetky klauzuly a rezolventy v množinovej notácií v druhom stĺpci. Tabuľka uvádza postup rezolúcie, ktorý bol použitý na zistenie, či zadaná formula je tautológia. Klauzuly a rezolventy sú očíslované v prvom stĺpci tabuľky. V tretom stĺpci tabuľky je uvedené, ktoré klauzuly boli použité na vytvorenie danej rezolventy pomocou rezolúcie.</li>
+    <li><b>Rezolučný strom:</b> Podľa zvoleného spôsobu rezolúcie a výpisu stromu bude tento strom obsahovať kroky vedúce k výsledku rezolúcie.</li>
+</ul>
+
+<font color="#FF0000">Všetky časti výstupu, teda textový výstup, tabuľku a strom je možné kopírovať pomocou tlačidiel umiestnenými pod oknom výstupu do formy LaTeX-ového kódu. Tabuľka je prevedená do formy tabular a strom je prevedený do obrázku formy tikz.</font>
+
+</div>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

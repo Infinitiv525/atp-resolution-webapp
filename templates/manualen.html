@@ -35,7 +35,7 @@
 </select>
 <label style="float: right; margin-top: 30px; font-size: 18px;" for="theme-select" class="pismo2"><b>Select theme:</b>&nbsp;&nbsp;</label>
 <div class="manual">
-<b>Priority of operators:</b>
+<b><u>Priority of operators:</u></b>
 <ol>
   <li>NOT (¬)</li>
   <li>NAND (↑)</li>
@@ -48,9 +48,13 @@
   <li>EQUIV (⇔)</li>
 </ol>
 
-To evaluate the formula, enter the formula in the box below the "Output" window using the keys below the box, or simply copy the formula from LaTeX. It is also possible to enter formulas manually, all possible accepted forms of operators are listed in the "Syntax" section. The input field checks the syntax.
+<b><u>Input and Output</u></b><br><br>
+There is an option on the left side to change the size of text in input and output field.<br>
+On the right side, there is an option to change the appearance of the website.
 <br><br>
-After pressing the "SUBMIT" button, the following data will be written in the output window:
+To evaluate the formula, enter the formula in the input field using the keys below the field, or simply copy the formula from LaTeX into the field. It is also possible to enter formulas manually, all possible accepted forms of operators are listed in the "Syntax" section. The input field checks the syntax.
+<br><br>
+After pressing the "SUBMIT" button, the output window will appear and the following data will be written in the left part of the output window:
 <ul>
   <li><b>Input formula:</b> the formula read from the input field.</li>
   <li><b>Simplified formula:</b> if the formula contains excess parentheses or multiple negations, they will be removed from it.</li>
@@ -88,16 +92,14 @@ Subsequently, the formula will be converted into Conjunctive Normal Form (CNF). 
 <ul>
   <li><b>Negated CNF:</b> Result of transfer to CNF</li>
   <li><b>Set notation:</b> conversion of CNF to set notation</li>
-  <li><b>Resolution table:</b> This table lists all clauses and resolvents in set notation in the second column. The table shows the resolution procedure used to determine whether a given formula is a tautology. Clauses and resolvents are numbered in the first column of the table. The third column of the table shows which clauses were used to create a given resolvent using resolution.
-  Below the table is written the result of the resolution, i.e. whether the given formula is a tautology or not.
-</li>
+  <li>The result of the resolution is written at the end of the window, i.e. whether the given formula is a tautology or not.</li>
 </ul>
 
 Under the input field, it is possible to set the resolution strategy and the method of listing the tree.
 <br><br>
 <b><u>Resolution strategies:</u></b>
 <ul>
-  <li><b>Full</b>- the program will try to combine each clause with each other to achieve a resolution result. However, it prioritizes unit clauses first.</li>
+  <li><b>Full</b> - the program will try to combine each clause with each other to achieve a resolution result. However, it prioritizes unit clauses first.</li>
   <li><b>Unit</b> - the program must use at least one unit clause for each resolution.</li>
   <li><b>Linear</b> - the program always uses the resolvent of the previous step in the next step.</li>
 </ul>
@@ -105,9 +107,15 @@ Under the input field, it is possible to set the resolution strategy and the met
 
 
 
-<b>Reduced Tree</b> - Instead of showing all clauses and resolvers in the tree, it will show only those that led to the result.
-<br>
-<font color="#FF0000"><b>The tree is written after the resolution is completed in the "Resolution tree" window. After clicking with the left button in the "Resolution tree" window, this tree will be copied in the form of LaTeX code as a tikz image, which can be inserted directly into LaTeX.</b></font></div>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<b>Reduced Tree</b> - Instead of showing all clauses and resolvers in the tree, it will show only those that led to the result.<br>
+
+In the right part of the output window it is possible to switch between 2 representations of resolution, namely:<br>
+<ul>
+   <li><b>Resolution table:</b> This table lists all clauses and resolvents in set notation in the second column. The table shows the resolution procedure used to determine whether a given formula is a tautology. Clauses and resolvents are numbered in the first column of the table. The third column of the table shows which clauses were used to create a given resolvent using resolution.</li>
+    <li><b>Resolution tree:</b> Based on the selected strategy of resolution, the tree will contain steps leading to the result of the resolution.</li>
+</ul>
+    <font color="#FF0000">Every part of output, namely the text output, the table, and the tree can be copied using the buttons under the output window in a form of LaTeX code. The table is converted to tabular format and tree is converted to an image in tikz format.</font>
+</div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
