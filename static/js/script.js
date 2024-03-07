@@ -123,23 +123,23 @@ function checkSyntax(input) {
     let vars = findVars(tokens);
     if (tokens.filter(token => token === '(').length !== tokens.filter(token => token === ')').length) {
         if (tokens.filter(token => token === '(').length > tokens.filter(token => token === ')').length) {
-            return 1;
+            return { errorCode: 1, position: tokens.indexOf('(')};
         } else {
-            return 2;
+            return { errorCode: 2, position: tokens.indexOf(')') };
         }
     }
     for (let i = 0; i < tokens.length - 1; i++) {
         let token = tokens[i];
         let next = tokens[i + 1];
-        if (vars.includes(token) && (vars.includes(next) || next === '(')) {
-            return 3;
+        if (vars.includes(token) && (vars.includes(next) || next === '(' || next === 'not')) {
+            return { errorCode: 3, position: i};
         }
         if (operators.includes(token) && (operators.includes(next) && next !== 'not')) {
-            return 4;
+            return { errorCode: 4, position: i };
         }
         if (token === '(') {
             if ((operators.includes(next) && next !== 'not') || next === ')') {
-                return 5;
+                return { errorCode: 5, position: i };
             }
             let j = i + 1;
             let brackets = 0;
@@ -157,27 +157,27 @@ function checkSyntax(input) {
                 j++;
             }
             if (j === tokens.length + 1) {
-                return 6;
+                return { errorCode: 6, position: i };
             }
         }
         if (token === ')' && (next === 'not' || vars.includes(next) || next === '(')) {
-            return 7;
+            return { errorCode: 7, position: i };
         }
     }
     if (tokens.length > 0) {
         if (!vars.includes(tokens[tokens.length - 1]) && tokens[tokens.length - 1] !== ')') {
-            return 8;
+            return { errorCode: 8, position: tokens.length - 1 };
         }
         if ((operators.includes(tokens[0]) && tokens[0] !== 'not') || tokens[0] === ')') {
-            return 9;
+            return { errorCode: 9, position: 0 };
         }
     }
-    return 0;
+    return { errorCode: 0, position: -1 };
 }
 
 function handleInput() {
     var userInput = inputField.value;
-    var isValidSyntax = checkSyntax(userInput);
+    var isValidSyntax = checkSyntax(userInput).errorCode;
     errorMessage.style.display = 'none';
 
     if (isValidSyntax === 0) {
@@ -379,7 +379,7 @@ if (inputForm) {
         event.preventDefault();
 
         var userInput = inputField.value;
-        var isValidSyntax = checkSyntax(userInput);
+        var isValidSyntax = checkSyntax(userInput).errorCode;
 
         if (isValidSyntax !== 0) {
             inputField.style.borderColor = 'red';
@@ -393,7 +393,18 @@ if (buttonGrid) {
     buttonGrid.addEventListener('click', (e) => {
         const symbol = e.target.getAttribute('data-symbol');
         if (symbol) {
-            inputField.value += symbol;
+            const startPos = inputField.selectionStart;
+            const endPos = inputField.selectionEnd;
+
+            const textBefore = inputField.value.substring(0, startPos);
+            const textAfter = inputField.value.substring(endPos, inputField.value.length);
+
+            inputField.value = textBefore + symbol + textAfter;
+
+            // Adjust cursor position after inserting the symbol
+            inputField.selectionStart = startPos + symbol.length;
+            inputField.selectionEnd = startPos + symbol.length;
+
             inputField.focus();
         }
     });
@@ -401,8 +412,9 @@ if (buttonGrid) {
 
 if (inputField) {
     inputField.addEventListener('blur', function () {
-        var userInput = inputField.value;
-        var isValidSyntax = checkSyntax(userInput);
+        let userInput = inputField.value;
+        let result = checkSyntax(userInput);
+        let isValidSyntax = result.errorCode;
         inputField.style.outline = '';
         if (isValidSyntax === 0) {
             errorMessage.style.display = 'none';
@@ -473,7 +485,8 @@ if (inputField) {
                     else error = "Syntax error";
                     break;
             }
-            errorMessage.textContent = error;
+            let tokens = tokenize(inputField.value);
+            errorMessage.textContent = error + "; token "+ (result.position+1) + ': "' + tokens[result.position] + '"';
         }
     });
 }

@@ -200,10 +200,12 @@ def negate_bfs(formula):
     queue = [formula]
     if formula[0] == "not":
         print_formula(['not', formula])
+        print_html("\n")
         print_formula(formula[1])
         return
     else:
         print_formula(['not', formula], q=queue, color=True)
+        print_html("\n")
     while queue:
         ref = queue[0]
         if len(ref) == 1:
@@ -285,6 +287,7 @@ def negate_bfs(formula):
                     break
             if printout:
                 print_formula(formula, q=queue, color=True)
+                print_html("\n")
         queue.pop(0)
     # print_formula(formula)
 
@@ -302,9 +305,9 @@ def negate(formula):
             elif formula[1] == "nor":
                 result.append([formula[0], "or", formula[2]])
             elif formula[1] == "nimply":
-                result.append(imply(formula[0], formula[2]))
+                result.append([formula[0], "imply", formula[2]])
             elif formula[1] == "xor":
-                result.append(equiv(formula[0], formula[2]))
+                result.append([formula[0], "equiv", formula[2]])
             elif formula[1] == "and":
                 result.append([negate(formula[0]), "or", negate(formula[2])])
             elif formula[1] == "or":
@@ -688,6 +691,7 @@ def full_cnf_steps(formula):
     if formula != no_imply:
         print_html(lang.REMOVE_IMPLY, end="\n")
         print_formula(formula, q=q, color=True, cnf=True)
+        print_html("\n")
         print_formula(no_imply, q=q, color=True, cnf=True)
         print_html("\n")
 
@@ -697,6 +701,7 @@ def full_cnf_steps(formula):
     if no_neg != no_imply:
         print_html(lang.REMOVE_NEG, end="\n")
         print_formula(no_imply, q=q, color=True, cnf=True)
+        print_html("\n")
         print_formula(no_neg, q=q, color=True, cnf=True)
         print_html("\n")
 
@@ -706,6 +711,7 @@ def full_cnf_steps(formula):
     if cnf != no_neg:
         print_html(lang.DISTRIBUTE_OR, end="\n")
         print_formula(no_neg, q=q, color=True, cnf=True)
+        print_html("\n")
         print_formula(cnf, q=q, color=True, cnf=True)
         print_html("\n")
 
@@ -721,6 +727,7 @@ def full_cnf_steps(formula):
     if q:
         print_html(lang.SIMPLIFY_CNF, end="\n")
         print_cnf(grouped_cnf, q)
+        print_html("\n")
         print_cnf(final_cnf)
         print_html("\n")
 
@@ -1529,14 +1536,14 @@ def print_recursive(formula, op, right=False, q=None, first_iter=False, color=Fa
                             end = ""
                         break
         if formula[1] == "imply" and op == "imply" and not right:
-            return f"{start}({print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)}){end}"
+            return f"{start}({print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)}) {end}"
         elif formula[1] == "imply" and op == "imply" and right:
-            return f"{start}{print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)}{end}"
+            return f"{start}{print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)} {end}"
         for operator in operators:
             if formula[1] == operator:
-                return f"{start}{print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)}{end}"
+                return f"{start}{print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)} {end}"
             elif op == operator:
-                return f"{start}({print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)}){end}"
+                return f"{start}({print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)}) {end}"
 
 
 class Node:
