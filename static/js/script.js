@@ -132,14 +132,14 @@ function checkSyntax(input) {
         let token = tokens[i];
         let next = tokens[i + 1];
         if (vars.includes(token) && (vars.includes(next) || next === '(' || next === 'not')) {
-            return { errorCode: 3, position: i};
+            return { errorCode: 3, position: i + 1};
         }
         if (operators.includes(token) && (operators.includes(next) && next !== 'not')) {
-            return { errorCode: 4, position: i };
+            return { errorCode: 4, position: i + 1};
         }
         if (token === '(') {
             if ((operators.includes(next) && next !== 'not') || next === ')') {
-                return { errorCode: 5, position: i };
+                return { errorCode: 5, position: i + 1 };
             }
             let j = i + 1;
             let brackets = 0;
@@ -157,11 +157,11 @@ function checkSyntax(input) {
                 j++;
             }
             if (j === tokens.length + 1) {
-                return { errorCode: 6, position: i };
+                return { errorCode: 6, position: i + 1};
             }
         }
         if (token === ')' && (next === 'not' || vars.includes(next) || next === '(')) {
-            return { errorCode: 7, position: i };
+            return { errorCode: 7, position: i + 1};
         }
     }
     if (tokens.length > 0) {
