@@ -717,3 +717,67 @@ textarea {
   padding: 5px;
   width: fit-content;
 }
+.left-panel::-webkit-scrollbar, .right-panel::-webkit-scrollbar {
+    width: 10px;
+    height: 12px;
+}
+
+.morning .left-panel::-webkit-scrollbar-track, .morning .right-panel::-webkit-scrollbar-track{
+  background: antiquewhite;
+  visibility: hidden;
+}
+
+.noon .left-panel::-webkit-scrollbar-track, .noon .right-panel::-webkit-scrollbar-track{
+  background: #97e2ff;
+  visibility: hidden;
+}
+
+.sunset .left-panel::-webkit-scrollbar-track, .sunset .right-panel::-webkit-scrollbar-track{
+  background: #ffbcbc;
+  visibility: hidden;
+}
+
+.midnight .left-panel::-webkit-scrollbar-track, .midnight .right-panel::-webkit-scrollbar-track{
+    background: #222222;
+    border: 1px solid #E4E6EB;
+  visibility: hidden;
+}
+
+.matrix .left-panel::-webkit-scrollbar-track, .matrix .right-panel::-webkit-scrollbar-track {
+  background: #101811;
+  border: 1px solid #2FE747;
+  visibility: hidden;
+}
+
+.left-panel:hover::-webkit-scrollbar-track, .right-panel:hover::-webkit-scrollbar-track{
+  visibility: visible;
+}
+
+.morning .left-panel::-webkit-scrollbar-thumb, .morning .right-panel::-webkit-scrollbar-thumb{
+  background: rgb(233, 145, 14);
+  visibility:hidden;
+}
+
+.noon .left-panel::-webkit-scrollbar-thumb, .noon .right-panel::-webkit-scrollbar-thumb{
+  background: blue;
+  visibility:hidden;
+}
+
+.sunset .left-panel::-webkit-scrollbar-thumb, .sunset .right-panel::-webkit-scrollbar-thumb{
+  background: red;
+  visibility:hidden;
+}
+
+.matrix .left-panel::-webkit-scrollbar-thumb, .matrix .right-panel::-webkit-scrollbar-thumb{
+    background: #2FE747;
+    visibility:hidden;
+}
+
+.midnight .left-panel::-webkit-scrollbar-thumb, .midnight .right-panel::-webkit-scrollbar-thumb{
+    background: #E4E6EB;
+    visibility:hidden;
+}
+
+.left-panel:hover::-webkit-scrollbar-thumb, .right-panel:hover::-webkit-scrollbar-thumb {
+    visibility:visible;
+}
