@@ -1640,7 +1640,7 @@ def handle_child(node, child):
     global tree, latex_tree
     child.value = child.value.replace("not ", "¬ ")
     tree += f'<line x1="{node.x + get_pixel_length(node.value, 16, "arial.ttf") / 2}" y1="{node.y + 5}" x2="{child.x + get_pixel_length(child.value, 16, "arial.ttf") / 2}" y2="{child.y - 15}"/>'
-    latex_tree += f'\\draw ({node.x},{-node.y - 10}) -- ({child.x},{-child.y + 10});\n'
+    latex_tree += f'\t\\draw ({node.x},{-node.y - 10}) -- ({child.x},{-child.y + 10});\n'
 
 
 def calculate_offset(node):
@@ -1719,7 +1719,7 @@ def print_tree(typ="reduced"):
         if node.x + get_pixel_length(node.value, 16, "arial.ttf") > x_max:
             x_max = node.x + get_pixel_length(node.value, 16, "arial.ttf")
         tree += f'<text x="{node.x}" y="{node.y}">{node.value}</text>'
-        latex_tree += f'\\node at ({node.x},{-node.y}) [] {svg2latex(node.value)};\n'
+        latex_tree += f'\t\\node at ({node.x},{-node.y}) [] {svg2latex(node.value)};\n'
         for child in node.children:
             if typ == "reduced":
                 break
