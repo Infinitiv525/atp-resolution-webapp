@@ -134,7 +134,7 @@ function checkSyntax(input) {
         if (vars.includes(token) && (vars.includes(next) || next === '(' || next === 'not')) {
             return { errorCode: 3, position: i + 1};
         }
-        if (operators.includes(token) && (operators.includes(next) && next !== 'not')) {
+        if (operators.includes(token) && ((operators.includes(next) && next !== 'not') || next === ")")) {
             return { errorCode: 4, position: i + 1};
         }
         if (token === '(') {
@@ -177,6 +177,7 @@ function checkSyntax(input) {
 
 function handleInput() {
     var userInput = inputField.value;
+    localStorage.setItem('textInputValue', document.getElementById('text-input').value);
     var isValidSyntax = checkSyntax(userInput).errorCode;
     errorMessage.style.display = 'none';
 
@@ -437,8 +438,8 @@ if (inputField) {
                     else error = "Variable must be followed by a binary operator or ')'";
                     break;
                 case 4:
-                    if (htmlLang === "sk") error = "Za operátorom nesmie nasledovať ďalší binárny operátor";
-                    else error = "Operator cannot be followed by another binary operator";
+                    if (htmlLang === "sk") error = "Za operátorom nesmie nasledovať ďalší binárny operátor alebo ')'";
+                    else error = "Operator cannot be followed by another binary operator or ')'";
                     break;
                 case 5:
                     if (htmlLang === "sk") error = "Za '(' nesmie nasledovať binárny operátor alebo ')'";
