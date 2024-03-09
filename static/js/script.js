@@ -379,6 +379,13 @@ if (inputForm) {
     inputForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
+        localStorage.setItem('textInputValue', document.getElementById('text-input').value);
+        const selectedRadio = document.querySelector('input[name="option"]:checked');
+        if (selectedRadio) {
+            localStorage.setItem('selectedRadio', selectedRadio.value);
+        }
+        localStorage.setItem('checkboxValue', document.getElementById('reduced').checked);
+
         var userInput = inputField.value;
         var isValidSyntax = checkSyntax(userInput).errorCode;
 
