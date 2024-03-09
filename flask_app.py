@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import importlib
 import re
 import PIL.ImageFont
+import time
 from pathlib import Path
 
 THIS_FOLDER = Path(__file__).parent.resolve()
@@ -798,6 +799,10 @@ def from_dimacs(string: str):
     return cnf, list_var
 
 
+def check_time():
+    return time.time() - start_time >= TIME_LIMIT
+
+
 def resolve(cnf):
     global nodes, tree
     new_cnf = cnf.copy()
@@ -812,9 +817,13 @@ def resolve(cnf):
         length += get_pixel_length(value.replace("not ", "¬ "), 16, "arial.ttf")
     found_unit = True
     while True:
+        if check_time():
+            return -1
         if found_unit:
             for unit in units:
                 for unit2 in units:
+                    if check_time():
+                        return -1
                     if unit == unit2:
                         continue
                     for phi in unit:
@@ -828,9 +837,13 @@ def resolve(cnf):
         found = False
         for unit in units:
             for mult in multi:
+                if check_time():
+                    return -1
                 if multi in multi_unusable:
                     continue
                 for phi in unit:
+                    if check_time():
+                        return -1
                     if phi * -1 in mult:
                         found = True
                         new = frozenset([term for term in mult if term != phi * -1])
@@ -869,13 +882,21 @@ def resolve(cnf):
         if found:
             continue
         for A in multi:
+            if check_time():
+                return -1
             if A in multi_unusable:
                 continue
             for B in multi:
+                if check_time():
+                    return -1
                 if A == B or B in multi_unusable:
                     continue
                 for phi in A:
+                    if check_time():
+                        return -1
                     for psi in B:
+                        if check_time():
+                            return -1
                         if phi == -1 * psi:
                             found = True
                             new = set([term for term in A if term != phi]).union(
@@ -933,9 +954,13 @@ def resolve_unit(cnf):
         length += get_pixel_length(value.replace("not ", "¬ "), 16, "arial.ttf")
     found_unit = True
     while True:
+        if check_time():
+            return -1
         if found_unit:
             for unit in units:
                 for unit2 in units:
+                    if check_time():
+                        return -1
                     if unit == unit2:
                         continue
                     for phi in unit:
@@ -950,9 +975,13 @@ def resolve_unit(cnf):
         found = False
         for unit in units:
             for mult in multi:
+                if check_time():
+                    return -1
                 if mult in multi_unusable:
                     continue
                 for phi in unit:
+                    if check_time():
+                        return -1
                     if phi * -1 in mult:
                         found = True
                         new = frozenset([term for term in mult if term != phi * -1])
@@ -1008,9 +1037,13 @@ def resolve_linear(cnf):
         length += get_pixel_length(value.replace("not ", "¬ "), 16, "arial.ttf")
     found_unit = True
     while True:
+        if check_time():
+            return -1
         if found_unit and result is None:
             for unit in units:
                 for unit2 in units:
+                    if check_time():
+                        return -1
                     if unit == unit2:
                         continue
                     for phi in unit:
@@ -1023,6 +1056,8 @@ def resolve_linear(cnf):
                                 return True
         elif found_unit:
             for unit in units:
+                if check_time():
+                    return -1
                 if unit == result:
                     continue
                 for phi in unit:
@@ -1038,6 +1073,8 @@ def resolve_linear(cnf):
         if result is None:
             for unit in units:
                 for mult in multi:
+                    if check_time():
+                        return -1
                     if mult in multi_unusable:
                         continue
                     for phi in unit:
@@ -1083,13 +1120,21 @@ def resolve_linear(cnf):
                 continue
         if result is None:
             for A in multi:
+                if check_time():
+                    return -1
                 if A in multi_unusable:
                     continue
                 for B in multi:
+                    if check_time():
+                        return -1
                     if A == B or B in multi_unusable:
                         continue
                     for phi in A:
+                        if check_time():
+                            return -1
                         for psi in B:
+                            if check_time():
+                                return -1
                             if phi == -1 * psi:
                                 found = True
                                 new = set([term for term in A if term != phi]).union(
@@ -1132,10 +1177,16 @@ def resolve_linear(cnf):
                 continue
         else:
             for A in multi:
+                if check_time():
+                    return -1
                 if A == result or A in multi_unusable:
                     continue
                 for phi in A:
+                    if check_time():
+                        return -1
                     for psi in result:
+                        if check_time():
+                            return -1
                         if phi == -1 * psi:
                             found = True
                             new = set([term for term in A if term != phi]).union(
@@ -1192,7 +1243,7 @@ def full_cnf(formula):
 
 
 def resolution(inp, res_type, reduced):
-    global var, output, table
+    global var, output, table, start_time
     is_dimacs = False
     try:
         cnf, var = from_dimacs(inp)
@@ -1269,17 +1320,21 @@ def resolution(inp, res_type, reduced):
         print_set(s)
         print_html("}</td><td></td>")
         print_html("</tr>")
+    start_time = time.time()
     if res_type == "Full":
         result = resolve(negated_resolution)
     elif res_type == "Unit":
         result = resolve_unit(negated_resolution)
     else:
         result = resolve_linear(negated_resolution)
-    if not result:
+    if not result or result == -1:
         print_html("</table>")
         table = output[table_start:]
         output = output[:table_start]
-        print_html(f"{lang.NOT_TAUTOLOGY}\n")
+        if result == -1:
+            print_html(f"{lang.NO_RESULT}\n")
+        else:
+            print_html(f"{lang.NOT_TAUTOLOGY}\n")
         if reduced:
             print_tree()
         else:
@@ -1669,6 +1724,9 @@ def print_tree(typ="reduced"):
     global tree, output, nodes, latex_tree
     if not nodes:
         return
+    if len(nodes) > 100:
+        tree = lang.TREE_TOO_BIG
+        return
     x_max = 0
     y_max = nodes[-1].y + 5
     x = 25
@@ -1864,6 +1922,8 @@ latex_table = ""
 nodes = []
 var = []
 lang = importlib.import_module('langs.slovak')
+start_time = time.time()
+TIME_LIMIT = 60
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=8000, debug=True)

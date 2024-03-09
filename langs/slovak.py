@@ -15,3 +15,5 @@ CONNECTED="<b>Spojenie</b>"
 TAUTOLOGY="<b>Formula JE tautológia</b>"
 NOT_TAUTOLOGY="<b>Formula NIE JE tautológia</b>"
 DIMACS="<b>Prevod z DIMACS na KNF:</b>"
+NO_RESULT='<b><font color="#ff0000">Formula je príliš komplexná, nebolo možné nájsť výsledok</font></b>'
+TREE_TOO_BIG="<b>Strom je príliš rozsiahly</b>"

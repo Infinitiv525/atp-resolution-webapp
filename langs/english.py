@@ -15,3 +15,5 @@ CONNECTED="<b>Connected</b>"
 TAUTOLOGY="<b>Formula IS a tautology</b>"
 NOT_TAUTOLOGY="<b>Formula IS NOT a tautology</b>"
 DIMACS="<b>CNF from DIMACS:</b>"
+NO_RESULT='<b><font color="#ff0000">Formula is too complex, could not find a result</font></b>'
+TREE_TOO_BIG="<b>Tree is too large to display</b>"
