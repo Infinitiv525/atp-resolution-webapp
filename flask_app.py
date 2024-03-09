@@ -62,7 +62,7 @@ def add_priority(tokens: list):
     for operator in operators:
         found = False
         is_not_neg = operator != "not"
-        if operator == "imply" or operator == "nimply":
+        if operator == "implies" or operator == "nimplies":
             formula = handle_implication(formula, operator)
             continue
         i = 0
@@ -200,12 +200,12 @@ def negate_bfs(formula):
     queue = [formula]
     if formula[0] == "not":
         print_formula(['not', formula])
-        print_html("\n")
+        print_html('<span style="display: block; text-align: center;">≡</span>')
         print_formula(formula[1])
         return
     else:
         print_formula(['not', formula], q=queue, color=True)
-        print_html("\n")
+        print_html('<span style="display: block; text-align: center;">≡</span>')
     while queue:
         ref = queue[0]
         if len(ref) == 1:
@@ -230,8 +230,8 @@ def negate_bfs(formula):
                 ref[1] = "and"
             elif ref[1] == "nor":
                 ref[1] = "or"
-            elif ref[1] == "nimply":
-                ref[1] = "imply"
+            elif ref[1] == "nimplies":
+                ref[1] = "implies"
             elif ref[1] == "xor":
                 ref[1] = "equiv"
             elif ref[1] == "and":
@@ -252,13 +252,13 @@ def negate_bfs(formula):
                     ref[0] = ["not", ref[0]]
                     queue.append(ref[0])
                 else:
-                    ref[2] = ref[0][1]
+                    ref[0] = ref[0][1]
                 if type(ref[2]) is not list or len(ref[2]) != 2:
                     ref[2] = ["not", ref[2]]
                     queue.append(ref[2])
                 else:
                     ref[2] = ref[2][1]
-            elif ref[1] == "imply":
+            elif ref[1] == "implies":
                 ref[1] = "and"
                 if type(ref[2]) is not list or len(ref[2]) != 2:
                     ref[2] = ["not", ref[2]]
@@ -287,9 +287,10 @@ def negate_bfs(formula):
                     break
             if printout:
                 print_formula(formula, q=queue, color=True)
-                print_html("\n")
+                if len(queue) != 1:
+                    print_html('<span style="display: block; text-align: center;">≡</span>')
         queue.pop(0)
-    # print_formula(formula)
+    return formula
 
 
 def negate(formula):
@@ -304,18 +305,18 @@ def negate(formula):
                 result.append([formula[0], "and", formula[2]])
             elif formula[1] == "nor":
                 result.append([formula[0], "or", formula[2]])
-            elif formula[1] == "nimply":
-                result.append([formula[0], "imply", formula[2]])
+            elif formula[1] == "nimplies":
+                result.append([formula[0], "implies", formula[2]])
             elif formula[1] == "xor":
                 result.append([formula[0], "equiv", formula[2]])
             elif formula[1] == "and":
                 result.append([negate(formula[0]), "or", negate(formula[2])])
             elif formula[1] == "or":
                 result.append([negate(formula[0]), "and", negate(formula[2])])
-            elif formula[1] == "imply":
+            elif formula[1] == "implies":
                 result.append([formula[0], "and", negate(formula[2])])
             elif formula[1] == "equiv":
-                result.append(negate([[formula[0], "imply", formula[2]], 'and', [formula[2], "imply", formula[0]]]))
+                result.append(negate([[formula[0], "implies", formula[2]], 'and', [formula[2], "implies", formula[0]]]))
     else:
         result.append(["not", formula])
     if len(result) == 1:  # and type(result[0])==list:
@@ -379,7 +380,7 @@ def nor(A: list, B: list):
 
 
 def nimply(A: list, B: list):
-    return negate([A, "imply", B])
+    return negate([A, "implies", B])
 
 
 def xor(A: list, B: list):
@@ -402,7 +403,7 @@ def to_cnf(formula):
             return [to_cnf(formula[0]), "and", to_cnf(formula[2])]
         elif formula[1] == "or":
             return oor(to_cnf(formula[0]), to_cnf(formula[2]))
-        elif formula[1] == "imply":
+        elif formula[1] == "implies":
             return to_cnf(imply(formula[0], formula[2]))
         elif formula[1] == "equiv":
             return to_cnf(equiv(formula[0], formula[2]))
@@ -410,7 +411,7 @@ def to_cnf(formula):
             return to_cnf(nand(formula[0], formula[2]))
         elif formula[1] == "nor":
             return to_cnf(nor(formula[0], formula[2]))
-        elif formula[1] == "nimply":
+        elif formula[1] == "nimplies":
             return to_cnf(nimply(formula[0], formula[2]))
         elif formula[1] == "xor":
             return to_cnf(xor(formula[0], formula[2]))
@@ -565,7 +566,7 @@ def remove_imply(formula, q):
             return [remove_imply(formula[0], q), "and", remove_imply(formula[2], q)]
         elif formula[1] == "or":
             return [remove_imply(formula[0], q), "or", remove_imply(formula[2], q)]
-        elif formula[1] == "imply":
+        elif formula[1] == "implies":
             q.append(formula)
             ret = remove_imply(imply(formula[0], formula[2]), q)
             q.append(ret)
@@ -579,8 +580,8 @@ def remove_imply(formula, q):
             return [remove_imply(formula[0], q), "nand", remove_imply(formula[2], q)]
         elif formula[1] == "nor":
             return [remove_imply(formula[0], q), "nor", remove_imply(formula[2], q)]
-        elif formula[1] == "nimply":
-            return [remove_imply(formula[0], q), "nimply", remove_imply(formula[2], q)]
+        elif formula[1] == "nimplies":
+            return [remove_imply(formula[0], q), "nimplies", remove_imply(formula[2], q)]
         elif formula[1] == "xor":
             return [remove_imply(formula[0], q), "xor", remove_imply(formula[2], q)]
         else:
@@ -614,7 +615,7 @@ def remove_neg(formula, q):
             ret = remove_neg(nor(formula[0], formula[2]), q)
             q.append(ret)
             return ret
-        elif formula[1] == "nimply":
+        elif formula[1] == "nimplies":
             q.append(formula)
             ret = remove_neg(nimply(formula[0], formula[2]), q)
             q.append(ret)
@@ -691,7 +692,7 @@ def full_cnf_steps(formula):
     if formula != no_imply:
         print_html(lang.REMOVE_IMPLY, end="\n")
         print_formula(formula, q=q, color=True, cnf=True)
-        print_html("\n")
+        print_html('<span style="display: block; text-align: center;">≡</span>')
         print_formula(no_imply, q=q, color=True, cnf=True)
         print_html("\n")
 
@@ -701,7 +702,7 @@ def full_cnf_steps(formula):
     if no_neg != no_imply:
         print_html(lang.REMOVE_NEG, end="\n")
         print_formula(no_imply, q=q, color=True, cnf=True)
-        print_html("\n")
+        print_html('<span style="display: block; text-align: center;">≡</span>')
         print_formula(no_neg, q=q, color=True, cnf=True)
         print_html("\n")
 
@@ -711,7 +712,7 @@ def full_cnf_steps(formula):
     if cnf != no_neg:
         print_html(lang.DISTRIBUTE_OR, end="\n")
         print_formula(no_neg, q=q, color=True, cnf=True)
-        print_html("\n")
+        print_html('<span style="display: block; text-align: center;">≡</span>')
         print_formula(cnf, q=q, color=True, cnf=True)
         print_html("\n")
 
@@ -727,7 +728,7 @@ def full_cnf_steps(formula):
     if q:
         print_html(lang.SIMPLIFY_CNF, end="\n")
         print_cnf(grouped_cnf, q)
-        print_html("\n")
+        print_html('<span style="display: block; text-align: center;">≡</span>')
         print_cnf(final_cnf)
         print_html("\n")
 
@@ -1417,12 +1418,12 @@ def beautify(text: str) -> str:
     text = text.replace(" and ", " ∧ ")
     text = text.replace(" or ", " ∨ ")
     text = text.replace("not ", "¬ ")
-    text = text.replace(" imply ", " ⇒ ")
+    text = text.replace(" implies ", " ⇒ ")
     text = text.replace(" equiv ", " ⇔ ")
     text = text.replace("xor", "⊕")
     text = text.replace("nand", "↑")
     text = text.replace("nor", "↓")
-    text = text.replace("nimply", "⇏")
+    text = text.replace("nimplies", "⇏")
     pattern = r'\b(' + '|'.join(re.escape(name) for name in greek_letters.keys()) + r')\b'
     text = re.sub(pattern, replace_function, text, flags=re.IGNORECASE)
     return text
@@ -1519,7 +1520,7 @@ def print_recursive(formula, op, right=False, q=None, first_iter=False, color=Fa
         return formula[0]
     elif len(formula) == 2:
         qu = handle_queue(q, formula)
-        return f"{formula[0]} {print_recursive(formula[1], formula[0], q=qu, color=color, cnf=cnf)}"
+        return f"{formula[0]} {print_recursive(formula[1], formula[0], q=qu, color=color, cnf=cnf)} "
     else:
         operat = formula[1]
         start = ""
@@ -1535,9 +1536,9 @@ def print_recursive(formula, op, right=False, q=None, first_iter=False, color=Fa
                             start = ""
                             end = ""
                         break
-        if formula[1] == "imply" and op == "imply" and not right:
+        if formula[1] == "implies" and op == "implies" and not right:
             return f"{start}({print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)}) {end}"
-        elif formula[1] == "imply" and op == "imply" and right:
+        elif formula[1] == "implies" and op == "implies" and right:
             return f"{start}{print_recursive(formula[0], formula[1], q=q, color=color, cnf=cnf)} {operat} {print_recursive(formula[2], formula[1], right=True, q=q, color=color, cnf=cnf)} {end}"
         for operator in operators:
             if formula[1] == operator:
@@ -1773,24 +1774,25 @@ def html2latex():
     latex_output = latex_output.replace("}}", "}}$")
     latex_output = latex_output.replace("{", "\\{")
     latex_output = latex_output.replace("}", "\\}")
-    latex_output = latex_output.replace(' <font color="#FF0000"> ', "")
+    latex_output = latex_output.replace('<font color="#FF0000"> ', "")
     latex_output = latex_output.replace(" </font> ", "")
     latex_output = latex_output.replace("<br><br>", "\n\n\n")
     latex_output = latex_output.replace("<br>", "\n\n")
     latex_output = latex_output.replace("<b>", "\\noindent\\textbf{")
     latex_output = latex_output.replace("</b>", "}")
+    latex_output = latex_output.replace('<span style="display: block; text-align: center;">≡</span>', "\\begin{center} $\\equiv$ \\end{center}\n\n")
     row = ""
     for char in latex_output:
         row = row + char
         if char == "\n":
-            if row == "" or ":}\n" in row or ":} $" in row:
+            if row == "" or ":}\n" in row or ":} $" in row or "\\begin{center}" in row:
                 row = ""
                 continue
             elif ":}" in row:
                 index = row.find(":}") + 2
                 latex_output = latex_output.replace(row, f"{row[:index]} ${row[index:-1]}$", 1)
             else:
-                latex_output = latex_output.replace(row, f"${row[:-1]}$\n", 1)
+                latex_output = latex_output.replace(row, f"\\noindent${row[:-1]}$\n", 1)
             row = ""
     index = latex_output.find("\n")
     latex_output = latex_output.replace(latex_output[:index+1], "")

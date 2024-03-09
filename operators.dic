@@ -1,9 +1,9 @@
-not:¬, !, -, ~, NOT, Not, neg
+not:¬, !, -, ~, NOT, Not, Neg, NEG, neg
 nand:↑, ⊼, NAND, Nand, uparrow
 nor:↓, ⊽, NOR, Nor, downarrow
-nimply:⇏, NIMPLY, Nimply, nRightarrow
+nimplies:⇏, NIMPLY, Nimply, nimply, NIMPLIES, Nimplies, nRightarrow
 xor:⊕, ↮, ⊻, ^^, ^, nequiv, neq, NEQUIV, NEQ, EXOR, XOR, EOR, Xor, oplus
 and:∧, ·, *, &&, &, AND, And, wedge, land
 or:∨, ||, |, +, OR, Or, vee, lor
-imply:⇒, →, =>, >, IMPLY, Imply, rightarrow, implies, Implies, Rightarrow
+implies:⇒, →, =>, >, IMPLY, Imply, rightarrow, imply, Implies, IMPLIES, Rightarrow
 equiv:⇔, ↔, <=>, <>, <->, ⊙, vtt, iff, xnor, EQUIV, XNOR, EQ, Equiv, Eq, Xnor, leftrightarrow, Leftrightarrow

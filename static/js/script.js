@@ -193,17 +193,17 @@ function handleInput() {
 }
 
 const operator_dic = {
-    "not": ["!", "¬", "neg", "-", "~", "NOT", "Not"],
-    "nand": ["↑", "⊼", "NAND", "Nand"],
-    "nor": ["↓", "⊽", "NOR", "Nor"],
-    "nimply": ["NIMPLY", "Nimply"],
-    "xor": ["↮", "⊻", "^^", "^", "⊕", "nequiv", "neq", "NEQUIV", "NEQ", "EXOR", "XOR", "EOR", "Xor"],
+    "not": ["¬", "!", "-", "~", "NOT", "Not", "Neg", "NEG", "neg"],
+    "nand": ["↑", "⊼", "NAND", "Nand", "uparrow"],
+    "nor": ["↓", "⊽", "NOR", "Nor", "downarrow"],
+    "nimplies": ["⇏", "NIMPLY", "Nimply", "nimply", "NIMPLIES", "Nimplies", "nRightarrow"],
+    "xor": ["⊕", "↮", "⊻", "^^", "^", "nequiv", "neq", "NEQUIV", "NEQ", "EXOR", "XOR", "EOR", "Xor", "oplus"],
     "and": ["·", "*", "&&", "&", "∧", "AND", "And", "land", "wedge"],
     "or": ["||", "|", "∨", "+", "OR", "Or", "lor", "vee"],
-    "imply": ["→", "=>", ">", "⇒", "IMPLY", "Imply", "Rightarrow", "rightarrow"],
+    "implies": ["⇒", "→", "=>", ">", "IMPLY", "Imply", "rightarrow", "imply", "Implies", "IMPLIES", "Rightarrow"],
     "equiv": ["↔", "<=>", "<>", "<->", "⇔", "⊙", "vtt", "iff", "xnor", "EQUIV", "XNOR", "EQ", "Equiv", "Eq", "Xnor", "Leftrightarrow", "leftrightarrow"]
 };
-const operators = ['not', 'nand', 'nor', 'nimply', 'xor', 'and', 'or', 'imply', 'equiv'];
+const operators = ['not', 'nand', 'nor', 'nimplies', 'xor', 'and', 'or', 'implies', 'equiv'];
 
 if (inputField) {
     inputField.addEventListener('input', handleInput);
