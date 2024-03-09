@@ -205,7 +205,7 @@ def negate_bfs(formula):
         return
     else:
         print_formula(['not', formula], q=queue, color=True)
-        print_html('<span style="display: block; text-align: center;">≡</span>')
+        #print_html('<span style="display: block; text-align: center;">≡</span>')
     while queue:
         ref = queue[0]
         if len(ref) == 1:
@@ -286,9 +286,10 @@ def negate_bfs(formula):
                     printout = False
                     break
             if printout:
+                print_html('<span style="display: block; text-align: center;">≡</span>')
                 print_formula(formula, q=queue, color=True)
-                if len(queue) != 1:
-                    print_html('<span style="display: block; text-align: center;">≡</span>')
+                #if len(queue) != 1:
+                    #print_html('<span style="display: block; text-align: center;">≡</span>')
         queue.pop(0)
     return formula
 
