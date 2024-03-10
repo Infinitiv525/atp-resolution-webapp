@@ -1884,7 +1884,7 @@ nodes = []
 var = []
 lang = importlib.import_module('langs.slovak')
 start_time = time.time()
-TIME_LIMIT = 5
+TIME_LIMIT = 550
 signal.signal(signal.SIGALRM, handler)
 
 if __name__ == "__main__":
