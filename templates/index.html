@@ -82,6 +82,17 @@
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTable()" style="float: right; height: 40px; margin-right: 10px;">Kopírovať Tabuľku</button>
  <div id="copy-message">Skopírované</div>
 <br><br>
+
+<select class="setting2" id="example-select" onchange="inputExample()">
+  <option value="0">---</option>
+  <option value="1">Jednoduchý vstup</option>
+  <option value="2">Symbolický vstup</option>
+  <option value="3">LaTeX vstup</option>
+  <option value="4">ASCII vstup</option>
+  <option value="5">DIMACS vstup</option>
+</select>
+<p class="pismo2">Príklady:&nbsp;</p>
+
 <div class="container2">
   <div class="input-container">
   <form id="inp-form" method="post">

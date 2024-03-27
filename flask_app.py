@@ -1194,7 +1194,8 @@ def full_cnf(formula):
 
 
 def resolution(inp, res_type, reduced):
-    global var, output, table, start_time
+    global var, output, table
+    start_time = time.time()
     is_dimacs = False
     try:
         cnf, var = from_dimacs(inp)
@@ -1212,7 +1213,8 @@ def resolution(inp, res_type, reduced):
         for token in tokens:
             first_formula += print_html(token, end=" ")
         if not tokens:
-            return print_html(lang.EMPTY_FORMULA)
+            print_html(lang.EMPTY_FORMULA)
+            return ""
         formula = add_priority(tokens)
         print_html("\n\n")
         cut = len(output)
@@ -1304,6 +1306,10 @@ def resolution(inp, res_type, reduced):
         else:
             print_tree("normal")
     table2latex(table)
+    stats = f"<br>{lang.NUMBER_CLAUSES}: {len(negated_resolution)}<br>"
+    stats += f"{lang.NUMBER_LITERALS}: {sum(len(clause) for clause in negated_resolution)}<br>"
+    stats += f"{lang.TIME_TAKEN}: {time.time() - start_time:.3f}s"
+    return stats
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -1330,12 +1336,12 @@ def index():
         latex_table = ""
         nodes = []
         signal.alarm(TIME_LIMIT)
-        resolution(inp, res_type, reduced)
+        stats = resolution(inp, res_type, reduced)
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
         html2latex()
-        return render_template("index.html", output=output, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
+        return render_template("index.html", output=output + stats, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("index.html")
 
@@ -1363,12 +1369,13 @@ def indexeng():
         table = ""
         latex_table = ""
         nodes = []
-        resolution(inp, res_type, reduced)
+        signal.alarm(TIME_LIMIT)
+        stats = resolution(inp, res_type, reduced)
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
         html2latex()
-        return render_template("indexeng.html", output=output, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
+        return render_template("indexeng.html", output=output + stats, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
     else:
         return render_template("indexeng.html")
 
@@ -1883,7 +1890,6 @@ latex_table = ""
 nodes = []
 var = []
 lang = importlib.import_module('langs.slovak')
-start_time = time.time()
 TIME_LIMIT = 550
 signal.signal(signal.SIGALRM, handler)
 

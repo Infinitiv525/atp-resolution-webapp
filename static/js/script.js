@@ -6,6 +6,7 @@ const inputField = document.getElementById('text-input');
 const inputForm = document.getElementById('inp-form');
 const errorMessage = document.getElementById('errorMessage');
 const copyMessage = document.getElementById("copy-message");
+const exampleSelect = document.getElementById("example-select");
 let isSyntaxVisible = false;
 const htmlLang = document.documentElement.lang;
 
@@ -98,8 +99,8 @@ function isDimacs(text){
     let numClauses = parseInt(match[2]);
     let actualNumClauses = text.split('\n').slice(1).filter(line => line.trim() !== '').length;
 
-    if(numClauses < actualNumClauses) return 10;
-    if(numClauses > actualNumClauses) return 11;
+    if(numClauses < actualNumClauses) return {errorCode: 10, position: 3};
+    if(numClauses > actualNumClauses) return {errorCode: 11, position: 3};
 
     let numVariables = parseInt(match[1]);
 
@@ -107,13 +108,14 @@ function isDimacs(text){
         let clause = lines[i].trim().split(' ');
         for (let j = 0; j < clause.length; j++) {
             if (clause[j] === '') continue;
-            if (isNaN(parseInt(clause[j]))) return 12;
-            if (Math.abs(parseInt(clause[j])) > numVariables) return 13;
-            if (j === clause.length -1  && parseInt(clause[j]) !== 0) return 14;
+            if (isNaN(parseInt(clause[j]))) return {errorCode: 12, position: j, line: i};
+            if (Math.abs(parseInt(clause[j])) > numVariables) return {errorCode: 13, position: j, line: i};
+            if (j === clause.length -1  && parseInt(clause[j]) !== 0) return {errorCode: 14, position: j, line: i};
+            if (clause.length === 1) return {errorCode: 15, position: j, line: i};
         }
     }
 
-    return 0;
+    return {errorCode: 0};
 }
 
 function checkSyntax(input) {
@@ -238,8 +240,8 @@ document.addEventListener('DOMContentLoaded', function () {
         checkbox.checked = true;
     }
     document.getElementById("fontSizeSelect");
-    var selectElement = document.getElementById("fontSizeSelect");
-    var savedFontSize = localStorage.getItem("fontSize");
+    const selectElement = document.getElementById("fontSizeSelect");
+    const savedFontSize = localStorage.getItem("fontSize");
     if (savedFontSize) {
         selectElement.value = savedFontSize;
         changeFontSize();
@@ -286,16 +288,42 @@ function toggleOptions() {
 }
 
 function changeFontSize() {
-    var selectElement = document.getElementById("fontSizeSelect");
-    var selectedValue = selectElement.options[selectElement.selectedIndex].text;
+    let selectElement = document.getElementById("fontSizeSelect");
+    let selectedValue = selectElement.options[selectElement.selectedIndex].text;
 
     document.getElementById("output-text").style.fontSize = selectedValue;
     document.getElementById("text-input").style.fontSize = selectedValue;
     localStorage.setItem('fontSize', selectElement.value);
 }
 
+function inputExample() {
+    let selectElement = document.getElementById("example-select");
+    let selectedValue = selectElement.options[selectElement.selectedIndex].value;
+    let example = "";
+    switch (selectedValue){
+        case "1":
+            example = "a and b implies (alpha or not beta)";
+            break;
+        case "2":
+            example = "a ∧ b ⇒ (α ∨ ¬β)";
+            break;
+        case "3":
+            example = "a \\wedge b \\Rightarrow \\(\\alpha \\vee \\neg\\beta\\)";
+            break;
+        case "4":
+            example = "a && b => (alpha || !beta)";
+            break;
+        case "5":
+            example = "p cnf 3 4\n" + "1 -2 0\n" + "2 3 0\n" + "-3 -1 0\n" + "-1 -2 -3 0";
+            break;
+        default:
+            example = "";
+    }
+    if (example !== "") inputField.value = example;
+}
+
 function copyToClipboardTree() {
-    var copyText = document.getElementById("latex-tree");
+    let copyText = document.getElementById("latex-tree");
     if (navigator.clipboard) {
         copyText.select();
         navigator.clipboard.writeText(copyText.value)
@@ -429,6 +457,7 @@ if (inputField) {
             inputField.style.borderColor = '';
         } else {
             let error;
+            let line = "";
             errorMessage.style.display = 'block';
             inputField.style.borderColor = 'red';
             switch (isValidSyntax) {
@@ -477,16 +506,44 @@ if (inputField) {
                     else error = "Too few clauses in DIMACS";
                     break;
                 case 12:
-                    if (htmlLang === "sk") error = "Klauzuly v DIMACS môžu obsahovať len čísla";
-                    else error = "Clauses in DIMACS can only contain integers";
+                    if (htmlLang === "sk") {
+                        error = "Klauzuly v DIMACS môžu obsahovať len čísla";
+                        line = ", riadok " + (result.line + 1);
+                    }
+                    else {
+                        error = "Clauses in DIMACS can only contain integers";
+                        line = ", line " + (result.line + 1);
+                    }
                     break;
                 case 13:
-                    if (htmlLang === "sk") error = "Príliš veľa premenných v DIMACS";
-                    else error = "Too many variables in DIMACS";
+                    if (htmlLang === "sk") {
+                        error = "Neplatná premenná v DIMACS";
+                        line = ", riadok " + (result.line + 1);
+                    }
+                    else {
+                        error = "Invalid variable in DIMACS";
+                        line = ", line " + (result.line + 1);
+                    }
                     break;
                 case 14:
-                    if (htmlLang === "sk") error = "Klauzula musí končiť nulou";
-                    else error = "A clause must end with 0";
+                    if (htmlLang === "sk"){
+                        error = "Klauzula musí končiť nulou";
+                        line = ", riadok " + (result.line + 1);
+                    }
+                    else {
+                        error = "Clause must end with 0";
+                        line = ", line " + (result.line + 1);
+                    }
+                    break;
+                case 15:
+                    if (htmlLang === "sk"){
+                        error = "Klauzula je prázdna";
+                        line = ", riadok " + (result.line + 1);
+                    }
+                    else {
+                        error = "Clause is empty";
+                        line = ", line " + (result.line + 1);
+                    }
                     break;
                 default:
                     if (htmlLang === "sk") error = "Chyba syntaxe";
@@ -494,7 +551,8 @@ if (inputField) {
                     break;
             }
             let tokens = tokenize(inputField.value);
-            errorMessage.textContent = error + "; token "+ (result.position+1) + ': "' + tokens[result.position] + '"';
+            if (line === "") errorMessage.textContent = error + "; token "+ (result.position+1) + ': "' + tokens[result.position] + '"';
+            else errorMessage.textContent = error + "; token "+ (result.position+1) + line;
         }
     });
 }

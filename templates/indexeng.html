@@ -82,6 +82,17 @@
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTable()" style="float: right; height: 40px; margin-right: 10px;">Copy Table</button>
 <div id="copy-message">Copied</div>
 <br><br>
+
+<select class="setting2" id="example-select" onchange="inputExample()">
+  <option value="0">---</option>
+  <option value="1">Simple input</option>
+  <option value="2">Symbolic input</option>
+  <option value="3">LaTeX input</option>
+  <option value="4">ASCII input</option>
+  <option value="5">DIMACS input</option>
+</select>
+<p class="pismo2">Examples:&nbsp;</p>
+
 <div class="container2">
   <div class="input-container">
   <form id="inp-form" method="post">
