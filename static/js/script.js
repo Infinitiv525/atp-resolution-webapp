@@ -771,12 +771,20 @@ function checkEmptyDiv() {
         for (let hideButton of hideButtons) {
             hideButton.style.display = 'none';
         }
+        let settings = document.getElementsByClassName('setting3');
+        for (let setting of settings){
+            setting.style.margin = '10px 11% 0px 0px'; 
+        }
     } else {
         for (let container of containers) {
             container.style.display = 'flex';
         }
         for (let hideButton of hideButtons) {
             hideButton.style.display = 'block';
+        }
+        let settings = document.getElementsByClassName('setting3');
+        for (let setting of settings){
+            if (htmlLang === 'en') setting.style.margin = '10px 13% 0px 0px';
         }
     }
 }
