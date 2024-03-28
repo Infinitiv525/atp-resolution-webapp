@@ -31,23 +31,23 @@ body{
 .sunset{
   background-color: #ffbcbc;
 }
-.midnight, .setting.midnight *, .setting2.midnight *, .setting3.midnight *{
+.midnight, .setting.midnight *, .setting2.midnight *, .setting3.midnight *, .setting4.midnight *{
   background-color: #222222;
   color: #E4E6EB;
 }
-.matrix, .setting.matrix *, .setting2.matrix *, .setting3.matrix *{
+.matrix, .setting.matrix *, .setting2.matrix *, .setting3.matrix *, .setting4.matrix *{
   background-color: #101811;
   color: #2FE747;
 }
 #text-input.morning, #text-input.noon, #text-input.sunset{
   background-color: white;
 }
-.container.midnight, table.midnight #text-input.midnight, .button.midnight, .setting.midnight, .setting2.midnight, .setting3.midnight{
+.container.midnight, table.midnight #text-input.midnight, .button.midnight, .setting.midnight, .setting2.midnight, .setting3.midnight, .setting4.midnight{
   background-color: #161616;
   color: #E4E6EB;
   border: 2px solid #E4E6EB;
 }
-.container.matrix, table.matrix, #text-input.matrix, .button.matrix, .setting.matrix, .setting2.matrix, .setting3.matrix{
+.container.matrix, table.matrix, #text-input.matrix, .button.matrix, .setting.matrix, .setting2.matrix, .setting3.matrix, .setting4.matrix{
   background-color: #080C09;
   color: #2FE747;
   border: 2px solid #2FE747;
@@ -159,6 +159,11 @@ li a:hover:not(.active) {
   }
   .setting2{
     display: flex!important;
+  }
+  .setting4{
+    margin: 0 auto!important;
+    width: 90%;
+    position: unset!important;
   }
   .container {
     flex-direction: column;
@@ -646,6 +651,18 @@ input[type="radio"].matrix{
   z-index: 1;
   width: 150px;
 }
+
+.setting4{
+  position: relative;
+  font-size: 20px;
+  left: 10px;
+  border-radius: 6px;
+  border: 1px solid black;
+  background-color: white;
+  z-index: 1;
+  display: block;
+}
+
 .container {
   display: flex;
   height: 480px; 

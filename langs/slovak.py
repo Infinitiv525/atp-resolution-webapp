@@ -1,5 +1,6 @@
 INPUT_FORMULA="<b>Zadaná formula:</b>"
 EMPTY_FORMULA="<b>Formula je prázdna, rezolúciu nemožno vykonať</b>"
+FULL_FORMULA="<b>Plne zátvorkovaná formula:</b> "
 SIMPLIFIED_FORMULA="<b>Zjednodušená formula:</b> "
 NEGATION_FORMULA="<b>Negácia formuly:</b>"
 NEGATED_FORMULA="<b>Negovaná formula:</b>"

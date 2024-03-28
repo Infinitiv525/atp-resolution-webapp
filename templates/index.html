@@ -74,10 +74,26 @@
       </div>
     </div>
     <textarea id="latex-output" style="display:none;">{{ latex_output | safe }}</textarea>
+    <textarea id="latex-formula" style="display:none;">{{ latex_formula | safe }}</textarea>
+    <textarea id="latex-negation-steps" style="display:none;">{{ latex_negation_steps | safe }}</textarea>
+    <textarea id="latex-negation" style="display:none;">{{ latex_negation | safe }}</textarea>
+    <textarea id="latex-cnf-steps" style="display:none;">{{ latex_cnf_steps | safe }}</textarea>
+    <textarea id="latex-cnf" style="display:none;">{{ latex_cnf | safe }}</textarea>
+    <textarea id="latex-set" style="display:none;">{{ latex_set | safe }}</textarea>
+
   </div>
 </div>
 <br>
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardOutput()" style="float: left; height: 40px; margin-left: 10px;" >Kopírovať Výstup</button>
+<select class="setting4 hide" id="output-select" onchange="outputSelect()">
+  <option value="latex-output">Všetko</option>
+  <option value="latex-formula">Úprava formuly</option>
+  <option value="latex-negation-steps">Kroky negácie formuly</option>
+  <option value="latex-negation">Negácia formuly</option>
+  <option value="latex-cnf-steps">Kroky prevodu na KNF</option>
+  <option value="latex-cnf">Formula v KNF</option>
+  <option value="latex-set">Množinová notácia</option>
+</select>
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTree()" style="float: right; height: 40px; margin-right: 10px;">Kopírovať Strom</button>
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTable()" style="float: right; height: 40px; margin-right: 10px;">Kopírovať Tabuľku</button>
 <div id="copy-message">Skopírované</div>
@@ -115,6 +131,10 @@
     </label>
     <label class="moznost" for="reduced">Redukovaný strom
       <input type="checkbox" id="reduced" name="reduced">
+      <span class="checkmark2"></span>
+    </label>
+    <label class="moznost" for="full">Plne zátvorkovaná formula
+      <input type="checkbox" id="full" name="full">
       <span class="checkmark2"></span>
     </label>
 

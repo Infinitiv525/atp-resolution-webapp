@@ -74,10 +74,25 @@
       </div>
     </div>
     <textarea id="latex-output" style="display:none;">{{ latex_output | safe }}</textarea>
+    <textarea id="latex-formula" style="display:none;">{{ latex_formula | safe }}</textarea>
+    <textarea id="latex-negation-steps" style="display:none;">{{ latex_negation_steps | safe }}</textarea>
+    <textarea id="latex-negation" style="display:none;">{{ latex_negation | safe }}</textarea>
+    <textarea id="latex-cnf-steps" style="display:none;">{{ latex_cnf_steps | safe }}</textarea>
+    <textarea id="latex-cnf" style="display:none;">{{ latex_cnf | safe }}</textarea>
+    <textarea id="latex-set" style="display:none;">{{ latex_set | safe }}</textarea>
   </div>
 </div>
 <br>
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardOutput()" style="float: left; height: 40px; margin-left: 10px;" >Copy Output</button>
+<select class="setting4 hide" id="output-select" onchange="outputSelect()">
+  <option value="latex-output">Everything</option>
+  <option value="latex-formula">Formula simplification</option>
+  <option value="latex-negation-steps">Negation steps</option>
+  <option value="latex-negation">Negated formula</option>
+  <option value="latex-cnf-steps">CNF conversion steps</option>
+  <option value="latex-cnf">CNF formula</option>
+  <option value="latex-set">Set notation</option>
+</select>
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTree()" style="float: right; height: 40px; margin-right: 10px;">Copy Tree</button>
 <button id="copy-button" class="click-button hide" type="submit" onclick="copyToClipboardTable()" style="float: right; height: 40px; margin-right: 10px;">Copy Table</button>
 <div id="copy-message">Copied</div>
@@ -115,6 +130,10 @@
     </label>
     <label class="moznost" for="reduced">Reduced tree
       <input type="checkbox" id="reduced" name="reduced">
+      <span class="checkmark2"></span>
+    </label>
+    <label class="moznost" for="full">Fully parenthesized formula
+      <input type="checkbox" id="full" name="full">
       <span class="checkmark2"></span>
     </label>
 

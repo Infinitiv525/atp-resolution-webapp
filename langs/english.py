@@ -1,5 +1,6 @@
 INPUT_FORMULA="<b>Input formula:</b>"
 EMPTY_FORMULA="<b>Formula is empty, can&apos;t perform resolution</b>"
+FULL_FORMULA="<b>Fully parenthesized formula:</b> "
 SIMPLIFIED_FORMULA="<b>Simplified formula:</b> "
 NEGATION_FORMULA="<b>Negation of the formula:</b>"
 NEGATED_FORMULA="<b>Negated formula:</b>"

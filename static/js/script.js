@@ -239,12 +239,26 @@ document.addEventListener('DOMContentLoaded', function () {
     if (savedCheckboxValue === 'true') {
         checkbox.checked = true;
     }
+    const fullCheckbox = document.getElementById('full');
+    const savedFullCheckboxValue = localStorage.getItem('fullCheckboxValue');
+    if (savedFullCheckboxValue === 'true') {
+        fullCheckbox.checked = true;
+    }
     document.getElementById("fontSizeSelect");
     const selectElement = document.getElementById("fontSizeSelect");
     const savedFontSize = localStorage.getItem("fontSize");
     if (savedFontSize) {
         selectElement.value = savedFontSize;
         changeFontSize();
+    }
+    const selectOutput = document.getElementById("output-select");
+    const savedOutputSelect = localStorage.getItem("outputSelect");
+    if (savedOutputSelect){
+        selectOutput.value = savedOutputSelect;
+    }
+    else{
+        selectOutput.value = "latex-output";
+        outputSelect()
     }
 });
 
@@ -257,6 +271,7 @@ if (inputForm) {
             localStorage.setItem('selectedRadio', selectedRadio.value);
         }
         localStorage.setItem('checkboxValue', document.getElementById('reduced').checked);
+        localStorage.setItem('fullCheckboxValue', document.getElementById('full').checked);
     });
 }
 
@@ -322,6 +337,11 @@ function inputExample() {
     if (example !== "") inputField.value = example;
 }
 
+function outputSelect(){
+    const selectOutput = document.getElementById("output-select");
+    localStorage.setItem("outputSelect", selectOutput.value);
+}
+
 function copyToClipboardTree() {
     let copyText = document.getElementById("latex-tree");
     if (navigator.clipboard) {
@@ -350,7 +370,7 @@ function copyToClipboardTree() {
 }
 
 function copyToClipboardTable() {
-    var copyText = document.getElementById("latex-table");
+    let copyText = document.getElementById("latex-table");
     if (navigator.clipboard) {
         copyText.select();
         navigator.clipboard.writeText(copyText.value)
@@ -377,7 +397,9 @@ function copyToClipboardTable() {
 }
 
 function copyToClipboardOutput() {
-    var copyText = document.getElementById("latex-output");
+    const selectOutput = document.getElementById("output-select");
+    let elementId = selectOutput.value;
+    let copyText = document.getElementById(elementId);
     if (navigator.clipboard) {
         copyText.select();
         navigator.clipboard.writeText(copyText.value)
@@ -413,6 +435,7 @@ if (inputForm) {
             localStorage.setItem('selectedRadio', selectedRadio.value);
         }
         localStorage.setItem('checkboxValue', document.getElementById('reduced').checked);
+        localStorage.setItem('fullCheckboxValue', document.getElementById('full').checked);
 
         var userInput = inputField.value;
         var isValidSyntax = checkSyntax(userInput).errorCode;

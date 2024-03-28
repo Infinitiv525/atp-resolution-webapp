@@ -1193,7 +1193,7 @@ def full_cnf(formula):
     return cnf
 
 
-def resolution(inp, res_type, reduced):
+def resolution(inp, res_type, reduced, full):
     global var, output, table
     start_time = time.time()
     is_dimacs = False
@@ -1217,6 +1217,9 @@ def resolution(inp, res_type, reduced):
             return ""
         formula = add_priority(tokens)
         print_html("\n\n")
+        if full:
+            print_html(lang.FULL_FORMULA)
+            print_html(formula, end="\n\n")
         cut = len(output)
         print_html(lang.SIMPLIFIED_FORMULA)
         simple_formula = print_formula(formula) + " "
@@ -1330,18 +1333,23 @@ def index():
             reduced = True
         except Exception:
             reduced = False
+        try:
+            full = request.form["full"]
+            full = True
+        except Exception:
+            full = False
         tree = ""
         latex_tree = ""
         table = ""
         latex_table = ""
         nodes = []
         signal.alarm(TIME_LIMIT)
-        stats = resolution(inp, res_type, reduced)
+        stats = resolution(inp, res_type, reduced, full)
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
         html2latex()
-        return render_template("index.html", output=output + stats, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
+        return render_template("index.html", output=output + stats, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table, latex_formula=latex_formula, latex_negation_steps=latex_negation_steps, latex_negation=latex_negation, latex_cnf_steps=latex_cnf_steps, latex_cnf=latex_cnf, latex_set=latex_set)
     else:
         return render_template("index.html")
 
@@ -1364,18 +1372,23 @@ def indexeng():
             reduced = True
         except Exception:
             reduced = False
+        try:
+            full = request.form["full"]
+            full = True
+        except Exception:
+            full = False
         tree = ""
         latex_tree = ""
         table = ""
         latex_table = ""
         nodes = []
         signal.alarm(TIME_LIMIT)
-        stats = resolution(inp, res_type, reduced)
+        stats = resolution(inp, res_type, reduced, full)
         output = beautify(output)
         tree = beautify(tree)
         table = beautify(table)
         html2latex()
-        return render_template("indexeng.html", output=output + stats, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table)
+        return render_template("indexeng.html", output=output + stats, latex_output=latex_output, tree=tree, latex_tree=latex_tree, table=table, latex_table=latex_table, latex_formula=latex_formula, latex_negation_steps=latex_negation_steps, latex_negation=latex_negation, latex_cnf_steps=latex_cnf_steps, latex_cnf=latex_cnf, latex_set=latex_set)
     else:
         return render_template("indexeng.html")
 
@@ -1785,7 +1798,7 @@ def recursive_children(node):
 
 
 def html2latex():
-    global output, latex_output
+    global output, latex_output, latex_formula, latex_negation_steps, latex_negation, latex_cnf_steps, latex_cnf, latex_set
     latex_output = output
     for key, operator in operator_dic.items():
         latex_output = latex_output.replace(f" {key} ", f" \\{operator[-1]} ")
@@ -1821,6 +1834,38 @@ def html2latex():
     latex_output = latex_output[:-3]
     index = latex_output.rfind("$")
     latex_output = latex_output[:index] + latex_output[index+1:]
+    print(latex_output)
+
+    formula_start = latex_output.find("\\noindent\\textbf{Zadaná formula:}")
+    if formula_start == -1:
+        formula_start = latex_output.find("\\noindent\\textbf{Input formula:}")
+        formula_end = latex_output.find("\\noindent\\textbf{Simplified formula:}")
+    else:
+        formula_end = latex_output.find("\\noindent\\textbf{Zjednodušená formula:}")
+    formula_end += latex_output[formula_end:].find("\n")
+    latex_formula = latex_output[formula_start:formula_end]
+
+    negation_steps_start = formula_end + 2
+    negation_start = latex_output.find("\\noindent\\textbf{Negovaná formula:}")
+    if negation_start == -1:
+        negation_start = latex_output.find("\\noindent\\textbf{Negated formula:}")
+    negation_end = negation_start + latex_output[negation_start:].find("\n")
+    latex_negation_steps = latex_output[negation_steps_start:negation_end]
+    latex_negation = latex_output[negation_start:negation_end]
+
+    cnf_steps_start = negation_end + 2
+    cnf_start = latex_output.find("\\noindent\\textbf{Negovaná KNF:}")
+    if cnf_start == -1:
+        cnf_start = latex_output.find("\\noindent\\textbf{Negated CNF:}")
+    cnf_end = cnf_start + latex_output[cnf_start:].find("\n")
+    latex_cnf_steps = latex_output[cnf_steps_start:cnf_end]
+    latex_cnf = latex_output[cnf_start:cnf_end]
+
+    set_start = latex_output.find("\\noindent\\textbf{Množinová notácia:}")
+    if set_start == -1:
+        set_start = latex_output.find("\\noindent\\textbf{Set notation:}")
+    set_end = set_start + latex_output[set_start:].find("\n")
+    latex_set = latex_output[set_start:set_end]
 
 
 def svg2latex(text):
@@ -1887,11 +1932,17 @@ tree = ""
 latex_tree = ""
 table = ""
 latex_table = ""
+latex_formula = ""
+latex_negation_steps = ""
+latex_negation = ""
+latex_cnf_steps = ""
+latex_cnf = ""
+latex_set = ""
 nodes = []
 var = []
 lang = importlib.import_module('langs.slovak')
 TIME_LIMIT = 550
-signal.signal(signal.SIGALRM, handler)
+signal.signal(signal.SIGALRM, handler) #odkomentovat v produkcii
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=8000, debug=True)
