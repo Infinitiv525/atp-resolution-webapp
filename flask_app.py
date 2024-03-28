@@ -1857,6 +1857,10 @@ def html2latex():
     cnf_start = latex_output.find("\\noindent\\textbf{Negovaná KNF:}")
     if cnf_start == -1:
         cnf_start = latex_output.find("\\noindent\\textbf{Negated CNF:}")
+        if cnf_start == -1:
+            cnf_start = latex_output.find("\\noindent\\textbf{Prevod z DIMACS na KNF:}")
+            if cnf_start == -1:
+                cnf_start = latex_output.find("\\noindent\\textbf{CNF from DIMACS:}")
     cnf_end = cnf_start + latex_output[cnf_start:].find("\n")
     latex_cnf_steps = latex_output[cnf_steps_start:cnf_end]
     latex_cnf = latex_output[cnf_start:cnf_end]
