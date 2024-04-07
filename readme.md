@@ -1,6 +1,4 @@
-Work in progress
-
-Vysvetlit strukturu stranka co na co sluzi
+Webová aplikácia k diplomovej práci Systém automatického dokauzovania teorem na základe výrokovej logiky
 
 link na stranku: [http://infinitiv.pythonanywhere.com/](http://infinitiv.pythonanywhere.com/)
 
