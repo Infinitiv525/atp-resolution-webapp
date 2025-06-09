@@ -1,14 +1,14 @@
 ATP Resolution WebApp is a web-based educational tool developed as part of a bachelor’s thesis. The application demonstrates Automated Theorem Proving (ATP) using the resolution method, and serves as a learning aid for the "Logic for IT Students" course .
 
-#Features
+# Features
 
-*Input of propositional logic formulas in CNF (Conjunctive Normal Form)
+* Input of propositional logic formulas in CNF (Conjunctive Normal Form)
 
-*Step-by-step resolution proof visualization
+* Step-by-step resolution proof visualization
 
-*Detection of unsatisfiability via deriving the empty clause
+* Detection of unsatisfiability via deriving the empty clause
 
-#Installation
+# Installation
 
 1. **Clone the repository**
 
